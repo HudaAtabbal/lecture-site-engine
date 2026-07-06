@@ -333,7 +333,7 @@ automation_question_types:
       - algorithm_iterations
       - variable_state
       - search_tree_expansion
-      - memory_page_replacement
+      - instruction_cycle_state
 
   compare_analyze:
     enabled: true

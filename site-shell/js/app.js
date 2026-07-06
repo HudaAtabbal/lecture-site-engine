@@ -3,6 +3,12 @@ import { initDiagrams, refreshDiagrams } from '../engine/renderer/diagram/diagra
 import { initEquations } from './equations.js';
 import { applySiteSettings } from '../themes/apply-theme.js';
 import { GUIDE_CONFIG } from './guide-config.js';
+import {
+  anchorIdFromHash,
+  getLectureIndexFromHash,
+  resolveLectureHash,
+  hashPointsToSection,
+} from './lecture-routing.js';
 
 const STORAGE_THEME = `${GUIDE_CONFIG.storagePrefix || 'study-guide'}-theme`;
 const STORAGE_LAST_LECTURE = `${GUIDE_CONFIG.storagePrefix || 'study-guide'}-last-lecture`;
@@ -23,9 +29,20 @@ const appState = { manifest: null, items: [] };
 let currentLectureIndex = -1;
 let siteTitle = GUIDE_CONFIG.defaultTitle || 'Study Guide';
 let scrollAnimObserver = null;
+let routeLock = false;
 
 function esc(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function lectureStats(lec) {
+  const mcqPart = lec.parts?.find(p => p.type === 'mcq');
+  const mcqCount = mcqPart?.questions?.length || 0;
+  return {
+    parts: lec.parts?.length || 0,
+    mcq: mcqCount,
+    sections: lec.parts?.find(p => p.type === 'detail')?.subsections?.length || 0,
+  };
 }
 
 function initTheme() {
@@ -63,33 +80,52 @@ async function loadLectureJson(path) {
 function renderHomeGrid() {
   const grid = document.getElementById('lectureGrid');
   if (!grid) return;
+
   grid.innerHTML = appState.items.map((item, i) => {
+    const stats = lectureStats(item.lec);
     const title = shortLectureTitle(item.lec.title);
-    const num = item.fileMeta?.num ?? String(i + 1);
-    const badge = item.fileMeta?.badge || item.lec.tag || '';
+    const num = item.fileMeta?.num ?? item.lec.title.match(/المحاضرة\s+(\d+)/)?.[1] ?? String(i + 1);
+    const badge = item.fileMeta?.badge;
+    const tag = item.lec.tag || '';
     return `
-      <button type="button" class="group text-right bg-surface-container-lowest border border-outline-variant rounded-xl p-lg w-full hover:border-primary/40 transition-colors" data-idx="${i}">
+      <button type="button"
+              class="lecture-picker-card group text-right bg-surface-container-lowest border border-outline-variant rounded-xl p-lg custom-shadow box-hover w-full cursor-pointer"
+              data-lecture-index="${i}" aria-label="فتح ${esc(title)}">
         <div class="flex items-start justify-between mb-md">
-          <span class="text-3xl" aria-hidden="true">${esc(item.icon)}</span>
+          <div class="picker-icon-wrap w-14 h-14 rounded-xl bg-primary-container flex items-center justify-center text-on-primary-container shrink-0">
+            ${ms(item.matIcon, true, 'text-3xl')}
+          </div>
           <div class="flex flex-col items-end gap-xs">
-            <span class="px-sm py-xs bg-secondary-container text-on-secondary-container rounded-lg text-sm">#${esc(num)}</span>
-            ${badge ? `<span class="px-sm py-xs bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-lg text-sm">${esc(badge)}</span>` : ''}
+            <span class="px-sm py-xs bg-secondary-container text-on-secondary-container rounded-lg font-code-sm text-code-sm">#${esc(num)}</span>
+            ${badge ? `<span class="px-sm py-xs bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-lg font-label-md text-label-md">${esc(badge)}</span>` : ''}
           </div>
         </div>
-        <h3 class="font-headline-sm text-on-surface group-hover:text-primary transition-colors">${esc(title)}</h3>
+        <h3 class="font-headline-sm text-headline-sm text-on-surface mb-xs group-hover:text-primary transition-colors">${esc(title)}</h3>
+        ${tag ? `<p class="font-label-md text-label-md text-on-surface-variant mb-md line-clamp-2">${esc(tag)}</p>` : '<div class="mb-md"></div>'}
+        <div class="flex flex-wrap gap-sm mb-lg">
+          <span class="inline-flex items-center gap-xs px-sm py-xs bg-surface-container-high rounded-full font-label-md text-label-md text-on-surface-variant">
+            ${ms('menu_book', false, 'text-sm text-primary')} ${stats.parts} أجزاء
+          </span>
+          ${stats.mcq ? `<span class="inline-flex items-center gap-xs px-sm py-xs bg-surface-container-high rounded-full font-label-md text-label-md text-on-surface-variant">
+            ${ms('quiz', false, 'text-sm text-secondary')} ${stats.mcq} سؤال
+          </span>` : ''}
+          ${stats.sections ? `<span class="inline-flex items-center gap-xs px-sm py-xs bg-surface-container-high rounded-full font-label-md text-label-md text-on-surface-variant">
+            ${ms('format_list_bulleted', false, 'text-sm text-tertiary')} ${stats.sections} أقسام
+          </span>` : ''}
+        </div>
+        <span class="inline-flex items-center gap-sm text-primary font-label-md font-bold group-hover:gap-md transition-all">
+          ابدأ الدراسة ${ms('arrow_back', false, 'text-lg')}
+        </span>
       </button>`;
   }).join('');
 
-  grid.querySelectorAll('[data-idx]').forEach(btn => {
+  grid.querySelectorAll('[data-lecture-index]').forEach(btn => {
     btn.addEventListener('click', () => {
-      loadLectureView(Number(btn.dataset.idx));
+      const idx = Number(btn.dataset.lectureIndex);
+      const id = appState.items[idx]?.lec.id;
+      if (id) location.hash = id;
     });
   });
-}
-
-function anchorIdFromHash(hash) {
-  if (!hash) return '';
-  return decodeURIComponent(String(hash).replace(/^#/, ''));
 }
 
 function revealAnimated(el) {
@@ -243,24 +279,25 @@ function loadLectureView(idx, hashPart) {
     initInteractivity(document.getElementById('content'));
     initDiagrams(document.getElementById('content'));
     initEquations(document.getElementById('content'));
-    requestAnimationFrame(() => {
-      initScrollAnimations(document.getElementById('content'));
-      buildSidebar(item.toc);
-      if (hashPart && hashPart !== item.lec.id) scrollToAnchor(hashPart);
-    });
     if (window.hljs) document.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
+    buildSidebar(item.toc);
+    initScrollAnimations(document.getElementById('content'));
   } else {
     buildSidebar(item.toc);
-    if (hashPart && hashPart !== item.lec.id) scrollToAnchor(hashPart);
   }
 
-  const hash = hashPart && hashPart !== item.lec.id && hashPart !== lectureIndexHash(idx)
-    ? hashPart
-    : lectureIndexHash(idx);
+  const hash = resolveLectureHash(idx, hashPart, item);
+  routeLock = true;
   if (location.hash !== `#${hash}`) location.hash = hash;
-  else if (!needsRender && hashPart && hashPart !== item.lec.id && hashPart !== lectureIndexHash(idx)) {
-    scrollToAnchor(hashPart);
-  }
+  routeLock = false;
+
+  const scrollAfterLoad = () => {
+    if (hashPointsToSection(hashPart, item)) scrollToAnchor(hashPart);
+    else window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  if (needsRender) requestAnimationFrame(scrollAfterLoad);
+  else scrollAfterLoad();
 }
 
 function initJumpQuiz() {
@@ -284,38 +321,16 @@ function initScrollFab() {
   fab.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 }
 
-function lectureIndexHash(idx) {
-  return `l${idx}`;
-}
-
-function getLectureIndexFromHash(hash) {
-  if (!hash || hash === 'home') return -1;
-  const id = anchorIdFromHash(hash);
-  const indexMatch = id.match(/^l(\d+)$/);
-  if (indexMatch) {
-    const idx = Number(indexMatch[1]);
-    return idx >= 0 && idx < appState.items.length ? idx : -1;
-  }
-  const exact = appState.items.findIndex(it => it.lec.id === id);
-  if (exact >= 0) return exact;
-  // Longest lecture id prefix wins (par1-sec2 before par1).
-  let best = -1;
-  let bestLen = 0;
-  for (let i = 0; i < appState.items.length; i++) {
-    const lid = appState.items[i].lec.id;
-    if (id.startsWith(`${lid}-`) && lid.length > bestLen) {
-      best = i;
-      bestLen = lid.length;
-    }
-  }
-  return best;
-}
-
 function resolveRoute() {
+  if (routeLock) return;
   const hash = anchorIdFromHash(location.hash);
-  const idx = getLectureIndexFromHash(hash);
+  const idx = getLectureIndexFromHash(hash, appState.items);
   if (idx >= 0) loadLectureView(idx, hash);
-  else showView('home');
+  else {
+    currentLectureIndex = -1;
+    showView('home');
+    if (hash === 'home' || !hash) window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }
 
 async function init() {
@@ -323,8 +338,14 @@ async function init() {
   initInteractivity();
   initScrollFab();
   initJumpQuiz();
-  document.getElementById('backToHomeBtn')?.addEventListener('click', () => { location.hash = 'home'; });
-  document.getElementById('brandBtn')?.addEventListener('click', () => { location.hash = 'home'; });
+  document.getElementById('backToHomeBtn')?.addEventListener('click', () => {
+    location.hash = 'home';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  document.getElementById('brandBtn')?.addEventListener('click', () => {
+    location.hash = 'home';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
   window.addEventListener('hashchange', resolveRoute);
 
   try {

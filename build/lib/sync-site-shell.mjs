@@ -6,6 +6,7 @@ import { cp, readFile, writeFile, readdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { ENGINE_ROOT } from './subject-paths.mjs';
+import { patchSubjectIndexHtml } from './patch-subject-index.mjs';
 
 async function listBuiltSubjects() {
   /** @type {string[]} */
@@ -46,6 +47,8 @@ async function syncOne(subjectRel) {
   );
 
   if (guideBackup) await writeFile(guidePath, guideBackup);
+
+  await patchSubjectIndexHtml(outDir, subjectRel);
 }
 
 export async function syncSiteShellToAllDist() {

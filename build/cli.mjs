@@ -14,6 +14,7 @@ import { createParser } from '../parser/index.js';
 import { runSchemaChecks, hasErrors } from './lib/schema-checks.mjs';
 import { ensureSubjectScaffold } from './lib/scaffold-subject.mjs';
 import { normalizeLectureMd } from './lib/normalize-lecture-md.mjs';
+import { patchSubjectIndexHtml } from './lib/patch-subject-index.mjs';
 
 const ENGINE_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -120,6 +121,8 @@ async function main() {
   await copyDir(path.join(ENGINE_ROOT, 'site-shell'), outDir);
   await copyDir(path.join(ENGINE_ROOT, 'themes'), path.join(outDir, 'themes'));
   await copyDir(path.join(ENGINE_ROOT, 'renderer'), path.join(outDir, 'engine/renderer'));
+
+  await patchSubjectIndexHtml(outDir, subjectRel);
 
   const guideSrc = path.join(subjectDir, 'guide-config.js');
   const guideDest = path.join(outDir, 'js/guide-config.js');
