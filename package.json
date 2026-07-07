@@ -10,7 +10,7 @@
     "admin:generate": "node build/generate-admin.mjs",
     "contrib:page": "node build/generate-contrib-page.mjs",
     "validate": "node build/validate.mjs",
-    "build": "node build/cli.mjs",
+    "build": "node build/generate-dist-index.mjs",
     "build:index": "node build/generate-dist-index.mjs",
     "dev": "node build/watch.mjs",
     "scaffold": "node build/scaffold-subjects.mjs --all",
