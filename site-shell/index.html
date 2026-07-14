@@ -104,7 +104,8 @@
           </div>
         </div>
       </section>
-      <section id="reviewFeatured" class="mb-2xl hidden" aria-label="مراجعة شاملة"></section>
+      <section id="subjectProgressTracker" class="mb-lg hidden" aria-label="تقدم الدراسة"></section>
+      <section id="reviewFeatured" class="mb-xl hidden" aria-label="مراجعة شاملة"></section>
       <div id="searchContainer" class="relative mb-xl" role="search" aria-label="بحث في المحاضرات">
         <div class="relative flex items-center bg-surface-container-high rounded-xl border border-outline-variant focus-within:ring-2 focus-within:ring-primary focus-within:border-primary transition-all">
           <span class="material-symbols-outlined text-on-surface-variant mx-md pointer-events-none select-none" aria-hidden="true">search</span>
@@ -139,6 +140,10 @@
         <span class="material-symbols-outlined text-primary scale-150 mb-md" id="sidebarMatIcon">school</span>
         <h3 class="font-headline-sm text-headline-sm text-primary text-center" id="sidebarCourseTitle">...</h3>
         <p class="font-label-md text-label-md text-on-surface-variant text-center" id="sidebarCourseSub">...</p>
+        <button type="button" id="sidebarCompleteBtn" class="lecture-complete-toggle hidden mt-md" aria-pressed="false">
+          <span class="material-symbols-outlined" aria-hidden="true">task_alt</span>
+          <span data-complete-label>وضع كمكتملة</span>
+        </button>
       </div>
       <nav id="sidebarToc" class="flex-1 py-md overflow-y-auto"></nav>
       <div class="p-lg border-t border-outline-variant shrink-0">
@@ -163,6 +168,10 @@
       <div>
         <p class="font-label-md font-bold text-on-surface" id="mobileTocCourseTitle">...</p>
         <p class="font-label-md text-on-surface-variant text-sm" id="mobileTocCourseSub"></p>
+        <button type="button" id="mobileCompleteBtn" class="lecture-complete-toggle hidden mt-sm" aria-pressed="false">
+          <span class="material-symbols-outlined" aria-hidden="true">task_alt</span>
+          <span data-complete-label>وضع كمكتملة</span>
+        </button>
       </div>
     </div>
     <nav id="mobileTocNav" class="mobile-toc-drawer__nav"></nav>
