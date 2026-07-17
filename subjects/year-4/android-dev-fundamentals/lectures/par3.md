@@ -23,19 +23,19 @@
 
 #### 1.1 تعريف الصنف (Define a Class)
 
-- **النص الأصلي يقول (English):**
-  > "When you define a class, you specify the properties and methods that all objects of that class should have. A class definition starts with the class keyword, followed by a name and a set of curly braces. A class consists of three major parts: Properties. Variables that specify the attributes of the class's objects. Methods. Functions that contain the class's behaviors and actions. Constructors. A special member function that creates instances of the class throughout the program in which it's defined."
+#### النص الأصلي يقول (English):
+> "When you define a class, you specify the properties and methods that all objects of that class should have. A class definition starts with the class keyword, followed by a name and a set of curly braces. A class consists of three major parts: Properties. Variables that specify the attributes of the class's objects. Methods. Functions that contain the class's behaviors and actions. Constructors. A special member function that creates instances of the class throughout the program in which it's defined."
 
-- **الترجمة الحرفية:**
-  > عندما تُعرِّف صنفاً (`class`)، فإنك تحدد الخصائص (`properties`) والدوال (`methods`) التي يجب أن تمتلكها جميع كائنات (`objects`) هذا الصنف.
-  > تعريف الصنف يبدأ بالكلمة المفتاحية `class`، متبوعة باسم، ثم بمجموعة من الأقواس المعقوفة `{ }`.
-  > يتكوّن الصنف من ثلاثة أجزاء رئيسية:
-  > الخصائص (`Properties`): متغيرات تحدد صفات كائنات الصنف.
-  > الدوال (`Methods`): دوال تحتوي على سلوكيات الصنف وأفعاله.
-  > المُنشِئات (`Constructors`): دالة عضو خاصة تُنشئ نسخاً (`instances`) من الصنف في أي مكان بالبرنامج يُستدعى فيه.
+#### الترجمة الحرفية:
+> عندما تُعرِّف صنفاً (`class`)، فإنك تحدد الخصائص (`properties`) والدوال (`methods`) التي يجب أن تمتلكها جميع كائنات (`objects`) هذا الصنف.
+> تعريف الصنف يبدأ بالكلمة المفتاحية `class`، متبوعة باسم، ثم بمجموعة من الأقواس المعقوفة `{ }`.
+> يتكوّن الصنف من ثلاثة أجزاء رئيسية:
+> الخصائص (`Properties`): متغيرات تحدد صفات كائنات الصنف.
+> الدوال (`Methods`): دوال تحتوي على سلوكيات الصنف وأفعاله.
+> المُنشِئات (`Constructors`): دالة عضو خاصة تُنشئ نسخاً (`instances`) من الصنف في أي مكان بالبرنامج يُستدعى فيه.
 
-- **الشرح المبسّط:**
-  فكّر بالصنف (`class`) على أنه "قالب" أو "مخطط هندسي" — تماماً مثل مخطط بناء منزل: المخطط نفسه ليس منزلاً تسكن فيه، لكنه يحدد كم غرفة فيه وما شكل كل غرفة. الصنف بنفس الطريقة يحدد **ما الذي سيملكه** كل كائن يُبنى منه (الخصائص) و**ما الذي يستطيع فعله** (الدوال)، لكنه لا يُنشئ أي كائن فعلي بحد ذاته. سبب وجود هذا الفصل بين "التصميم" (الصنف) و"التنفيذ" (الكائن) هو إعادة الاستخدام: تكتب القالب مرة واحدة، ثم تصنع منه عدد لا نهائي من الكائنات المتشابهة في البنية والمختلفة في القيم. مثال عملي: صنف `SmartDevice` يحدد أن كل جهاز ذكي (`smart device`) له اسم وفئة وحالة تشغيل، لكن كل تلفاز أو مصباح ذكي فعلي هو كائن منفصل يُبنى من هذا القالب.
+#### الشرح المبسّط:
+فكّر بالصنف (`class`) على أنه "قالب" أو "مخطط هندسي" — تماماً مثل مخطط بناء منزل: المخطط نفسه ليس منزلاً تسكن فيه، لكنه يحدد كم غرفة فيه وما شكل كل غرفة. الصنف بنفس الطريقة يحدد **ما الذي سيملكه** كل كائن يُبنى منه (الخصائص) و**ما الذي يستطيع فعله** (الدوال)، لكنه لا يُنشئ أي كائن فعلي بحد ذاته. سبب وجود هذا الفصل بين "التصميم" (الصنف) و"التنفيذ" (الكائن) هو إعادة الاستخدام: تكتب القالب مرة واحدة، ثم تصنع منه عدد لا نهائي من الكائنات المتشابهة في البنية والمختلفة في القيم. مثال عملي: صنف `SmartDevice` يحدد أن كل جهاز ذكي (`smart device`) له اسم وفئة وحالة تشغيل، لكن كل تلفاز أو مصباح ذكي فعلي هو كائن منفصل يُبنى من هذا القالب.
 
 **لماذا؟** فصل التصميم عن التنفيذ يجعل الكود أسهل في الصيانة: إذا احتجت تعديل سلوك مشترك بين كل الأجهزة الذكية، تُعدّله في الصنف مرة واحدة فينعكس تلقائياً على كل الكائنات.
 
@@ -70,17 +70,17 @@ class SmartDevice {
 
 #### 1.2 إنشاء نسخة (كائن) من الصنف (Create an Instance of a Class)
 
-- **النص الأصلي يقول (English):**
-  > "A class is a blueprint for an object. The Kotlin runtime uses the class to create an object of that particular type. The instantiation syntax starts with the class name followed by a set of parentheses. To use an object, you create the object and assign it to a variable, similar to how you define a variable. The val or var keyword is followed by the name of the variable, then an = assignment operator, then the instantiation of the class object."
+#### النص الأصلي يقول (English):
+> "A class is a blueprint for an object. The Kotlin runtime uses the class to create an object of that particular type. The instantiation syntax starts with the class name followed by a set of parentheses. To use an object, you create the object and assign it to a variable, similar to how you define a variable. The val or var keyword is followed by the name of the variable, then an = assignment operator, then the instantiation of the class object."
 
-- **الترجمة الحرفية:**
-  > الصنف هو مخطط (`blueprint`) لكائن. بيئة تشغيل `Kotlin` تستخدم الصنف لإنشاء كائن من ذلك النوع المحدد.
-  > صيغة إنشاء الكائن (`instantiation`) تبدأ باسم الصنف متبوعاً بمجموعة من الأقواس الهلالية.
-  > لاستخدام كائن، تُنشئه وتُسنده إلى متغير، بشكل مشابه لكيفية تعريف أي متغير.
-  > الكلمة المفتاحية `val` أو `var` تليها اسم المتغير، ثم عامل الإسناد `=`، ثم إنشاء نسخة من الصنف.
+#### الترجمة الحرفية:
+> الصنف هو مخطط (`blueprint`) لكائن. بيئة تشغيل `Kotlin` تستخدم الصنف لإنشاء كائن من ذلك النوع المحدد.
+> صيغة إنشاء الكائن (`instantiation`) تبدأ باسم الصنف متبوعاً بمجموعة من الأقواس الهلالية.
+> لاستخدام كائن، تُنشئه وتُسنده إلى متغير، بشكل مشابه لكيفية تعريف أي متغير.
+> الكلمة المفتاحية `val` أو `var` تليها اسم المتغير، ثم عامل الإسناد `=`، ثم إنشاء نسخة من الصنف.
 
-- **الشرح المبسّط:**
-  إنشاء الكائن هو اللحظة التي "يتحول فيها المخطط إلى بناء حقيقي". حتى الآن كان `SmartDevice` مجرد وصف نظري؛ عندما تكتب `SmartDevice()` فأنت تطلب من `Kotlin` أن يحجز مساحة في الذاكرة وينشئ كائناً فعلياً يطابق هذا الوصف. الرابط بما سبق واضح: بما أن الصنف من القسم السابق كان "قالباً فارغاً"، فهذا القسم يشرح كيف نستخدم ذلك القالب عملياً. الصياغة تشبه تماماً تعريف أي متغير عادي (`val name = value`)، والفرق الوحيد أن "القيمة" هنا هي استدعاء اسم الصنف متبوعاً بقوسين `()`.
+#### الشرح المبسّط:
+إنشاء الكائن هو اللحظة التي "يتحول فيها المخطط إلى بناء حقيقي". حتى الآن كان `SmartDevice` مجرد وصف نظري؛ عندما تكتب `SmartDevice()` فأنت تطلب من `Kotlin` أن يحجز مساحة في الذاكرة وينشئ كائناً فعلياً يطابق هذا الوصف. الرابط بما سبق واضح: بما أن الصنف من القسم السابق كان "قالباً فارغاً"، فهذا القسم يشرح كيف نستخدم ذلك القالب عملياً. الصياغة تشبه تماماً تعريف أي متغير عادي (`val name = value`)، والفرق الوحيد أن "القيمة" هنا هي استدعاء اسم الصنف متبوعاً بقوسين `()`.
 
 **لماذا؟** بدون هذه الخطوة يبقى الصنف مجرد تعريف نظري لا يشغل ذاكرة ولا يمكن التعامل معه؛ الكائن هو الذي يحمل القيم الفعلية ويُستخدم في بقية البرنامج.
 
@@ -113,17 +113,17 @@ fun main() {
 
 #### 1.3 تعريف دوال الصنف (Define Class Methods)
 
-- **النص الأصلي يقول (English):**
-  > "Actions that the class can perform are defined as functions in the class. When you define a function in the class body, it's referred to as a member function or a method, and it represents the behavior of the class. To call a class method outside of the class, start with the class object followed by the . operator, the name of the function, and a set of parentheses. If applicable, the parentheses contain arguments required by the method."
+#### النص الأصلي يقول (English):
+> "Actions that the class can perform are defined as functions in the class. When you define a function in the class body, it's referred to as a member function or a method, and it represents the behavior of the class. To call a class method outside of the class, start with the class object followed by the . operator, the name of the function, and a set of parentheses. If applicable, the parentheses contain arguments required by the method."
 
-- **الترجمة الحرفية:**
-  > الأفعال التي يستطيع الصنف تنفيذها تُعرَّف كدوال (`functions`) داخل الصنف.
-  > عندما تُعرِّف دالة داخل جسم الصنف، تُسمى دالة عضو (`member function`) أو طريقة (`method`)، وهي تمثل سلوك الصنف.
-  > لاستدعاء دالة من الصنف خارجه، تبدأ بكائن الصنف متبوعاً بعامل النقطة `.`، ثم اسم الدالة، ثم مجموعة أقواس هلالية.
-  > إذا لزم الأمر، تحتوي الأقواس على الوسائط (`arguments`) التي تتطلبها الدالة.
+#### الترجمة الحرفية:
+> الأفعال التي يستطيع الصنف تنفيذها تُعرَّف كدوال (`functions`) داخل الصنف.
+> عندما تُعرِّف دالة داخل جسم الصنف، تُسمى دالة عضو (`member function`) أو طريقة (`method`)، وهي تمثل سلوك الصنف.
+> لاستدعاء دالة من الصنف خارجه، تبدأ بكائن الصنف متبوعاً بعامل النقطة `.`، ثم اسم الدالة، ثم مجموعة أقواس هلالية.
+> إذا لزم الأمر، تحتوي الأقواس على الوسائط (`arguments`) التي تتطلبها الدالة.
 
-- **الشرح المبسّط:**
-  إذا كانت الخصائص تجيب عن سؤال "ماذا يملك الكائن؟"، فإن الدوال (المسماة هنا `methods`) تجيب عن سؤال "ماذا يستطيع الكائن أن يفعل؟". أي فعل مثل "شغّل الجهاز" أو "أطفئ الجهاز" يصبح دالة داخل جسم الصنف بدل أن تكون خارجه. طريقة الاستدعاء تعتمد على نمط "الكائن نقطة الدالة" (`object.method()`) — تماماً كما تقول بالعربية "التلفاز . شغّل ()" أي "اطلب من كائن التلفاز أن ينفذ سلوك التشغيل". هذا الربط بين الكائن والدالة عبر النقطة هو حجر الأساس في كل استدعاء لاحق لأي دالة عضو في بقية المحاضرة.
+#### الشرح المبسّط:
+إذا كانت الخصائص تجيب عن سؤال "ماذا يملك الكائن؟"، فإن الدوال (المسماة هنا `methods`) تجيب عن سؤال "ماذا يستطيع الكائن أن يفعل؟". أي فعل مثل "شغّل الجهاز" أو "أطفئ الجهاز" يصبح دالة داخل جسم الصنف بدل أن تكون خارجه. طريقة الاستدعاء تعتمد على نمط "الكائن نقطة الدالة" (`object.method()`) — تماماً كما تقول بالعربية "التلفاز . شغّل ()" أي "اطلب من كائن التلفاز أن ينفذ سلوك التشغيل". هذا الربط بين الكائن والدالة عبر النقطة هو حجر الأساس في كل استدعاء لاحق لأي دالة عضو في بقية المحاضرة.
 
 **لماذا؟** تجميع السلوك (الدوال) داخل الصنف نفسه — بدل كتابته كدوال منفصلة تتلقى الكائن كوسيط — يجعل الكود أقرب لمنطق العالم الحقيقي: "الجهاز يشغّل نفسه" بدل "دالة خارجية تشغّل الجهاز".
 
@@ -168,15 +168,15 @@ Smart device is turned off.
 ---
 #### 1.4 تعريف خصائص الصنف (Define Class Properties)
 
-- **النص الأصلي يقول (English):**
-  > "Properties are basically variables that are defined in the class body instead of the function body. This means that the syntax to define properties and variables are identical."
+#### النص الأصلي يقول (English):
+> "Properties are basically variables that are defined in the class body instead of the function body. This means that the syntax to define properties and variables are identical."
 
-- **الترجمة الحرفية:**
-  > الخصائص (`Properties`) هي أساساً متغيرات تُعرَّف داخل جسم الصنف بدلاً من جسم دالة.
-  > هذا يعني أن صياغة تعريف الخصائص وصياغة تعريف المتغيرات متطابقتان تماماً.
+#### الترجمة الحرفية:
+> الخصائص (`Properties`) هي أساساً متغيرات تُعرَّف داخل جسم الصنف بدلاً من جسم دالة.
+> هذا يعني أن صياغة تعريف الخصائص وصياغة تعريف المتغيرات متطابقتان تماماً.
 
-- **الشرح المبسّط:**
-  الخاصية ليست شيئاً جديداً بالكامل — هي نفس `val`/`var` التي تعلمتها في أساسيات `Kotlin`، والفرق الوحيد هو **مكان** كتابتها: إن كُتبت داخل جسم الصنف مباشرة (وليس داخل دالة) أصبحت خاصية تخص كل كائن يُبنى من هذا الصنف. هذا يربط مباشرة بما ذُكر في القسم 1.1 عن "الأجزاء الثلاثة للصنف" — الآن نرى الجزء الأول (الخصائص) عملياً. مثال: `name`، `category`، `deviceStatus` تصبح متاحة تلقائياً لأي كائن `SmartDevice` تُنشئه، ولكل كائن نسخته الخاصة من هذه القيم (فتلفاز ومصباح كل منهما له اسمه الخاص).
+#### الشرح المبسّط:
+الخاصية ليست شيئاً جديداً بالكامل — هي نفس `val`/`var` التي تعلمتها في أساسيات `Kotlin`، والفرق الوحيد هو **مكان** كتابتها: إن كُتبت داخل جسم الصنف مباشرة (وليس داخل دالة) أصبحت خاصية تخص كل كائن يُبنى من هذا الصنف. هذا يربط مباشرة بما ذُكر في القسم 1.1 عن "الأجزاء الثلاثة للصنف" — الآن نرى الجزء الأول (الخصائص) عملياً. مثال: `name`، `category`، `deviceStatus` تصبح متاحة تلقائياً لأي كائن `SmartDevice` تُنشئه، ولكل كائن نسخته الخاصة من هذه القيم (فتلفاز ومصباح كل منهما له اسمه الخاص).
 
 **لماذا؟** بدون خصائص، سيكون كل كائن مطابقاً تماماً للآخر بلا أي بيانات مميزة له؛ الخصائص هي ما يمنح كل كائن "هويته" الخاصة رغم أنه مبني من نفس القالب.
 
@@ -225,18 +225,18 @@ Smart device is turned off.
 
 #### 1.5 دوال القراءة والتعيين في الخصائص (Getter and Setter Functions in Properties)
 
-- **النص الأصلي يقول (English):**
-  > "Properties can do more than a variable can. The full syntax to define a mutable property starts with the variable definition followed by the optional get() and set() functions. When you don't define the getter and setter function for a property, the Kotlin compiler internally creates the functions. The full syntax for an immutable property has two differences: It starts with the val keyword. The variables of val type are read-only variables, so they don't have set() functions."
+#### النص الأصلي يقول (English):
+> "Properties can do more than a variable can. The full syntax to define a mutable property starts with the variable definition followed by the optional get() and set() functions. When you don't define the getter and setter function for a property, the Kotlin compiler internally creates the functions. The full syntax for an immutable property has two differences: It starts with the val keyword. The variables of val type are read-only variables, so they don't have set() functions."
 
-- **الترجمة الحرفية:**
-  > الخصائص تستطيع فعل أكثر مما يستطيعه المتغير العادي.
-  > الصياغة الكاملة لتعريف خاصية قابلة للتغيير تبدأ بتعريف المتغير متبوعاً بدالتَي `get()` و`set()` الاختياريتين.
-  > عندما لا تُعرِّف دالتَي القراءة والتعيين لخاصية ما، فإن مترجم `Kotlin` ينشئهما داخلياً تلقائياً.
-  > الصياغة الكاملة للخاصية غير القابلة للتغيير تختلف بنقطتين: تبدأ بالكلمة المفتاحية `val`.
-  > متغيرات النوع `val` هي متغيرات للقراءة فقط، لذلك لا تمتلك دالة `set()`.
+#### الترجمة الحرفية:
+> الخصائص تستطيع فعل أكثر مما يستطيعه المتغير العادي.
+> الصياغة الكاملة لتعريف خاصية قابلة للتغيير تبدأ بتعريف المتغير متبوعاً بدالتَي `get()` و`set()` الاختياريتين.
+> عندما لا تُعرِّف دالتَي القراءة والتعيين لخاصية ما، فإن مترجم `Kotlin` ينشئهما داخلياً تلقائياً.
+> الصياغة الكاملة للخاصية غير القابلة للتغيير تختلف بنقطتين: تبدأ بالكلمة المفتاحية `val`.
+> متغيرات النوع `val` هي متغيرات للقراءة فقط، لذلك لا تمتلك دالة `set()`.
 
-- **الشرح المبسّط:**
-  هذه هي النقطة التي تُميّز "الخاصية" الحقيقية عن "المتغير" البسيط: كل خاصية تمتلك خلف الكواليس دالة `get()` تُنفَّذ كل مرة تقرأ فيها قيمتها، ودالة `set()` تُنفَّذ كل مرة تُسند فيها قيمة جديدة (فقط لمتغيرات `var`). في الحالة الافتراضية لا تكتب هذه الدوال يدوياً لأن `Kotlin` يولّدها تلقائياً بشكل بسيط (إرجاع القيمة كما هي، أو تخزينها كما هي). لكن يمكنك كتابتها يدوياً لإضافة منطق مخصص، وهذا ما سنراه في القسم التالي حين نستخدم `set()` للتحقق من نطاق قيمة معينة. الفرق بين `val` و`var` هنا منطقي: بما أن `val` للقراءة فقط، فلا معنى لوجود `set()` أصلاً.
+#### الشرح المبسّط:
+هذه هي النقطة التي تُميّز "الخاصية" الحقيقية عن "المتغير" البسيط: كل خاصية تمتلك خلف الكواليس دالة `get()` تُنفَّذ كل مرة تقرأ فيها قيمتها، ودالة `set()` تُنفَّذ كل مرة تُسند فيها قيمة جديدة (فقط لمتغيرات `var`). في الحالة الافتراضية لا تكتب هذه الدوال يدوياً لأن `Kotlin` يولّدها تلقائياً بشكل بسيط (إرجاع القيمة كما هي، أو تخزينها كما هي). لكن يمكنك كتابتها يدوياً لإضافة منطق مخصص، وهذا ما سنراه في القسم التالي حين نستخدم `set()` للتحقق من نطاق قيمة معينة. الفرق بين `val` و`var` هنا منطقي: بما أن `val` للقراءة فقط، فلا معنى لوجود `set()` أصلاً.
 
 **لماذا؟** القدرة على تخصيص `get()`/`set()` تسمح للصنف بحماية بياناته الداخلية (مثلاً منع قيمة غير منطقية) دون تغيير الطريقة التي يتعامل بها المستخدم الخارجي مع الخاصية — يبقى الاستخدام `object.property` كما هو تماماً.
 
@@ -264,18 +264,18 @@ var speakerVolume = 2
 
 #### 1.6 الحقل الخلفي (Backing Field)
 
-- **النص الأصلي يقول (English):**
-  > "Kotlin properties use a backing field to hold a value in memory. A backing field is basically a class variable defined internally in the properties. A backing field is scoped to a property, which means that you can only access it through the get() or set() property functions. To read the property value in the get() function or update the value in the set() function, you need to use the property's backing field. It's autogenerated by the Kotlin compiler and referenced with a field identifier."
+#### النص الأصلي يقول (English):
+> "Kotlin properties use a backing field to hold a value in memory. A backing field is basically a class variable defined internally in the properties. A backing field is scoped to a property, which means that you can only access it through the get() or set() property functions. To read the property value in the get() function or update the value in the set() function, you need to use the property's backing field. It's autogenerated by the Kotlin compiler and referenced with a field identifier."
 
-- **الترجمة الحرفية:**
-  > خصائص `Kotlin` تستخدم حقلاً خلفياً (`backing field`) لتخزين القيمة في الذاكرة.
-  > الحقل الخلفي هو أساساً متغير صنف يُعرَّف داخلياً ضمن الخصائص.
-  > الحقل الخلفي محصور النطاق ضمن الخاصية، أي أنه لا يمكن الوصول إليه إلا عبر دالتَي `get()` أو `set()` الخاصتين بتلك الخاصية.
-  > لقراءة قيمة الخاصية داخل `get()` أو تحديثها داخل `set()`، تحتاج لاستخدام الحقل الخلفي للخاصية.
-  > يُولَّد تلقائياً بواسطة مترجم `Kotlin` ويُشار إليه بالمعرِّف `field`.
+#### الترجمة الحرفية:
+> خصائص `Kotlin` تستخدم حقلاً خلفياً (`backing field`) لتخزين القيمة في الذاكرة.
+> الحقل الخلفي هو أساساً متغير صنف يُعرَّف داخلياً ضمن الخصائص.
+> الحقل الخلفي محصور النطاق ضمن الخاصية، أي أنه لا يمكن الوصول إليه إلا عبر دالتَي `get()` أو `set()` الخاصتين بتلك الخاصية.
+> لقراءة قيمة الخاصية داخل `get()` أو تحديثها داخل `set()`، تحتاج لاستخدام الحقل الخلفي للخاصية.
+> يُولَّد تلقائياً بواسطة مترجم `Kotlin` ويُشار إليه بالمعرِّف `field`.
 
-- **الشرح المبسّط:**
-  `field` هو "الصندوق الفعلي" الذي تُخزَّن فيه القيمة الحقيقية في الذاكرة، بينما `get()`/`set()` هما "البوابتان" اللتان تتحكمان بمن يدخل ومن يخرج من هذا الصندوق. لماذا لا نستخدم اسم الخاصية نفسها (`speakerVolume`) داخل `set()`؟ لأن كتابة `speakerVolume = value` داخل `set()` الخاصة بـ `speakerVolume` نفسها ستستدعي `set()` من جديد بلا نهاية (حلقة لا متناهية) — لذلك يوفّر `Kotlin` `field` كمرجع مباشر للذاكرة يتجاوز هذه المشكلة. هذا يمهّد مباشرة للمثال العملي التالي: التحقق من أن مستوى الصوت بين 0 و100 قبل قبول القيمة الجديدة.
+#### الشرح المبسّط:
+`field` هو "الصندوق الفعلي" الذي تُخزَّن فيه القيمة الحقيقية في الذاكرة، بينما `get()`/`set()` هما "البوابتان" اللتان تتحكمان بمن يدخل ومن يخرج من هذا الصندوق. لماذا لا نستخدم اسم الخاصية نفسها (`speakerVolume`) داخل `set()`؟ لأن كتابة `speakerVolume = value` داخل `set()` الخاصة بـ `speakerVolume` نفسها ستستدعي `set()` من جديد بلا نهاية (حلقة لا متناهية) — لذلك يوفّر `Kotlin` `field` كمرجع مباشر للذاكرة يتجاوز هذه المشكلة. هذا يمهّد مباشرة للمثال العملي التالي: التحقق من أن مستوى الصوت بين 0 و100 قبل قبول القيمة الجديدة.
 
 **لماذا؟** بدون `field`، لن تستطيع كتابة أي منطق تحقق (`validation`) داخل `set()` دون الوقوع في استدعاء ذاتي لا نهائي؛ `field` هو الحل الآمن لهذه المشكلة.
 
@@ -307,20 +307,20 @@ var speakerVolume = 2
 
 #### 1.7 تعريف المُنشِئ (Define a Constructor)
 
-- **النص الأصلي يقول (English):**
-  > "The primary purpose of the constructor is to specify how the objects of the class are created. In other words, constructors initialize an object and make the object ready for use. A default constructor is a constructor without parameters. Kotlin aims to be concise, so you can remove the constructor keyword if there are no annotations or visibility modifiers on the constructor. You can also remove the parentheses if the constructor has no parameters. The Kotlin compiler autogenerates the default constructor. To maintain immutability but avoid hardcoded values, use a parameterized constructor to initialize them."
+#### النص الأصلي يقول (English):
+> "The primary purpose of the constructor is to specify how the objects of the class are created. In other words, constructors initialize an object and make the object ready for use. A default constructor is a constructor without parameters. Kotlin aims to be concise, so you can remove the constructor keyword if there are no annotations or visibility modifiers on the constructor. You can also remove the parentheses if the constructor has no parameters. The Kotlin compiler autogenerates the default constructor. To maintain immutability but avoid hardcoded values, use a parameterized constructor to initialize them."
 
-- **الترجمة الحرفية:**
-  > الغرض الأساسي من المُنشِئ (`constructor`) هو تحديد كيف تُنشأ كائنات الصنف.
-  > بعبارة أخرى، المُنشِئات تُهيّئ الكائن وتجعله جاهزاً للاستخدام.
-  > المُنشِئ الافتراضي (`default constructor`) هو مُنشِئ بلا وسائط.
-  > `Kotlin` يهدف إلى الإيجاز، لذا يمكنك حذف الكلمة المفتاحية `constructor` إن لم توجد تعليقات توضيحية (`annotations`) أو معدِّلات رؤية على المُنشِئ.
-  > يمكنك أيضاً حذف الأقواس الهلالية إن لم يكن للمُنشِئ أي وسائط.
-  > مترجم `Kotlin` يُولِّد المُنشِئ الافتراضي تلقائياً.
-  > للحفاظ على عدم القابلية للتغيير مع تجنّب القيم المكتوبة يدوياً بشكل ثابت (`hardcoded`)، استخدم مُنشِئاً بوسائط لتهيئتها.
+#### الترجمة الحرفية:
+> الغرض الأساسي من المُنشِئ (`constructor`) هو تحديد كيف تُنشأ كائنات الصنف.
+> بعبارة أخرى، المُنشِئات تُهيّئ الكائن وتجعله جاهزاً للاستخدام.
+> المُنشِئ الافتراضي (`default constructor`) هو مُنشِئ بلا وسائط.
+> `Kotlin` يهدف إلى الإيجاز، لذا يمكنك حذف الكلمة المفتاحية `constructor` إن لم توجد تعليقات توضيحية (`annotations`) أو معدِّلات رؤية على المُنشِئ.
+> يمكنك أيضاً حذف الأقواس الهلالية إن لم يكن للمُنشِئ أي وسائط.
+> مترجم `Kotlin` يُولِّد المُنشِئ الافتراضي تلقائياً.
+> للحفاظ على عدم القابلية للتغيير مع تجنّب القيم المكتوبة يدوياً بشكل ثابت (`hardcoded`)، استخدم مُنشِئاً بوسائط لتهيئتها.
 
-- **الشرح المبسّط:**
-  المُنشِئ هو الخطوة الفاصلة بين "الكائن أُنشئ في الذاكرة" و"الكائن جاهز فعلاً للاستخدام بقيم منطقية". حتى الآن كنا نكتب `SmartDevice()` بلا أي وسائط — هذا استدعاء لمُنشِئ افتراضي (`default constructor`) لم نكتبه صراحة لكن `Kotlin` ولّده لنا تلقائياً. المشكلة أن القيم في الأمثلة السابقة كانت "مكتوبة يدوياً بشكل ثابت" (`hardcoded`) — كل كائن `SmartDevice` جديد سيحمل نفس الاسم `"Android TV"` بالضبط، وهذا غير منطقي إن أردنا إنشاء تلفاز ومصباح مختلفين. الحل هو مُنشِئ بوسائط (`parameterized constructor`) يستقبل القيم من الخارج وقت الإنشاء، وهذا ما سيُشرح بالتفصيل في القسم التالي.
+#### الشرح المبسّط:
+المُنشِئ هو الخطوة الفاصلة بين "الكائن أُنشئ في الذاكرة" و"الكائن جاهز فعلاً للاستخدام بقيم منطقية". حتى الآن كنا نكتب `SmartDevice()` بلا أي وسائط — هذا استدعاء لمُنشِئ افتراضي (`default constructor`) لم نكتبه صراحة لكن `Kotlin` ولّده لنا تلقائياً. المشكلة أن القيم في الأمثلة السابقة كانت "مكتوبة يدوياً بشكل ثابت" (`hardcoded`) — كل كائن `SmartDevice` جديد سيحمل نفس الاسم `"Android TV"` بالضبط، وهذا غير منطقي إن أردنا إنشاء تلفاز ومصباح مختلفين. الحل هو مُنشِئ بوسائط (`parameterized constructor`) يستقبل القيم من الخارج وقت الإنشاء، وهذا ما سيُشرح بالتفصيل في القسم التالي.
 
 **لماذا؟** المُنشِئ الافتراضي مناسب فقط عندما تكون كل كائنات الصنف متطابقة القيم؛ أما في الحالات الواقعية (كل جهاز له اسمه الخاص) فنحتاج مُنشِئاً يستقبل بيانات مختلفة لكل كائن.
 
@@ -367,17 +367,17 @@ Device category is: Entertainment
 
 #### 1.8 نوعا المُنشِئ: الرئيسي والثانوي (Primary and Secondary Constructors)
 
-- **النص الأصلي يقول (English):**
-  > "There are two main types of constructors in Kotlin: Primary constructor. A class can have only one primary constructor, which is defined as part of the class header. The primary constructor doesn't have a body. Secondary constructor. A class can have multiple secondary constructors. The secondary constructor can initialize the class and has a body, which can contain initialization logic. If the class has a primary constructor, each secondary constructor needs to initialize the primary constructor. The secondary constructor is enclosed in the body of the class and its syntax includes three parts: declaration with the constructor keyword, initialization of the primary constructor using a colon and the this keyword, and the secondary constructor body in curly braces."
+#### النص الأصلي يقول (English):
+> "There are two main types of constructors in Kotlin: Primary constructor. A class can have only one primary constructor, which is defined as part of the class header. The primary constructor doesn't have a body. Secondary constructor. A class can have multiple secondary constructors. The secondary constructor can initialize the class and has a body, which can contain initialization logic. If the class has a primary constructor, each secondary constructor needs to initialize the primary constructor. The secondary constructor is enclosed in the body of the class and its syntax includes three parts: declaration with the constructor keyword, initialization of the primary constructor using a colon and the this keyword, and the secondary constructor body in curly braces."
 
-- **الترجمة الحرفية:**
-  > يوجد نوعان رئيسيان من المُنشِئات في `Kotlin`: المُنشِئ الرئيسي (`Primary constructor`). يمكن أن يمتلك الصنف مُنشِئاً رئيسياً واحداً فقط، ويُعرَّف كجزء من ترويسة الصنف. المُنشِئ الرئيسي لا يملك جسماً.
-  > المُنشِئ الثانوي (`Secondary constructor`). يمكن أن يمتلك الصنف عدة مُنشِئات ثانوية. المُنشِئ الثانوي يستطيع تهيئة الصنف ويمتلك جسماً يمكن أن يحتوي منطق تهيئة.
-  > إذا كان للصنف مُنشِئ رئيسي، يجب على كل مُنشِئ ثانوي أن يُهيّئ المُنشِئ الرئيسي.
-  > المُنشِئ الثانوي محاط بجسم الصنف، وصياغته تتضمن ثلاثة أجزاء: التصريح بالكلمة المفتاحية `constructor`، تهيئة المُنشِئ الرئيسي باستخدام نقطتين رأسيتين والكلمة المفتاحية `this`، وجسم المُنشِئ الثانوي بين أقواس معقوفة.
+#### الترجمة الحرفية:
+> يوجد نوعان رئيسيان من المُنشِئات في `Kotlin`: المُنشِئ الرئيسي (`Primary constructor`). يمكن أن يمتلك الصنف مُنشِئاً رئيسياً واحداً فقط، ويُعرَّف كجزء من ترويسة الصنف. المُنشِئ الرئيسي لا يملك جسماً.
+> المُنشِئ الثانوي (`Secondary constructor`). يمكن أن يمتلك الصنف عدة مُنشِئات ثانوية. المُنشِئ الثانوي يستطيع تهيئة الصنف ويمتلك جسماً يمكن أن يحتوي منطق تهيئة.
+> إذا كان للصنف مُنشِئ رئيسي، يجب على كل مُنشِئ ثانوي أن يُهيّئ المُنشِئ الرئيسي.
+> المُنشِئ الثانوي محاط بجسم الصنف، وصياغته تتضمن ثلاثة أجزاء: التصريح بالكلمة المفتاحية `constructor`، تهيئة المُنشِئ الرئيسي باستخدام نقطتين رأسيتين والكلمة المفتاحية `this`، وجسم المُنشِئ الثانوي بين أقواس معقوفة.
 
-- **الشرح المبسّط:**
-  الفرق الجوهري بين النوعين: المُنشِئ الرئيسي "خفيف" — مجرد قائمة وسائط في ترويسة الصنف بلا أي منطق تنفيذي، بينما المُنشِئ الثانوي "كامل" — له جسم حقيقي يمكن أن يحتوي عمليات حسابية أو شرطية أثناء التهيئة. القاعدة المهمة هنا هي أن المُنشِئ الثانوي لا يعمل بمعزل عن الرئيسي؛ يجب أن "يمرّ" عبره أولاً باستخدام `: this(...)`، تماماً كما لو قلت "أولاً نفّذ التهيئة الأساسية، ثم أضف عليها هذا المنطق الإضافي". هذا يشبه سلّم بيت: المُنشِئ الرئيسي هو الأساس الذي لا بد من بنائه أولاً، والمُنشِئ الثانوي هو طابق إضافي يُبنى فوقه.
+#### الشرح المبسّط:
+الفرق الجوهري بين النوعين: المُنشِئ الرئيسي "خفيف" — مجرد قائمة وسائط في ترويسة الصنف بلا أي منطق تنفيذي، بينما المُنشِئ الثانوي "كامل" — له جسم حقيقي يمكن أن يحتوي عمليات حسابية أو شرطية أثناء التهيئة. القاعدة المهمة هنا هي أن المُنشِئ الثانوي لا يعمل بمعزل عن الرئيسي؛ يجب أن "يمرّ" عبره أولاً باستخدام `: this(...)`، تماماً كما لو قلت "أولاً نفّذ التهيئة الأساسية، ثم أضف عليها هذا المنطق الإضافي". هذا يشبه سلّم بيت: المُنشِئ الرئيسي هو الأساس الذي لا بد من بنائه أولاً، والمُنشِئ الثانوي هو طابق إضافي يُبنى فوقه.
 
 **لماذا؟** فصل "التهيئة البسيطة" (رئيسي) عن "التهيئة المنطقية المعقدة" (ثانوي) يبقي الحالة الشائعة (مُنشِئ رئيسي فقط) نظيفة وموجزة، بينما يوفّر مرونة لحالات خاصة تحتاج معالجة إضافية أثناء الإنشاء.
 
@@ -442,17 +442,17 @@ Device status is: offline
 
 #### 1.9 العلاقة بين الأصناف: مبدأ الوراثة (Implement a Relationship Between Classes — Inheritance)
 
-- **النص الأصلي يقول (English):**
-  > "Inheritance lets you build a class upon the characteristics and behavior of another class. It's a powerful mechanism that helps you write reusable code and establish relationships between classes. In Kotlin, all the classes are final by default, which means that you can't extend them, so you have to define the relationships between them. The open keyword informs the compiler that this class is extendable, so now other classes can extend it. The syntax to create a subclass starts with the creation of the class header. The constructor's closing parenthesis is followed by a space, a colon, another space, the superclass name, and a set of parentheses."
+#### النص الأصلي يقول (English):
+> "Inheritance lets you build a class upon the characteristics and behavior of another class. It's a powerful mechanism that helps you write reusable code and establish relationships between classes. In Kotlin, all the classes are final by default, which means that you can't extend them, so you have to define the relationships between them. The open keyword informs the compiler that this class is extendable, so now other classes can extend it. The syntax to create a subclass starts with the creation of the class header. The constructor's closing parenthesis is followed by a space, a colon, another space, the superclass name, and a set of parentheses."
 
-- **الترجمة الحرفية:**
-  > الوراثة (`Inheritance`) تتيح لك بناء صنف اعتماداً على خصائص وسلوك صنف آخر. إنها آلية قوية تساعدك على كتابة كود قابل لإعادة الاستخدام وإقامة علاقات بين الأصناف.
-  > في `Kotlin`، كل الأصناف نهائية (`final`) بشكل افتراضي، أي أنه لا يمكن توسيعها (وراثتها)، لذا يتوجب عليك تحديد العلاقات بينها صراحة.
-  > الكلمة المفتاحية `open` تُخبر المترجم أن هذا الصنف قابل للتوسيع، فتستطيع أصناف أخرى الآن وراثته.
-  > صياغة إنشاء صنف فرعي (`subclass`) تبدأ بترويسة الصنف. القوس الهلالي الأخير للمُنشِئ يتبعه مسافة، ثم نقطتان رأسيتان، ثم مسافة، ثم اسم الصنف الأعلى (`superclass`)، ثم مجموعة أقواس هلالية.
+#### الترجمة الحرفية:
+> الوراثة (`Inheritance`) تتيح لك بناء صنف اعتماداً على خصائص وسلوك صنف آخر. إنها آلية قوية تساعدك على كتابة كود قابل لإعادة الاستخدام وإقامة علاقات بين الأصناف.
+> في `Kotlin`، كل الأصناف نهائية (`final`) بشكل افتراضي، أي أنه لا يمكن توسيعها (وراثتها)، لذا يتوجب عليك تحديد العلاقات بينها صراحة.
+> الكلمة المفتاحية `open` تُخبر المترجم أن هذا الصنف قابل للتوسيع، فتستطيع أصناف أخرى الآن وراثته.
+> صياغة إنشاء صنف فرعي (`subclass`) تبدأ بترويسة الصنف. القوس الهلالي الأخير للمُنشِئ يتبعه مسافة، ثم نقطتان رأسيتان، ثم مسافة، ثم اسم الصنف الأعلى (`superclass`)، ثم مجموعة أقواس هلالية.
 
-- **الشرح المبسّط:**
-  الوراثة تحل مشكلة عملية: `SmartTvDevice` و`SmartLightDevice` كلاهما "جهاز ذكي" يشترك في نفس الخصائص الأساسية (`name`, `category`, `deviceStatus`) ونفس الدوال الأساسية (`turnOn`, `turnOff`) التي رأيناها في `SmartDevice` سابقاً. بدل تكرار كتابة هذا الكود في كل صنف جهاز جديد، تجعل `SmartDevice` صنفاً أعلى (`superclass`/`parent`) قابلاً للتوسيع بكلمة `open`، ثم تبني `SmartTvDevice` و`SmartLightDevice` كأصناف فرعية (`subclass`/`child`) ترث منه تلقائياً كل ما يملكه. نقطة الأمان المهمة هنا هي أن `Kotlin` يمنع الوراثة افتراضياً (كل صنف `final`) لتجنّب أخطاء غير مقصودة؛ يجب أن تُصرّح صراحةً بنيّتك في السماح بالتوسيع عبر `open`. الصياغة `class Child(...) : Parent(...)` تشبه جملة "الابن يرث من الأب" حيث الاسم الثاني بعد النقطتين هو اسم الأب.
+#### الشرح المبسّط:
+الوراثة تحل مشكلة عملية: `SmartTvDevice` و`SmartLightDevice` كلاهما "جهاز ذكي" يشترك في نفس الخصائص الأساسية (`name`, `category`, `deviceStatus`) ونفس الدوال الأساسية (`turnOn`, `turnOff`) التي رأيناها في `SmartDevice` سابقاً. بدل تكرار كتابة هذا الكود في كل صنف جهاز جديد، تجعل `SmartDevice` صنفاً أعلى (`superclass`/`parent`) قابلاً للتوسيع بكلمة `open`، ثم تبني `SmartTvDevice` و`SmartLightDevice` كأصناف فرعية (`subclass`/`child`) ترث منه تلقائياً كل ما يملكه. نقطة الأمان المهمة هنا هي أن `Kotlin` يمنع الوراثة افتراضياً (كل صنف `final`) لتجنّب أخطاء غير مقصودة؛ يجب أن تُصرّح صراحةً بنيّتك في السماح بالتوسيع عبر `open`. الصياغة `class Child(...) : Parent(...)` تشبه جملة "الابن يرث من الأب" حيث الاسم الثاني بعد النقطتين هو اسم الأب.
 
 **لماذا؟** الوراثة تمنع تكرار الكود المشترك (مبدأ `DRY` — Don't Repeat Yourself) وتنظّم الأصناف في تسلسل هرمي منطقي يعكس بنية العالم الحقيقي (كل تلفاز ذكي هو أولاً وقبل كل شيء "جهاز ذكي").
 
@@ -567,17 +567,17 @@ class SmartLightDevice(deviceName: String, deviceCategory: String) :
 
 #### 1.10 علاقات IS-A وHAS-A بين الأصناف (IS-A and HAS-A Relationships)
 
-- **النص الأصلي يقول (English):**
-  > "When you use inheritance, you establish a relationship between two classes in something called an IS-A relationship. An object is also an instance of the class from which it inherits. In a HAS-A relationship, an object can own an instance of another class without actually being an instance of that class itself. The relationship is unidirectional, so you can say that every smart TV is a smart device, but you can't say that every smart device is a smart TV. The HAS-A relationship between two classes is also referred to as composition."
+#### النص الأصلي يقول (English):
+> "When you use inheritance, you establish a relationship between two classes in something called an IS-A relationship. An object is also an instance of the class from which it inherits. In a HAS-A relationship, an object can own an instance of another class without actually being an instance of that class itself. The relationship is unidirectional, so you can say that every smart TV is a smart device, but you can't say that every smart device is a smart TV. The HAS-A relationship between two classes is also referred to as composition."
 
-- **الترجمة الحرفية:**
-  > عندما تستخدم الوراثة، تُقيم علاقة بين صنفين تُسمى علاقة "هو-عبارة-عن" (`IS-A relationship`). الكائن هو أيضاً نسخة من الصنف الذي يرث منه.
-  > في علاقة "يملك" (`HAS-A relationship`)، يمكن للكائن أن يمتلك نسخة من صنف آخر دون أن يكون هو نفسه نسخة من ذلك الصنف.
-  > العلاقة أحادية الاتجاه، فيمكنك القول إن كل تلفاز ذكي هو جهاز ذكي، لكن لا يمكنك القول إن كل جهاز ذكي هو تلفاز ذكي.
-  > علاقة "يملك" بين صنفين تُسمى أيضاً التركيب (`composition`).
+#### الترجمة الحرفية:
+> عندما تستخدم الوراثة، تُقيم علاقة بين صنفين تُسمى علاقة "هو-عبارة-عن" (`IS-A relationship`). الكائن هو أيضاً نسخة من الصنف الذي يرث منه.
+> في علاقة "يملك" (`HAS-A relationship`)، يمكن للكائن أن يمتلك نسخة من صنف آخر دون أن يكون هو نفسه نسخة من ذلك الصنف.
+> العلاقة أحادية الاتجاه، فيمكنك القول إن كل تلفاز ذكي هو جهاز ذكي، لكن لا يمكنك القول إن كل جهاز ذكي هو تلفاز ذكي.
+> علاقة "يملك" بين صنفين تُسمى أيضاً التركيب (`composition`).
 
-- **الشرح المبسّط:**
-  هذان النمطان يوضحان طريقتين مختلفتين تماماً لربط الأصناف ببعضها، ومن المهم عدم الخلط بينهما. علاقة `IS-A` هي ما رأيناه في القسم السابق: `SmartTvDevice` **هو** `SmartDevice` (عبر الوراثة `:`)، والعلاقة أحادية الاتجاه تماماً كما تقول "كل قطة هي حيوان، لكن ليس كل حيوان قطة". أما علاقة `HAS-A` فهي مختلفة جوهرياً: صنف `SmartHome` لا يرث من `SmartTvDevice`، بل **يمتلك** كائناً منه كخاصية داخلية — تماماً كما "البيت يملك تلفازاً" لكن "البيت ليس تلفازاً". هذا النمط الثاني يُسمى تركيباً (`composition`) لأنك تُركّب كائناً من كائنات أصغر بدل أن تجعله يرث منها.
+#### الشرح المبسّط:
+هذان النمطان يوضحان طريقتين مختلفتين تماماً لربط الأصناف ببعضها، ومن المهم عدم الخلط بينهما. علاقة `IS-A` هي ما رأيناه في القسم السابق: `SmartTvDevice` **هو** `SmartDevice` (عبر الوراثة `:`)، والعلاقة أحادية الاتجاه تماماً كما تقول "كل قطة هي حيوان، لكن ليس كل حيوان قطة". أما علاقة `HAS-A` فهي مختلفة جوهرياً: صنف `SmartHome` لا يرث من `SmartTvDevice`، بل **يمتلك** كائناً منه كخاصية داخلية — تماماً كما "البيت يملك تلفازاً" لكن "البيت ليس تلفازاً". هذا النمط الثاني يُسمى تركيباً (`composition`) لأنك تُركّب كائناً من كائنات أصغر بدل أن تجعله يرث منها.
 
 **لماذا؟** التمييز بين النمطين أساسي لتصميم صحيح: تستخدم `IS-A` (وراثة) فقط عندما يكون الصنف الفرعي فعلاً نوعاً خاصاً من الصنف الأعلى، وتستخدم `HAS-A` (تركيب) عندما يكون الصنف مجرد "يحتوي على" أو "يستخدم" كائناً آخر دون أن يكون من نفس نوعه.
 
@@ -669,15 +669,15 @@ class SmartHome(
 
 #### 1.11 تجاوز دوال الصنف الأعلى من الأصناف الفرعية (Override Superclass Methods from Subclasses)
 
-- **النص الأصلي يقول (English):**
-  > "To override means to intercept the action, typically to take manual control. When you override a method, the method in the subclass interrupts the execution of the method defined in the superclass and provides its own execution."
+#### النص الأصلي يقول (English):
+> "To override means to intercept the action, typically to take manual control. When you override a method, the method in the subclass interrupts the execution of the method defined in the superclass and provides its own execution."
 
-- **الترجمة الحرفية:**
-  > التجاوز (`override`) يعني اعتراض الفعل، عادةً لأخذ التحكم اليدوي به.
-  > عندما تُجاوِز دالة، فإن الدالة في الصنف الفرعي تقاطع تنفيذ الدالة المُعرَّفة في الصنف الأعلى وتقدّم تنفيذها الخاص بها بدلاً منها.
+#### الترجمة الحرفية:
+> التجاوز (`override`) يعني اعتراض الفعل، عادةً لأخذ التحكم اليدوي به.
+> عندما تُجاوِز دالة، فإن الدالة في الصنف الفرعي تقاطع تنفيذ الدالة المُعرَّفة في الصنف الأعلى وتقدّم تنفيذها الخاص بها بدلاً منها.
 
-- **الشرح المبسّط:**
-  حتى الآن كانت `turnOn()`/`turnOff()` في القسم 1.9 تُطبع نفس الرسالة العامة بغض النظر عن نوع الجهاز — وهذا غير واقعي، فتشغيل تلفاز يختلف فعلياً عن تشغيل مصباح (يجب ضبط مستوى الصوت والقناة للتلفاز، ومستوى الإضاءة للمصباح). التجاوز (`override`) يسمح لكل صنف فرعي أن "يعترض" السلوك الموروث ويستبدله بسلوك خاص به يناسب طبيعته. لكي يسمح الصنف الأعلى بهذا الاعتراض، يجب تعليم الدالة فيه بـ `open` أيضاً (تماماً كما فعلنا مع الصنف نفسه في 1.9) — بدون `open` على الدالة، لن يستطيع أي صنف فرعي تجاوزها. ثم في الصنف الفرعي، تُكتب الدالة بنفس الاسم والتوقيع لكن مسبوقة بالكلمة المفتاحية `override`.
+#### الشرح المبسّط:
+حتى الآن كانت `turnOn()`/`turnOff()` في القسم 1.9 تُطبع نفس الرسالة العامة بغض النظر عن نوع الجهاز — وهذا غير واقعي، فتشغيل تلفاز يختلف فعلياً عن تشغيل مصباح (يجب ضبط مستوى الصوت والقناة للتلفاز، ومستوى الإضاءة للمصباح). التجاوز (`override`) يسمح لكل صنف فرعي أن "يعترض" السلوك الموروث ويستبدله بسلوك خاص به يناسب طبيعته. لكي يسمح الصنف الأعلى بهذا الاعتراض، يجب تعليم الدالة فيه بـ `open` أيضاً (تماماً كما فعلنا مع الصنف نفسه في 1.9) — بدون `open` على الدالة، لن يستطيع أي صنف فرعي تجاوزها. ثم في الصنف الفرعي، تُكتب الدالة بنفس الاسم والتوقيع لكن مسبوقة بالكلمة المفتاحية `override`.
 
 **لماذا؟** التجاوز يحقق ما يُعرف بتعدد الأشكال (`polymorphism`) — نفس الاستدعاء `smartDevice.turnOn()` ينتج سلوكاً مختلفاً فعلياً حسب النوع الحقيقي للكائن، دون أن يحتاج الكود المستدعي لمعرفة ذلك النوع مسبقاً.
 
@@ -765,16 +765,16 @@ Google Light turned on. The brightness level is 2.
 
 #### 1.12 إعادة استخدام كود الصنف الأعلى بالكلمة المفتاحية super (Reuse Superclass Code with the super Keyword)
 
-- **النص الأصلي يقول (English):**
-  > "To call the overridden method in the superclass from the subclass, you need to use the super keyword. Calling a method from the superclass is similar to calling the method from outside the class. Instead of using a . operator between the object and method, you need to use the super keyword, which informs the Kotlin compiler to call the method on the superclass instead of the subclass."
+#### النص الأصلي يقول (English):
+> "To call the overridden method in the superclass from the subclass, you need to use the super keyword. Calling a method from the superclass is similar to calling the method from outside the class. Instead of using a . operator between the object and method, you need to use the super keyword, which informs the Kotlin compiler to call the method on the superclass instead of the subclass."
 
-- **الترجمة الحرفية:**
-  > لاستدعاء الدالة المُجاوَزة في الصنف الأعلى من داخل الصنف الفرعي، تحتاج لاستخدام الكلمة المفتاحية `super`.
-  > استدعاء دالة من الصنف الأعلى يشبه استدعاءها من خارج الصنف.
-  > بدل استخدام عامل النقطة `.` بين الكائن والدالة، تحتاج لاستخدام الكلمة المفتاحية `super`، التي تُخبر مترجم `Kotlin` باستدعاء الدالة على الصنف الأعلى بدلاً من الصنف الفرعي.
+#### الترجمة الحرفية:
+> لاستدعاء الدالة المُجاوَزة في الصنف الأعلى من داخل الصنف الفرعي، تحتاج لاستخدام الكلمة المفتاحية `super`.
+> استدعاء دالة من الصنف الأعلى يشبه استدعاءها من خارج الصنف.
+> بدل استخدام عامل النقطة `.` بين الكائن والدالة، تحتاج لاستخدام الكلمة المفتاحية `super`، التي تُخبر مترجم `Kotlin` باستدعاء الدالة على الصنف الأعلى بدلاً من الصنف الفرعي.
 
-- **الشرح المبسّط:**
-  في القسم السابق، `override` استبدل سلوك الأب بالكامل — لكن ماذا لو أردنا **إضافة** سلوك جديد فوق سلوك الأب بدل استبداله كلياً؟ هنا يأتي دور `super`: يسمح لك بتنفيذ منطق الأب أولاً (مثل تحديث `deviceStatus` الموروثة) ثم إضافة منطقك الخاص بعده. هذا يحل مشكلة تكرار الكود: بدل أن تعيد كتابة `deviceStatus = "on"` يدوياً في كل صنف فرعي (كما فعلنا في القسم 1.11)، تستدعي `super.turnOn()` فينفّذ الأب هذا السطر نيابة عنك، ثم يكمل الصنف الفرعي بمنطقه الإضافي الخاص. لاحظ الفرق الدقيق: عامل النقطة العادي `smartDevice.turnOn()` يستدعي النسخة "الحقيقية" حسب نوع الكائن (تعدد الأشكال)، بينما `super.turnOn()` يفرض تحديداً استدعاء نسخة الأب بغض النظر عن أي تجاوز.
+#### الشرح المبسّط:
+في القسم السابق، `override` استبدل سلوك الأب بالكامل — لكن ماذا لو أردنا **إضافة** سلوك جديد فوق سلوك الأب بدل استبداله كلياً؟ هنا يأتي دور `super`: يسمح لك بتنفيذ منطق الأب أولاً (مثل تحديث `deviceStatus` الموروثة) ثم إضافة منطقك الخاص بعده. هذا يحل مشكلة تكرار الكود: بدل أن تعيد كتابة `deviceStatus = "on"` يدوياً في كل صنف فرعي (كما فعلنا في القسم 1.11)، تستدعي `super.turnOn()` فينفّذ الأب هذا السطر نيابة عنك، ثم يكمل الصنف الفرعي بمنطقه الإضافي الخاص. لاحظ الفرق الدقيق: عامل النقطة العادي `smartDevice.turnOn()` يستدعي النسخة "الحقيقية" حسب نوع الكائن (تعدد الأشكال)، بينما `super.turnOn()` يفرض تحديداً استدعاء نسخة الأب بغض النظر عن أي تجاوز.
 
 **لماذا؟** `super` يحقق التوازن بين إعادة استخدام كود الأب (تجنّب التكرار) والتخصيص الإضافي في الابن (تعدد الأشكال)، بدل الاختيار بين أحدهما فقط.
 
@@ -814,14 +814,14 @@ class SmartTvDevice(deviceName: String, deviceCategory: String) :
 
 #### 1.13 تجاوز خصائص الصنف الأعلى من الأصناف الفرعية (Override Superclass Properties from Subclasses)
 
-- **النص الأصلي يقول (English):**
-  > "Similar to methods, you can also override properties with the same steps."
+#### النص الأصلي يقول (English):
+> "Similar to methods, you can also override properties with the same steps."
 
-- **الترجمة الحرفية:**
-  > على غرار الدوال، يمكنك أيضاً تجاوز الخصائص بنفس الخطوات.
+#### الترجمة الحرفية:
+> على غرار الدوال، يمكنك أيضاً تجاوز الخصائص بنفس الخطوات.
 
-- **الشرح المبسّط:**
-  هذا القسم قصير لأنه ببساطة يُطبِّق نفس فكرة القسم 1.11 (`open`/`override`) لكن على الخصائص بدل الدوال. تُعلَّم الخاصية في الأب بـ `open val` بدل `open fun`، وفي الصنف الفرعي تُكتب `override val` بدل `override fun`. المثال العملي هنا مفيد جداً: خاصية `deviceType` في `SmartDevice` تحمل قيمة عامة `"unknown"`، بينما كل صنف فرعي يُجاوِزها بقيمة أكثر تحديداً تعكس نوعه الحقيقي (`"Smart TV"` أو `"Smart Light"`).
+#### الشرح المبسّط:
+هذا القسم قصير لأنه ببساطة يُطبِّق نفس فكرة القسم 1.11 (`open`/`override`) لكن على الخصائص بدل الدوال. تُعلَّم الخاصية في الأب بـ `open val` بدل `open fun`، وفي الصنف الفرعي تُكتب `override val` بدل `override fun`. المثال العملي هنا مفيد جداً: خاصية `deviceType` في `SmartDevice` تحمل قيمة عامة `"unknown"`، بينما كل صنف فرعي يُجاوِزها بقيمة أكثر تحديداً تعكس نوعه الحقيقي (`"Smart TV"` أو `"Smart Light"`).
 
 **لماذا؟** تجاوز الخصائص — تماماً كتجاوز الدوال — يسمح لكل صنف فرعي بتخصيص بيانات وصفية عن نفسه دون كسر البنية العامة الموروثة من الأب.
 
@@ -858,16 +858,16 @@ class SmartLightDevice(deviceName: String, deviceCategory: String) :
 
 #### 1.14 معدِّلات الرؤية: المفهوم العام (Visibility Modifiers — The Concept)
 
-- **النص الأصلي يقول (English):**
-  > "Visibility modifiers play an important role to achieve encapsulation: In a class, they let you hide your properties and methods from unauthorized access outside the class. In a package, they let you hide the classes and interfaces from unauthorized access outside the package. Kotlin provides four visibility modifiers: public, private, protected, internal. A package is like a directory or a folder that groups related classes, whereas a module provides a container for your app's source code, resource files, and app-level settings."
+#### النص الأصلي يقول (English):
+> "Visibility modifiers play an important role to achieve encapsulation: In a class, they let you hide your properties and methods from unauthorized access outside the class. In a package, they let you hide the classes and interfaces from unauthorized access outside the package. Kotlin provides four visibility modifiers: public, private, protected, internal. A package is like a directory or a folder that groups related classes, whereas a module provides a container for your app's source code, resource files, and app-level settings."
 
-- **الترجمة الحرفية:**
-  > معدِّلات الرؤية (`Visibility modifiers`) تلعب دوراً مهماً لتحقيق التغليف (`encapsulation`): داخل الصنف، تتيح لك إخفاء خصائصك ودوالك عن الوصول غير المصرَّح به من خارج الصنف. داخل الحزمة (`package`)، تتيح لك إخفاء الأصناف والواجهات عن الوصول غير المصرَّح به من خارج الحزمة.
-  > يوفّر `Kotlin` أربعة معدِّلات رؤية: `public`، `private`، `protected`، `internal`.
-  > الحزمة (`package`) أشبه بمجلد يجمع أصنافاً مترابطة، بينما الوحدة (`module`) توفّر حاوية لكود مصدر التطبيق وملفات الموارد وإعدادات مستوى التطبيق.
+#### الترجمة الحرفية:
+> معدِّلات الرؤية (`Visibility modifiers`) تلعب دوراً مهماً لتحقيق التغليف (`encapsulation`): داخل الصنف، تتيح لك إخفاء خصائصك ودوالك عن الوصول غير المصرَّح به من خارج الصنف. داخل الحزمة (`package`)، تتيح لك إخفاء الأصناف والواجهات عن الوصول غير المصرَّح به من خارج الحزمة.
+> يوفّر `Kotlin` أربعة معدِّلات رؤية: `public`، `private`، `protected`، `internal`.
+> الحزمة (`package`) أشبه بمجلد يجمع أصنافاً مترابطة، بينما الوحدة (`module`) توفّر حاوية لكود مصدر التطبيق وملفات الموارد وإعدادات مستوى التطبيق.
 
-- **الشرح المبسّط:**
-  التغليف (`encapsulation`) هو أحد أعمدة البرمجة الكائنية الأربعة، ومعناه ببساطة: "لا تسمح لأي جزء خارجي بالعبث ببيانات الصنف الداخلية دون رقابة". معدِّلات الرؤية هي الأداة العملية لتطبيق هذا المبدأ — تحدد بدقة "من يستطيع رؤية واستخدام هذه الخاصية أو الدالة". الأربعة معدِّلات تمثل دوائر تحكم متدرجة الاتساع: `private` هي الأضيق (نفس الصنف فقط)، تليها `protected` (الصنف والأبناء)، ثم `internal` (نفس الوحدة البرمجية)، وأخيراً `public` وهي الأوسع (الجميع). هذا مثل طبقات الأمان في مبنى: بعض الغرف مفتوحة للجميع (`public`)، وبعضها لموظفي القسم فقط (`internal`)، وبعضها لعائلة واحدة فقط (`protected` للأبناء)، وبعضها لشخص واحد فقط (`private`).
+#### الشرح المبسّط:
+التغليف (`encapsulation`) هو أحد أعمدة البرمجة الكائنية الأربعة، ومعناه ببساطة: "لا تسمح لأي جزء خارجي بالعبث ببيانات الصنف الداخلية دون رقابة". معدِّلات الرؤية هي الأداة العملية لتطبيق هذا المبدأ — تحدد بدقة "من يستطيع رؤية واستخدام هذه الخاصية أو الدالة". الأربعة معدِّلات تمثل دوائر تحكم متدرجة الاتساع: `private` هي الأضيق (نفس الصنف فقط)، تليها `protected` (الصنف والأبناء)، ثم `internal` (نفس الوحدة البرمجية)، وأخيراً `public` وهي الأوسع (الجميع). هذا مثل طبقات الأمان في مبنى: بعض الغرف مفتوحة للجميع (`public`)، وبعضها لموظفي القسم فقط (`internal`)، وبعضها لعائلة واحدة فقط (`protected` للأبناء)، وبعضها لشخص واحد فقط (`private`).
 
 **لماذا؟** بدون معدِّلات رؤية، يستطيع أي كود خارجي تعديل أي خاصية داخلية مباشرة (مثل `deviceStatus`) بقيم قد تكسر منطق الصنف؛ التغليف يحمي "الحالة الداخلية" ويجبر أي تعديل على المرور عبر دوال مضبوطة (مثل `set()` مع تحقق من النطاق).
 
@@ -876,31 +876,31 @@ class SmartLightDevice(deviceName: String, deviceCategory: String) :
 > **وجه الشبه:** مكتب شخصي مغلق = `private`، قسم بأكمله = `protected`، مبنى الشركة كله = `internal`، الشارع العام = `public`.
 
 #### الأصناف والدوال والخصائص العامة افتراضياً في Kotlin
-- **النص الأصلي يقول (English):**
-  > "When you define a class, it's publicly visible and can be accessed by any package that imports it, which means that it's public by default unless you specify a visibility modifier. When you define or declare properties and methods in the class, by default they can be accessed outside the class through the class object."
-- **الترجمة الحرفية:**
-  > عندما تُعرِّف صنفاً، فهو مرئي علنياً ويمكن الوصول إليه من أي حزمة تستورده، ما يعني أنه `public` افتراضياً ما لم تحدد معدِّل رؤية آخر.
-  > عندما تُعرِّف أو تُصرِّح خصائص ودوالاً داخل الصنف، فهي بشكل افتراضي قابلة للوصول من خارج الصنف عبر كائن الصنف.
-- **الشرح المبسّط:**
-  هذه نقطة يجب تذكّرها جيداً: إن لم تكتب أي معدِّل رؤية إطلاقاً، فـ`Kotlin` يفترض `public` تلقائياً لكل شيء (الأصناف، الدوال، الخصائص). هذا يفسّر لماذا كل الأمثلة في الأقسام السابقة عملت بشكل طبيعي رغم أننا لم نكتب `public` أبداً — كانت `public` ضمنياً طوال الوقت.
+#### النص الأصلي يقول (English):
+> "When you define a class, it's publicly visible and can be accessed by any package that imports it, which means that it's public by default unless you specify a visibility modifier. When you define or declare properties and methods in the class, by default they can be accessed outside the class through the class object."
+#### الترجمة الحرفية:
+> عندما تُعرِّف صنفاً، فهو مرئي علنياً ويمكن الوصول إليه من أي حزمة تستورده، ما يعني أنه `public` افتراضياً ما لم تحدد معدِّل رؤية آخر.
+> عندما تُعرِّف أو تُصرِّح خصائص ودوالاً داخل الصنف، فهي بشكل افتراضي قابلة للوصول من خارج الصنف عبر كائن الصنف.
+#### الشرح المبسّط:
+هذه نقطة يجب تذكّرها جيداً: إن لم تكتب أي معدِّل رؤية إطلاقاً، فـ`Kotlin` يفترض `public` تلقائياً لكل شيء (الأصناف، الدوال، الخصائص). هذا يفسّر لماذا كل الأمثلة في الأقسام السابقة عملت بشكل طبيعي رغم أننا لم نكتب `public` أبداً — كانت `public` ضمنياً طوال الوقت.
 
 ---
 
 #### 1.15 تطبيق معدِّلات الرؤية على الخصائص والدوال والمُنشِئات والأصناف
 
-- **النص الأصلي يقول (English):**
-  > "public. Makes the declaration accessible everywhere. private. Makes the declaration accessible in the same class or source file. protected. Makes the declaration accessible in subclasses. internal. Makes the declaration accessible in the same module. The syntax to specify a visibility modifier for a property/method/class starts with the private, protected, or internal modifier followed by the syntax that defines it. For a constructor, the modifier is specified after the class name but before the constructor keyword, and you must keep the constructor keyword and parentheses even with no parameters."
+#### النص الأصلي يقول (English):
+> "public. Makes the declaration accessible everywhere. private. Makes the declaration accessible in the same class or source file. protected. Makes the declaration accessible in subclasses. internal. Makes the declaration accessible in the same module. The syntax to specify a visibility modifier for a property/method/class starts with the private, protected, or internal modifier followed by the syntax that defines it. For a constructor, the modifier is specified after the class name but before the constructor keyword, and you must keep the constructor keyword and parentheses even with no parameters."
 
-- **الترجمة الحرفية:**
-  > `public`: تجعل التصريح قابلاً للوصول من أي مكان.
-  > `private`: تجعل التصريح قابلاً للوصول ضمن نفس الصنف أو نفس ملف المصدر فقط.
-  > `protected`: تجعل التصريح قابلاً للوصول في الأصناف الفرعية.
-  > `internal`: تجعل التصريح قابلاً للوصول ضمن نفس الوحدة (`module`).
-  > صياغة تحديد معدِّل رؤية لخاصية/دالة/صنف تبدأ بالمعدِّل `private` أو `protected` أو `internal` متبوعاً بصياغة تعريفها.
-  > بالنسبة للمُنشِئ، يُكتب المعدِّل بعد اسم الصنف لكن قبل الكلمة المفتاحية `constructor`، ويجب الإبقاء على الكلمة المفتاحية `constructor` والأقواس حتى لو لم توجد وسائط.
+#### الترجمة الحرفية:
+> `public`: تجعل التصريح قابلاً للوصول من أي مكان.
+> `private`: تجعل التصريح قابلاً للوصول ضمن نفس الصنف أو نفس ملف المصدر فقط.
+> `protected`: تجعل التصريح قابلاً للوصول في الأصناف الفرعية.
+> `internal`: تجعل التصريح قابلاً للوصول ضمن نفس الوحدة (`module`).
+> صياغة تحديد معدِّل رؤية لخاصية/دالة/صنف تبدأ بالمعدِّل `private` أو `protected` أو `internal` متبوعاً بصياغة تعريفها.
+> بالنسبة للمُنشِئ، يُكتب المعدِّل بعد اسم الصنف لكن قبل الكلمة المفتاحية `constructor`، ويجب الإبقاء على الكلمة المفتاحية `constructor` والأقواس حتى لو لم توجد وسائط.
 
-- **الشرح المبسّط:**
-  الميزة الجميلة هنا أن الصياغة موحّدة تماماً بغض النظر عمّا تُطبِّق عليه معدِّل الرؤية: تكتب المعدِّل مباشرة قبل `var`/`val`/`fun`/`class`. الاستثناء الوحيد هو المُنشِئ — لأن `Kotlin` عادة يسمح بحذف الكلمة `constructor` تماماً عند عدم وجود وسائط (كما رأينا في 1.7)، لكن بمجرد إضافة معدِّل رؤية عليه، يصبح إعادة كتابة `constructor()` صراحةً أمراً إلزامياً حتى يعرف المترجم أين يضع المعدِّل بالضبط. مثال شائع عملياً: خاصية `deviceStatus` يجب أن تُقرأ من الخارج لكن لا تُعدَّل إلا من داخل الصنف أو أبنائه — هنا تُستخدم حيلة "معدِّل على `set` فقط" (`protected set`) بدل تقييد الخاصية كلها.
+#### الشرح المبسّط:
+الميزة الجميلة هنا أن الصياغة موحّدة تماماً بغض النظر عمّا تُطبِّق عليه معدِّل الرؤية: تكتب المعدِّل مباشرة قبل `var`/`val`/`fun`/`class`. الاستثناء الوحيد هو المُنشِئ — لأن `Kotlin` عادة يسمح بحذف الكلمة `constructor` تماماً عند عدم وجود وسائط (كما رأينا في 1.7)، لكن بمجرد إضافة معدِّل رؤية عليه، يصبح إعادة كتابة `constructor()` صراحةً أمراً إلزامياً حتى يعرف المترجم أين يضع المعدِّل بالضبط. مثال شائع عملياً: خاصية `deviceStatus` يجب أن تُقرأ من الخارج لكن لا تُعدَّل إلا من داخل الصنف أو أبنائه — هنا تُستخدم حيلة "معدِّل على `set` فقط" (`protected set`) بدل تقييد الخاصية كلها.
 
 **لماذا؟** تطبيق نفس فكرة "دوائر التحكم" (1.14) على أربعة عناصر مختلفة (خاصية، دالة، مُنشِئ، صنف) يعطي مرونة دقيقة: يمكنك مثلاً السماح بقراءة قيمة من الخارج بينما تمنع تعديلها إلا من الداخل.
 
@@ -963,17 +963,17 @@ internal open class SmartDeviceV4(val name: String, val category: String) {
 
 #### 1.16 تعريف مفوِّضات الخصائص (Define Property Delegates)
 
-- **النص الأصلي يقول (English):**
-  > "The syntax to create property delegates starts with the declaration of a variable followed by the by keyword, and the delegate object that handles the getter and setter functions for the property. An interface is a contract to which classes that implement it need to adhere. It focuses on what to do instead of how to do the action. With interfaces, the class implements the interface. The class provides implementation details for the methods and properties declared in the interface. To create the delegate class: For the var type, you need to implement the ReadWriteProperty interface. For the val type, you need to implement the ReadOnlyProperty interface."
+#### النص الأصلي يقول (English):
+> "The syntax to create property delegates starts with the declaration of a variable followed by the by keyword, and the delegate object that handles the getter and setter functions for the property. An interface is a contract to which classes that implement it need to adhere. It focuses on what to do instead of how to do the action. With interfaces, the class implements the interface. The class provides implementation details for the methods and properties declared in the interface. To create the delegate class: For the var type, you need to implement the ReadWriteProperty interface. For the val type, you need to implement the ReadOnlyProperty interface."
 
-- **الترجمة الحرفية:**
-  > صياغة إنشاء مفوِّضات الخصائص (`property delegates`) تبدأ بتصريح متغير متبوعاً بالكلمة المفتاحية `by`، ثم كائن المفوَّض (`delegate object`) الذي يتولى دالتَي القراءة والتعيين للخاصية.
-  > الواجهة (`interface`) هي عقد يجب على الأصناف المُنفِّذة له الالتزام به. تركّز على "ماذا يجب أن يُفعل" بدل "كيف يُفعل".
-  > مع الواجهات، الصنف يُنفِّذ (`implements`) الواجهة، ويقدّم تفاصيل التنفيذ للدوال والخصائص المُصرَّح عنها في الواجهة.
-  > لإنشاء صنف المفوَّض: بالنسبة للنوع `var`، تحتاج لتنفيذ واجهة `ReadWriteProperty`. بالنسبة للنوع `val`، تحتاج لتنفيذ واجهة `ReadOnlyProperty`.
+#### الترجمة الحرفية:
+> صياغة إنشاء مفوِّضات الخصائص (`property delegates`) تبدأ بتصريح متغير متبوعاً بالكلمة المفتاحية `by`، ثم كائن المفوَّض (`delegate object`) الذي يتولى دالتَي القراءة والتعيين للخاصية.
+> الواجهة (`interface`) هي عقد يجب على الأصناف المُنفِّذة له الالتزام به. تركّز على "ماذا يجب أن يُفعل" بدل "كيف يُفعل".
+> مع الواجهات، الصنف يُنفِّذ (`implements`) الواجهة، ويقدّم تفاصيل التنفيذ للدوال والخصائص المُصرَّح عنها في الواجهة.
+> لإنشاء صنف المفوَّض: بالنسبة للنوع `var`، تحتاج لتنفيذ واجهة `ReadWriteProperty`. بالنسبة للنوع `val`، تحتاج لتنفيذ واجهة `ReadOnlyProperty`.
 
-- **الشرح المبسّط:**
-  تذكّر القسم 1.6: كتبنا يدوياً منطق تحقق (`if (value in 0..100)`) داخل `set()` لكل خاصية على حدة (`speakerVolume`, `channelNumber`, `brightnessLevel`) — وهذا تكرار للمنطق نفسه في أماكن متعددة. مفوِّضات الخصائص تحل هذه المشكلة: بدل كتابة نفس منطق التحقق مراراً، تكتبه **مرة واحدة** داخل صنف منفصل (المفوَّض)، ثم "تُفوِّض" كل خاصية لتستخدم ذلك الصنف عبر الكلمة المفتاحية `by`. الآلية التقنية خلف ذلك هي الواجهات (`interfaces`): يجب أن ينفّذ صنف المفوَّض واجهة جاهزة من مكتبة `Kotlin` القياسية (`ReadWriteProperty` لخصائص `var` القابلة للقراءة والتعديل، أو `ReadOnlyProperty` لخصائص `val` للقراءة فقط)، وهذه الواجهة تفرض عليه تعريف دالتين محددتين: `getValue()` و`setValue()`.
+#### الشرح المبسّط:
+تذكّر القسم 1.6: كتبنا يدوياً منطق تحقق (`if (value in 0..100)`) داخل `set()` لكل خاصية على حدة (`speakerVolume`, `channelNumber`, `brightnessLevel`) — وهذا تكرار للمنطق نفسه في أماكن متعددة. مفوِّضات الخصائص تحل هذه المشكلة: بدل كتابة نفس منطق التحقق مراراً، تكتبه **مرة واحدة** داخل صنف منفصل (المفوَّض)، ثم "تُفوِّض" كل خاصية لتستخدم ذلك الصنف عبر الكلمة المفتاحية `by`. الآلية التقنية خلف ذلك هي الواجهات (`interfaces`): يجب أن ينفّذ صنف المفوَّض واجهة جاهزة من مكتبة `Kotlin` القياسية (`ReadWriteProperty` لخصائص `var` القابلة للقراءة والتعديل، أو `ReadOnlyProperty` لخصائص `val` للقراءة فقط)، وهذه الواجهة تفرض عليه تعريف دالتين محددتين: `getValue()` و`setValue()`.
 
 **لماذا؟** فصل منطق التحقق في صنف مفوَّض منفصل وقابل لإعادة الاستخدام يمنع تكرار الكود عبر خصائص متعددة، ويجعل تعديل قاعدة التحقق (مثلاً تغيير النطاق المسموح) بتغيير مكان واحد فقط بدل عدة أماكن متفرقة.
 
@@ -1036,12 +1036,12 @@ class SmartTvDevice(deviceName: String, deviceCategory: String) :
 
 ### 2. الأنواع العامة، الكائنات، والامتدادات (Generics, Objects, and Extensions)
 
-- **النص الأصلي يقول (English):**
-  > "In Kotlin language, there are a number of features intended to help developers write more expressive code: Generics, Different kinds of classes (enum classes and data classes), Singleton and companion objects, Extension properties and functions, Scope functions."
-- **الترجمة الحرفية:**
-  > في لغة `Kotlin`، يوجد عدد من الميزات المُصمَّمة لمساعدة المطورين على كتابة كود أكثر تعبيراً ووضوحاً: الأنواع العامة (`Generics`)، أنواع مختلفة من الأصناف (أصناف التعداد وأصناف البيانات)، الكائنات المفردة والمرافقة، خصائص ودوال التوسيع، دوال النطاق.
-- **الشرح المبسّط:**
-  بعد أن أتقنّا في القسم 1 أساسيات بناء الأصناف والعلاقات بينها، ينتقل هذا القسم لأدوات "متقدمة" في `Kotlin` تجعل الكود أقصر وأكثر أماناً وتعبيراً عن النية بوضوح أكبر، دون تغيير المنطق الأساسي للبرمجة الكائنية. هذه الأدوات الست (الأنواع العامة، أصناف التعداد، أصناف البيانات، الكائنات المفردة/المرافقة، الامتدادات، ودوال النطاق) ستُبنى جميعها فوق مثال متكامل واحد: نظام أسئلة اختبار (`Quiz`)، بحيث يرى الطالب كيف تتراكب هذه الأدوات فوق بعضها في مشروع واقعي.
+#### النص الأصلي يقول (English):
+> "In Kotlin language, there are a number of features intended to help developers write more expressive code: Generics, Different kinds of classes (enum classes and data classes), Singleton and companion objects, Extension properties and functions, Scope functions."
+#### الترجمة الحرفية:
+> في لغة `Kotlin`، يوجد عدد من الميزات المُصمَّمة لمساعدة المطورين على كتابة كود أكثر تعبيراً ووضوحاً: الأنواع العامة (`Generics`)، أنواع مختلفة من الأصناف (أصناف التعداد وأصناف البيانات)، الكائنات المفردة والمرافقة، خصائص ودوال التوسيع، دوال النطاق.
+#### الشرح المبسّط:
+بعد أن أتقنّا في القسم 1 أساسيات بناء الأصناف والعلاقات بينها، ينتقل هذا القسم لأدوات "متقدمة" في `Kotlin` تجعل الكود أقصر وأكثر أماناً وتعبيراً عن النية بوضوح أكبر، دون تغيير المنطق الأساسي للبرمجة الكائنية. هذه الأدوات الست (الأنواع العامة، أصناف التعداد، أصناف البيانات، الكائنات المفردة/المرافقة، الامتدادات، ودوال النطاق) ستُبنى جميعها فوق مثال متكامل واحد: نظام أسئلة اختبار (`Quiz`)، بحيث يرى الطالب كيف تتراكب هذه الأدوات فوق بعضها في مشروع واقعي.
 
 **لماذا؟** تعلّم هذه الأدوات مجتمعة على نفس المثال يوضح كيف تُستخدم معاً في مشروع حقيقي، بدل تعلّم كل أداة بمعزل عن الأخرى.
 
@@ -1049,16 +1049,16 @@ class SmartTvDevice(deviceName: String, deviceCategory: String) :
 
 #### 2.1 الأنواع العامة (Generics)
 
-- **النص الأصلي يقول (English):**
-  > "Generic types, or generics for short, allow a data type, such as a class, to specify an unknown placeholder data type that can be used with its properties and methods. The syntax for defining a generic type for a class: After the class name comes a left-facing angle bracket (<), followed by a placeholder name for the data type, followed by a right-facing angle bracket (>). The data type that the generic type uses is passed as a parameter in angle brackets when you instantiate the class."
+#### النص الأصلي يقول (English):
+> "Generic types, or generics for short, allow a data type, such as a class, to specify an unknown placeholder data type that can be used with its properties and methods. The syntax for defining a generic type for a class: After the class name comes a left-facing angle bracket (<), followed by a placeholder name for the data type, followed by a right-facing angle bracket (>). The data type that the generic type uses is passed as a parameter in angle brackets when you instantiate the class."
 
-- **الترجمة الحرفية:**
-  > الأنواع العامة (`Generic types`)، أو `generics` اختصاراً، تتيح لنوع بيانات، كصنف مثلاً، أن يحدد نوع بيانات غير معروف كعنصر نائب (`placeholder`) يمكن استخدامه مع خصائصه ودواله.
-  > صياغة تعريف نوع عام لصنف: بعد اسم الصنف يأتي قوس زاوي يفتح لليسار (`<`)، متبوعاً باسم نائب لنوع البيانات، متبوعاً بقوس زاوي يفتح لليمين (`>`).
-  > نوع البيانات الذي يستخدمه النوع العام يُمرَّر كوسيط بين قوسين زاويين عند إنشاء نسخة من الصنف.
+#### الترجمة الحرفية:
+> الأنواع العامة (`Generic types`)، أو `generics` اختصاراً، تتيح لنوع بيانات، كصنف مثلاً، أن يحدد نوع بيانات غير معروف كعنصر نائب (`placeholder`) يمكن استخدامه مع خصائصه ودواله.
+> صياغة تعريف نوع عام لصنف: بعد اسم الصنف يأتي قوس زاوي يفتح لليسار (`<`)، متبوعاً باسم نائب لنوع البيانات، متبوعاً بقوس زاوي يفتح لليمين (`>`).
+> نوع البيانات الذي يستخدمه النوع العام يُمرَّر كوسيط بين قوسين زاويين عند إنشاء نسخة من الصنف.
 
-- **الشرح المبسّط:**
-  تخيّل أنك تريد بناء صنف "سؤال اختبار" (`Question`) يحتوي نص السؤال والإجابة الصحيحة — لكن الإجابة قد تكون نصاً (`String`) في سؤال، أو `Boolean` (صح/خطأ) في سؤال آخر، أو رقماً (`Int`) في سؤال ثالث. بدون الأنواع العامة، ستُضطر لكتابة ثلاثة أصناف منفصلة (`QuestionString`, `QuestionBoolean`, `QuestionInt`) رغم أن بنيتها متطابقة تماماً — وهذا تكرار غير ضروري. الحل هو استخدام نوع عام نائب مثل `T` بدل تحديد نوع ثابت للإجابة، بحيث "يُملأ" هذا النائب بنوع حقيقي فقط عند إنشاء الكائن الفعلي، كأنك تقول "سأخبرك لاحقاً أي نوع بيانات أريد استخدامه هنا".
+#### الشرح المبسّط:
+تخيّل أنك تريد بناء صنف "سؤال اختبار" (`Question`) يحتوي نص السؤال والإجابة الصحيحة — لكن الإجابة قد تكون نصاً (`String`) في سؤال، أو `Boolean` (صح/خطأ) في سؤال آخر، أو رقماً (`Int`) في سؤال ثالث. بدون الأنواع العامة، ستُضطر لكتابة ثلاثة أصناف منفصلة (`QuestionString`, `QuestionBoolean`, `QuestionInt`) رغم أن بنيتها متطابقة تماماً — وهذا تكرار غير ضروري. الحل هو استخدام نوع عام نائب مثل `T` بدل تحديد نوع ثابت للإجابة، بحيث "يُملأ" هذا النائب بنوع حقيقي فقط عند إنشاء الكائن الفعلي، كأنك تقول "سأخبرك لاحقاً أي نوع بيانات أريد استخدامه هنا".
 
 **لماذا؟** الأنواع العامة تمنع تكرار نفس بنية الصنف لكل نوع بيانات محتمل، مع الحفاظ الكامل على أمان الأنواع (`type safety`) وقت الترجمة — فمترجم `Kotlin` يعرف بالضبط نوع `answer` في كل كائن `Question` تنشئه.
 
@@ -1095,18 +1095,18 @@ fun main() {
 
 #### 2.2 استخدام صنف التعداد (Use an Enum Class)
 
-- **النص الأصلي يقول (English):**
-  > "An enum class is used to create types with a limited set of possible values. Each possible value of an enum is called an enum constant. Enum constants are placed inside the curly braces separated by commas. The convention is to capitalize every letter in the constant name. You refer to enum constants using the dot operator."
+#### النص الأصلي يقول (English):
+> "An enum class is used to create types with a limited set of possible values. Each possible value of an enum is called an enum constant. Enum constants are placed inside the curly braces separated by commas. The convention is to capitalize every letter in the constant name. You refer to enum constants using the dot operator."
 
-- **الترجمة الحرفية:**
-  > صنف التعداد (`enum class`) يُستخدم لإنشاء أنواع بمجموعة محدودة من القيم الممكنة.
-  > كل قيمة ممكنة في التعداد تُسمى ثابت تعداد (`enum constant`).
-  > ثوابت التعداد تُوضع داخل الأقواس المعقوفة مفصولة بفواصل.
-  > العُرف المتبع هو كتابة كل حرف في اسم الثابت بحروف كبيرة (`CAPS`).
-  > يُشار إلى ثوابت التعداد باستخدام عامل النقطة.
+#### الترجمة الحرفية:
+> صنف التعداد (`enum class`) يُستخدم لإنشاء أنواع بمجموعة محدودة من القيم الممكنة.
+> كل قيمة ممكنة في التعداد تُسمى ثابت تعداد (`enum constant`).
+> ثوابت التعداد تُوضع داخل الأقواس المعقوفة مفصولة بفواصل.
+> العُرف المتبع هو كتابة كل حرف في اسم الثابت بحروف كبيرة (`CAPS`).
+> يُشار إلى ثوابت التعداد باستخدام عامل النقطة.
 
-- **الشرح المبسّط:**
-  في المثال السابق (2.1)، كانت `difficulty` من نوع `String` عادي — وهذا يفتح الباب لأخطاء إملائية خطيرة مثل كتابة `"medum"` بدل `"medium"` دون أن يكتشف المترجم الخطأ، لأن أي نص يُعتبر صالحاً من منظور اللغة. صنف التعداد يحل هذه المشكلة بالضبط: يحدد مسبقاً القيم الوحيدة المسموحة (`EASY`, `MEDIUM`, `HARD` مثلاً) بحيث يرفض المترجم أي قيمة أخرى فوراً وقت الترجمة قبل حتى تشغيل البرنامج. الرابط بالقسم السابق مباشر: سنستبدل الآن `val difficulty: String` بـ `val difficulty: Difficulty` في صنف `Question` العام نفسه.
+#### الشرح المبسّط:
+في المثال السابق (2.1)، كانت `difficulty` من نوع `String` عادي — وهذا يفتح الباب لأخطاء إملائية خطيرة مثل كتابة `"medum"` بدل `"medium"` دون أن يكتشف المترجم الخطأ، لأن أي نص يُعتبر صالحاً من منظور اللغة. صنف التعداد يحل هذه المشكلة بالضبط: يحدد مسبقاً القيم الوحيدة المسموحة (`EASY`, `MEDIUM`, `HARD` مثلاً) بحيث يرفض المترجم أي قيمة أخرى فوراً وقت الترجمة قبل حتى تشغيل البرنامج. الرابط بالقسم السابق مباشر: سنستبدل الآن `val difficulty: String` بـ `val difficulty: Difficulty` في صنف `Question` العام نفسه.
 
 **لماذا؟** صنف التعداد يحوّل مجموعة قيم نصية "مفتوحة" وعرضة للأخطاء إلى مجموعة قيم "مغلقة" ومضبوطة بأمان الأنواع، فيكتشف المترجم أي خطأ إملائي أو قيمة غير منطقية فوراً بدل اكتشافها أثناء التشغيل أو عدم اكتشافها إطلاقاً.
 
@@ -1142,17 +1142,17 @@ fun main() {
 
 #### 2.3 استخدام صنف البيانات (Use a Data Class)
 
-- **النص الأصلي يقول (English):**
-  > "Classes that only contain data and don't have any methods that perform an action can be defined as a data class. Defining a class as a data class allows the Kotlin compiler to make certain assumptions, and to automatically implement some methods. To define a data class, simply add the data keyword before the class keyword. When a class is defined as a data class, the following methods are implemented: equals(), hashCode(), toString(), componentN(), copy()."
+#### النص الأصلي يقول (English):
+> "Classes that only contain data and don't have any methods that perform an action can be defined as a data class. Defining a class as a data class allows the Kotlin compiler to make certain assumptions, and to automatically implement some methods. To define a data class, simply add the data keyword before the class keyword. When a class is defined as a data class, the following methods are implemented: equals(), hashCode(), toString(), componentN(), copy()."
 
-- **الترجمة الحرفية:**
-  > الأصناف التي تحتوي فقط على بيانات ولا تمتلك أي دوال تنفّذ فعلاً يمكن تعريفها كصنف بيانات (`data class`).
-  > تعريف صنف كـ`data class` يسمح لمترجم `Kotlin` بافتراض أمور معينة، وتنفيذ بعض الدوال تلقائياً.
-  > لتعريف صنف بيانات، ببساطة أضف الكلمة المفتاحية `data` قبل الكلمة المفتاحية `class`.
-  > عندما يُعرَّف صنف كـ`data class`، تُنفَّذ الدوال التالية تلقائياً: `equals()`، `hashCode()`، `toString()`، `componentN()`, `copy()`.
+#### الترجمة الحرفية:
+> الأصناف التي تحتوي فقط على بيانات ولا تمتلك أي دوال تنفّذ فعلاً يمكن تعريفها كصنف بيانات (`data class`).
+> تعريف صنف كـ`data class` يسمح لمترجم `Kotlin` بافتراض أمور معينة، وتنفيذ بعض الدوال تلقائياً.
+> لتعريف صنف بيانات، ببساطة أضف الكلمة المفتاحية `data` قبل الكلمة المفتاحية `class`.
+> عندما يُعرَّف صنف كـ`data class`، تُنفَّذ الدوال التالية تلقائياً: `equals()`، `hashCode()`، `toString()`، `componentN()`, `copy()`.
 
-- **الشرح المبسّط:**
-  انظر مجدداً إلى صنف `Question` من القسم 2.1 — هو تماماً المثال المثالي لصنف بيانات: يحمل ثلاث خصائص فقط (`questionText`, `answer`, `difficulty`) ولا يحتوي أي دالة سلوك حقيقية. عادةً في `Kotlin` (كما في لغات أخرى) يحتاج المبرمج كتابة دوال يدوية مثل `toString()` (لعرض الكائن كنص مقروء) أو `equals()` (لمقارنة كائنين) بنفسه — وهذا كود مكرر ومملّ لأي صنف بيانات جديد. كلمة `data` تلغي هذا العناء بالكامل: يفحص المترجم كل الخصائص المعرّفة في المُنشِئ الرئيسي، ويولّد تلقائياً دوال المقارنة والعرض والنسخ استناداً إليها. لاحظ الفرق العملي: `println(question1.toString())` سيطبع الآن تمثيلاً نصياً مقروءاً تلقائياً يحتوي كل قيم الخصائص، بدل نص تقني غامض كان سيظهر بدون `data`.
+#### الشرح المبسّط:
+انظر مجدداً إلى صنف `Question` من القسم 2.1 — هو تماماً المثال المثالي لصنف بيانات: يحمل ثلاث خصائص فقط (`questionText`, `answer`, `difficulty`) ولا يحتوي أي دالة سلوك حقيقية. عادةً في `Kotlin` (كما في لغات أخرى) يحتاج المبرمج كتابة دوال يدوية مثل `toString()` (لعرض الكائن كنص مقروء) أو `equals()` (لمقارنة كائنين) بنفسه — وهذا كود مكرر ومملّ لأي صنف بيانات جديد. كلمة `data` تلغي هذا العناء بالكامل: يفحص المترجم كل الخصائص المعرّفة في المُنشِئ الرئيسي، ويولّد تلقائياً دوال المقارنة والعرض والنسخ استناداً إليها. لاحظ الفرق العملي: `println(question1.toString())` سيطبع الآن تمثيلاً نصياً مقروءاً تلقائياً يحتوي كل قيم الخصائص، بدل نص تقني غامض كان سيظهر بدون `data`.
 
 **لماذا؟** توليد هذه الدوال تلقائياً يوفّر وقت المطور ويمنع أخطاء يدوية شائعة (مثل نسيان تحديث `equals()` بعد إضافة خاصية جديدة)، وهو مناسب تحديداً للأصناف التي وظيفتها الوحيدة حمل بيانات بلا سلوك.
 
@@ -1191,19 +1191,19 @@ Question(questionText=Quoth the raven ___, answer=nevermore, difficulty=MEDIUM)
 
 #### 2.4 استخدام الكائن المفرد (Use a Singleton Object)
 
-- **النص الأصلي يقول (English):**
-  > "A singleton is a class that can only have a single instance. Kotlin provides a special construct, called an object, that can be used to make a singleton class. The syntax for an object is similar to that of a class. Simply use the object keyword instead of the class keyword. A singleton object can't have a constructor as you can't create instances directly. Instead, all the properties are defined within the curly braces and are given an initial value. You can access singleton object properties by referring to the name of the object itself, followed by the dot operator, followed by the property name."
+#### النص الأصلي يقول (English):
+> "A singleton is a class that can only have a single instance. Kotlin provides a special construct, called an object, that can be used to make a singleton class. The syntax for an object is similar to that of a class. Simply use the object keyword instead of the class keyword. A singleton object can't have a constructor as you can't create instances directly. Instead, all the properties are defined within the curly braces and are given an initial value. You can access singleton object properties by referring to the name of the object itself, followed by the dot operator, followed by the property name."
 
-- **الترجمة الحرفية:**
-  > الكائن المفرد (`singleton`) هو صنف لا يمكن أن يكون له إلا نسخة واحدة فقط.
-  > يوفّر `Kotlin` بنية خاصة تُسمى `object`، تُستخدم لإنشاء صنف مفرد.
-  > صياغة `object` مشابهة لصياغة `class`. ببساطة استخدم الكلمة المفتاحية `object` بدل `class`.
-  > الكائن المفرد لا يمكن أن يمتلك مُنشِئاً لأنه لا يمكن إنشاء نسخ منه مباشرة.
-  > بدلاً من ذلك، تُعرَّف كل الخصائص داخل الأقواس المعقوفة وتُعطى قيمة ابتدائية.
-  > يمكنك الوصول لخصائص الكائن المفرد بالإشارة لاسم الكائن نفسه، متبوعاً بعامل النقطة، متبوعاً باسم الخاصية.
+#### الترجمة الحرفية:
+> الكائن المفرد (`singleton`) هو صنف لا يمكن أن يكون له إلا نسخة واحدة فقط.
+> يوفّر `Kotlin` بنية خاصة تُسمى `object`، تُستخدم لإنشاء صنف مفرد.
+> صياغة `object` مشابهة لصياغة `class`. ببساطة استخدم الكلمة المفتاحية `object` بدل `class`.
+> الكائن المفرد لا يمكن أن يمتلك مُنشِئاً لأنه لا يمكن إنشاء نسخ منه مباشرة.
+> بدلاً من ذلك، تُعرَّف كل الخصائص داخل الأقواس المعقوفة وتُعطى قيمة ابتدائية.
+> يمكنك الوصول لخصائص الكائن المفرد بالإشارة لاسم الكائن نفسه، متبوعاً بعامل النقطة، متبوعاً باسم الخاصية.
 
-- **الشرح المبسّط:**
-  حتى الآن كل الأصناف التي رأيناها (`SmartDevice`, `Question`, ...) يمكن إنشاء عدد غير محدود من الكائنات منها. لكن أحياناً تحتاج فعلياً كائناً **واحداً فقط** يشترك فيه كل البرنامج — مثل تتبع "عدد الأسئلة التي أجاب عنها الطالب" في اختبار واحد؛ لا معنى منطقياً لوجود أكثر من نسخة واحدة من هذه الحالة. الكلمة المفتاحية `object` تفرض هذا القيد تلقائياً: بما أنك لا تستدعي `StudentProgress()` أبداً (لا يوجد مُنشِئ إطلاقاً)، فإن `Kotlin` ينشئ النسخة الوحيدة تلقائياً أول مرة يُستخدم فيها الكائن، ويعيد استخدام نفس النسخة في كل مكان آخر بالبرنامج. هذا يختلف جوهرياً عن `class`: لا حاجة لكتابة `val x = StudentProgress()` إطلاقاً؛ تصل مباشرة عبر `StudentProgress.answered`.
+#### الشرح المبسّط:
+حتى الآن كل الأصناف التي رأيناها (`SmartDevice`, `Question`, ...) يمكن إنشاء عدد غير محدود من الكائنات منها. لكن أحياناً تحتاج فعلياً كائناً **واحداً فقط** يشترك فيه كل البرنامج — مثل تتبع "عدد الأسئلة التي أجاب عنها الطالب" في اختبار واحد؛ لا معنى منطقياً لوجود أكثر من نسخة واحدة من هذه الحالة. الكلمة المفتاحية `object` تفرض هذا القيد تلقائياً: بما أنك لا تستدعي `StudentProgress()` أبداً (لا يوجد مُنشِئ إطلاقاً)، فإن `Kotlin` ينشئ النسخة الوحيدة تلقائياً أول مرة يُستخدم فيها الكائن، ويعيد استخدام نفس النسخة في كل مكان آخر بالبرنامج. هذا يختلف جوهرياً عن `class`: لا حاجة لكتابة `val x = StudentProgress()` إطلاقاً؛ تصل مباشرة عبر `StudentProgress.answered`.
 
 **لماذا؟** بعض البيانات في البرنامج منطقياً يجب أن تكون فريدة وموحّدة (كحالة تقدّم طالب واحد)؛ الكائن المفرد يضمن هذا على مستوى اللغة نفسها بدل الاعتماد على انضباط المبرمج يدوياً.
 
@@ -1237,17 +1237,17 @@ fun main() {
 
 #### 2.5 تعريف الكائنات كأصناف مرافقة (Declare Objects as Companion Objects)
 
-- **النص الأصلي يقول (English):**
-  > "Classes and objects in Kotlin can be defined inside other types, and can be a great way to organize your code. You can define a singleton object inside another class using a companion object. A companion object allows you to access its properties and methods from inside the class, if the object's properties and methods belong to that class, allowing for more concise syntax. To declare a companion object, simply add the companion keyword before the object keyword."
+#### النص الأصلي يقول (English):
+> "Classes and objects in Kotlin can be defined inside other types, and can be a great way to organize your code. You can define a singleton object inside another class using a companion object. A companion object allows you to access its properties and methods from inside the class, if the object's properties and methods belong to that class, allowing for more concise syntax. To declare a companion object, simply add the companion keyword before the object keyword."
 
-- **الترجمة الحرفية:**
-  > الأصناف والكائنات في `Kotlin` يمكن تعريفها داخل أنواع أخرى، وهذا يمكن أن يكون طريقة رائعة لتنظيم الكود.
-  > يمكنك تعريف كائن مفرد داخل صنف آخر باستخدام كائن مرافق (`companion object`).
-  > الكائن المرافق يتيح لك الوصول لخصائصه ودواله من داخل الصنف، إن كانت خصائص الكائن ودواله تخص فعلياً ذلك الصنف، مما يسمح بصياغة أكثر إيجازاً.
-  > لتعريف كائن مرافق، ببساطة أضف الكلمة المفتاحية `companion` قبل الكلمة المفتاحية `object`.
+#### الترجمة الحرفية:
+> الأصناف والكائنات في `Kotlin` يمكن تعريفها داخل أنواع أخرى، وهذا يمكن أن يكون طريقة رائعة لتنظيم الكود.
+> يمكنك تعريف كائن مفرد داخل صنف آخر باستخدام كائن مرافق (`companion object`).
+> الكائن المرافق يتيح لك الوصول لخصائصه ودواله من داخل الصنف، إن كانت خصائص الكائن ودواله تخص فعلياً ذلك الصنف، مما يسمح بصياغة أكثر إيجازاً.
+> لتعريف كائن مرافق، ببساطة أضف الكلمة المفتاحية `companion` قبل الكلمة المفتاحية `object`.
 
-- **الشرح المبسّط:**
-  في القسم السابق (2.4) كان `StudentProgress` كائناً مستقلاً منفصلاً تماماً عن صنف `Quiz`، رغم أن تقدّم الطالب منطقياً يخص اختباراً محدداً وليس البرنامج ككل. الكائن المرافق يحل هذا التضارب المفاهيمي: يسمح "بوضع" الكائن المفرد **داخل** صنف آخر (هنا `Quiz`)، بحيث يصبح تابعاً منطقياً له بدل أن يكون معزولاً عنه. الميزة العملية الإضافية هي إيجاز الصياغة: من داخل صنف `Quiz` نفسه، يمكن الوصول لخصائص الكائن المرافق مباشرة باسمها فقط أحياناً (دون تكرار اسمه)، بينما من خارج الصنف يبقى الوصول عبر `Quiz.answered` تماماً كما كان `StudentProgress.answered` من قبل.
+#### الشرح المبسّط:
+في القسم السابق (2.4) كان `StudentProgress` كائناً مستقلاً منفصلاً تماماً عن صنف `Quiz`، رغم أن تقدّم الطالب منطقياً يخص اختباراً محدداً وليس البرنامج ككل. الكائن المرافق يحل هذا التضارب المفاهيمي: يسمح "بوضع" الكائن المفرد **داخل** صنف آخر (هنا `Quiz`)، بحيث يصبح تابعاً منطقياً له بدل أن يكون معزولاً عنه. الميزة العملية الإضافية هي إيجاز الصياغة: من داخل صنف `Quiz` نفسه، يمكن الوصول لخصائص الكائن المرافق مباشرة باسمها فقط أحياناً (دون تكرار اسمه)، بينما من خارج الصنف يبقى الوصول عبر `Quiz.answered` تماماً كما كان `StudentProgress.answered` من قبل.
 
 **لماذا؟** الكائن المرافق يربط منطقياً بين بيانات "ثابتة/مشتركة" (تشبه المتغيرات الساكنة `static` في لغات أخرى) وبين الصنف الذي تخصه فعلياً، بدل تركها ككائن منفصل بلا سياق واضح.
 
@@ -1281,15 +1281,15 @@ fun main() {
 
 #### 2.6 توسيع الأصناف بخصائص ودوال جديدة (Extend Classes with New Properties and Methods)
 
-- **النص الأصلي يقول (English):**
-  > "To define an extension property, add the type name and a dot operator (.) before the variable name. To define an extension function, add the type name and a dot operator (.) before the function name."
+#### النص الأصلي يقول (English):
+> "To define an extension property, add the type name and a dot operator (.) before the variable name. To define an extension function, add the type name and a dot operator (.) before the function name."
 
-- **الترجمة الحرفية:**
-  > لتعريف خاصية توسيع (`extension property`)، أضف اسم النوع وعامل نقطة `.` قبل اسم المتغير.
-  > لتعريف دالة توسيع (`extension function`)، أضف اسم النوع وعامل نقطة `.` قبل اسم الدالة.
+#### الترجمة الحرفية:
+> لتعريف خاصية توسيع (`extension property`)، أضف اسم النوع وعامل نقطة `.` قبل اسم المتغير.
+> لتعريف دالة توسيع (`extension function`)، أضف اسم النوع وعامل نقطة `.` قبل اسم الدالة.
 
-- **الشرح المبسّط:**
-  حتى الآن كنا نضيف كل خاصية أو دالة جديدة من **داخل** تعريف الصنف نفسه (بين قوسيه المعقوفين). دوال وخصائص التوسيع تكسر هذا القيد: تسمح لك بإضافة سلوك جديد لصنف موجود مسبقاً (حتى لو كان صنفاً من مكتبة خارجية لا تملك حق تعديل كودها المصدري) **من الخارج تماماً**، بدون فتح ملف الصنف الأصلي وتعديله. الصياغة تشبه كتابة دالة عادية، لكن مع إضافة "اسم النوع + نقطة" مباشرة قبل اسم الدالة أو الخاصية — وكأنك تقول "هذه الدالة تنتمي منطقياً لهذا النوع، رغم أنها مكتوبة في مكان آخر تماماً". المثال العملي هنا يوسّع `Quiz.StudentProgress` (الكائن المرافق من القسم السابق) بخاصية `progressText` ودالة `printProgressBar()` جديدتين تماماً، دون العودة لتعديل تعريف `Quiz` الأصلي.
+#### الشرح المبسّط:
+حتى الآن كنا نضيف كل خاصية أو دالة جديدة من **داخل** تعريف الصنف نفسه (بين قوسيه المعقوفين). دوال وخصائص التوسيع تكسر هذا القيد: تسمح لك بإضافة سلوك جديد لصنف موجود مسبقاً (حتى لو كان صنفاً من مكتبة خارجية لا تملك حق تعديل كودها المصدري) **من الخارج تماماً**، بدون فتح ملف الصنف الأصلي وتعديله. الصياغة تشبه كتابة دالة عادية، لكن مع إضافة "اسم النوع + نقطة" مباشرة قبل اسم الدالة أو الخاصية — وكأنك تقول "هذه الدالة تنتمي منطقياً لهذا النوع، رغم أنها مكتوبة في مكان آخر تماماً". المثال العملي هنا يوسّع `Quiz.StudentProgress` (الكائن المرافق من القسم السابق) بخاصية `progressText` ودالة `printProgressBar()` جديدتين تماماً، دون العودة لتعديل تعريف `Quiz` الأصلي.
 
 **لماذا؟** التوسيع مفيد جداً عند التعامل مع أصناف لا تملك صلاحية تعديلها (من مكتبات خارجية)، أو لإبقاء الصنف الأصلي "نظيفاً" ومركّزاً بينما تُضاف الوظائف الإضافية أو المساعدة في ملفات منفصلة.
 
@@ -1345,18 +1345,18 @@ fun main() {
 
 #### 2.7 إعادة كتابة دوال التوسيع باستخدام الواجهات (Rewrite Extension Functions Using Interfaces)
 
-- **النص الأصلي يقول (English):**
-  > "An interface is defined using the interface keyword, followed by a name in UpperCamelCase, followed by opening and closing curly braces. Within the curly braces, you can define any method signatures or get-only properties that any class conforming to the interface must implement. An interface is a contract. A class that conforms to an interface is said to extend the interface. In return, the class must implement all properties and methods specified in the interface. Interfaces allow for variation in the behavior of classes that extend them. It's up to each class to provide the implementation."
+#### النص الأصلي يقول (English):
+> "An interface is defined using the interface keyword, followed by a name in UpperCamelCase, followed by opening and closing curly braces. Within the curly braces, you can define any method signatures or get-only properties that any class conforming to the interface must implement. An interface is a contract. A class that conforms to an interface is said to extend the interface. In return, the class must implement all properties and methods specified in the interface. Interfaces allow for variation in the behavior of classes that extend them. It's up to each class to provide the implementation."
 
-- **الترجمة الحرفية:**
-  > الواجهة (`interface`) تُعرَّف باستخدام الكلمة المفتاحية `interface`، متبوعة باسم بصيغة `UpperCamelCase`، متبوعة بأقواس معقوفة فاتحة وخاتمة.
-  > داخل الأقواس المعقوفة، يمكنك تعريف أي توقيعات دوال أو خصائص للقراءة فقط يجب على أي صنف يتوافق مع الواجهة تنفيذها.
-  > الواجهة عقد. الصنف الذي يتوافق مع واجهة يُقال إنه يوسّع الواجهة (`extends`).
-  > في المقابل، يجب على الصنف تنفيذ كل الخصائص والدوال المحددة في الواجهة.
-  > الواجهات تتيح تبايناً في سلوك الأصناف التي توسّعها؛ الأمر متروك لكل صنف لتقديم التنفيذ الخاص به.
+#### الترجمة الحرفية:
+> الواجهة (`interface`) تُعرَّف باستخدام الكلمة المفتاحية `interface`، متبوعة باسم بصيغة `UpperCamelCase`، متبوعة بأقواس معقوفة فاتحة وخاتمة.
+> داخل الأقواس المعقوفة، يمكنك تعريف أي توقيعات دوال أو خصائص للقراءة فقط يجب على أي صنف يتوافق مع الواجهة تنفيذها.
+> الواجهة عقد. الصنف الذي يتوافق مع واجهة يُقال إنه يوسّع الواجهة (`extends`).
+> في المقابل، يجب على الصنف تنفيذ كل الخصائص والدوال المحددة في الواجهة.
+> الواجهات تتيح تبايناً في سلوك الأصناف التي توسّعها؛ الأمر متروك لكل صنف لتقديم التنفيذ الخاص به.
 
-- **الشرح المبسّط:**
-  في القسم السابق (2.6) كانت `progressText` و`printProgressBar()` مرتبطتين تحديداً وحصراً بـ `Quiz.StudentProgress` — لا يمكن لأي صنف آخر مختلف تماماً (يملك بنية بيانات مختلفة) أن يعيد استخدام نفس الفكرة بسهولة. الواجهة تحل هذه المحدودية عبر تحويل الفكرة إلى "عقد عام": بدل كتابة دوال توسيع مرتبطة بصنف واحد بالتحديد، تُعرِّف واجهة `ProgressPrintable` تنص على "أي صنف يريد طباعة شريط تقدم يجب أن يمتلك `progressText` و`printProgressBar()`"، ثم يلتزم `Quiz` (ويمكن أي صنف آخر لاحقاً) بهذا العقد عبر `class Quiz : ProgressPrintable`. الفرق الجوهري عن الوراثة (القسم 1.9): الواجهة لا تحمل أي تنفيذ فعلي، فقط "توقيعات" فارغة يلتزم كل صنف بملئها بطريقته الخاصة.
+#### الشرح المبسّط:
+في القسم السابق (2.6) كانت `progressText` و`printProgressBar()` مرتبطتين تحديداً وحصراً بـ `Quiz.StudentProgress` — لا يمكن لأي صنف آخر مختلف تماماً (يملك بنية بيانات مختلفة) أن يعيد استخدام نفس الفكرة بسهولة. الواجهة تحل هذه المحدودية عبر تحويل الفكرة إلى "عقد عام": بدل كتابة دوال توسيع مرتبطة بصنف واحد بالتحديد، تُعرِّف واجهة `ProgressPrintable` تنص على "أي صنف يريد طباعة شريط تقدم يجب أن يمتلك `progressText` و`printProgressBar()`"، ثم يلتزم `Quiz` (ويمكن أي صنف آخر لاحقاً) بهذا العقد عبر `class Quiz : ProgressPrintable`. الفرق الجوهري عن الوراثة (القسم 1.9): الواجهة لا تحمل أي تنفيذ فعلي، فقط "توقيعات" فارغة يلتزم كل صنف بملئها بطريقته الخاصة.
 
 **لماذا؟** الواجهات تفصل "ماذا يجب أن يفعل الصنف" عن "كيف يفعله فعلياً"، فتسمح لأصناف مختلفة تماماً في بنيتها الداخلية أن تشترك في نفس السلوك المتوقَّع (`ProgressPrintable`) دون فرض تسلسل وراثي واحد عليها جميعاً.
 
@@ -1406,17 +1406,17 @@ fun main() {
 
 #### 2.8 دالة النطاق let() — التخلص من الإشارة المتكررة لاسم الكائن (Eliminate Repetitive Object References with let())
 
-- **النص الأصلي يقول (English):**
-  > "Scope functions are higher-order functions that allow you to access properties and methods of an object without referring to the object's name. The let() function allows you to refer to an object in a lambda expression using the identifier it, instead of the object's actual name. This can help you avoid using a long, more descriptive object name repeatedly when accessing more than one property. The let() function is an extension function that can be called on any Kotlin object using dot notation."
+#### النص الأصلي يقول (English):
+> "Scope functions are higher-order functions that allow you to access properties and methods of an object without referring to the object's name. The let() function allows you to refer to an object in a lambda expression using the identifier it, instead of the object's actual name. This can help you avoid using a long, more descriptive object name repeatedly when accessing more than one property. The let() function is an extension function that can be called on any Kotlin object using dot notation."
 
-- **الترجمة الحرفية:**
-  > دوال النطاق (`Scope functions`) هي دوال من الرتبة الأعلى (`higher-order functions`) تتيح لك الوصول لخصائص ودوال كائن دون الإشارة لاسم الكائن.
-  > دالة `let()` تتيح لك الإشارة لكائن داخل تعبير لامدا (`lambda expression`) باستخدام المُعرِّف `it` بدل الاسم الفعلي للكائن.
-  > هذا يساعدك على تجنّب استخدام اسم كائن طويل ووصفي بشكل متكرر عند الوصول لأكثر من خاصية واحدة.
-  > دالة `let()` هي دالة توسيع يمكن استدعاؤها على أي كائن في `Kotlin` باستخدام صيغة النقطة.
+#### الترجمة الحرفية:
+> دوال النطاق (`Scope functions`) هي دوال من الرتبة الأعلى (`higher-order functions`) تتيح لك الوصول لخصائص ودوال كائن دون الإشارة لاسم الكائن.
+> دالة `let()` تتيح لك الإشارة لكائن داخل تعبير لامدا (`lambda expression`) باستخدام المُعرِّف `it` بدل الاسم الفعلي للكائن.
+> هذا يساعدك على تجنّب استخدام اسم كائن طويل ووصفي بشكل متكرر عند الوصول لأكثر من خاصية واحدة.
+> دالة `let()` هي دالة توسيع يمكن استدعاؤها على أي كائن في `Kotlin` باستخدام صيغة النقطة.
 
-- **الشرح المبسّط:**
-  تخيّل أنك تريد طباعة ثلاث خصائص من نفس السؤال (`question1.questionText`, `question1.answer`, `question1.difficulty`) — تكرار اسم `question1` ثلاث مرات متتالية أمر مزعج بصرياً خصوصاً إن كان الاسم طويلاً. `let()` تحل هذه المشكلة بأناقة: تستدعيها على الكائن (`question1.let { ... }`)، وداخل الأقواس المعقوفة (تعبير لامدا) يصبح بإمكانك الإشارة لنفس الكائن عبر الكلمة المختصرة `it` فقط، دون كتابة `question1` مجدداً على الإطلاق. من الناحية التقنية، `let()` هي في الأصل دالة توسيع عادية (بنفس مبدأ القسم 2.6) لكنها معرَّفة مسبقاً داخل مكتبة `Kotlin` القياسية، متاحة تلقائياً على أي كائن دون الحاجة لكتابتها بنفسك.
+#### الشرح المبسّط:
+تخيّل أنك تريد طباعة ثلاث خصائص من نفس السؤال (`question1.questionText`, `question1.answer`, `question1.difficulty`) — تكرار اسم `question1` ثلاث مرات متتالية أمر مزعج بصرياً خصوصاً إن كان الاسم طويلاً. `let()` تحل هذه المشكلة بأناقة: تستدعيها على الكائن (`question1.let { ... }`)، وداخل الأقواس المعقوفة (تعبير لامدا) يصبح بإمكانك الإشارة لنفس الكائن عبر الكلمة المختصرة `it` فقط، دون كتابة `question1` مجدداً على الإطلاق. من الناحية التقنية، `let()` هي في الأصل دالة توسيع عادية (بنفس مبدأ القسم 2.6) لكنها معرَّفة مسبقاً داخل مكتبة `Kotlin` القياسية، متاحة تلقائياً على أي كائن دون الحاجة لكتابتها بنفسك.
 
 **لماذا؟** تقليل التكرار البصري لاسم كائن طويل يجعل الكود أقصر وأسهل قراءة، خصوصاً عند تنفيذ عدة عمليات متتالية على نفس الكائن داخل كتلة واحدة.
 
@@ -1463,16 +1463,16 @@ fun main() {
 
 #### 2.9 دالة النطاق apply() — استدعاء دوال الكائن قبل تخزينه في متغير (Call an Object's Methods Without a Variable Using apply())
 
-- **النص الأصلي يقول (English):**
-  > "One of the cool features of scope functions is that you can call them on an object before that object has even been assigned to a variable. The apply() function is an extension function that can be called on an object using dot notation. The apply() function also returns a reference to that object so that it can be stored in a variable."
+#### النص الأصلي يقول (English):
+> "One of the cool features of scope functions is that you can call them on an object before that object has even been assigned to a variable. The apply() function is an extension function that can be called on an object using dot notation. The apply() function also returns a reference to that object so that it can be stored in a variable."
 
-- **الترجمة الحرفية:**
-  > إحدى الميزات الرائعة لدوال النطاق أنه يمكنك استدعاءها على كائن حتى قبل إسناد ذلك الكائن إلى متغير.
-  > دالة `apply()` هي دالة توسيع يمكن استدعاؤها على كائن باستخدام صيغة النقطة.
-  > دالة `apply()` تُعيد أيضاً مرجعاً لذلك الكائن نفسه، بحيث يمكن تخزينه في متغير.
+#### الترجمة الحرفية:
+> إحدى الميزات الرائعة لدوال النطاق أنه يمكنك استدعاءها على كائن حتى قبل إسناد ذلك الكائن إلى متغير.
+> دالة `apply()` هي دالة توسيع يمكن استدعاؤها على كائن باستخدام صيغة النقطة.
+> دالة `apply()` تُعيد أيضاً مرجعاً لذلك الكائن نفسه، بحيث يمكن تخزينه في متغير.
 
-- **الشرح المبسّط:**
-  في القسم السابق كنا نكتب خطوتين منفصلتين: أولاً `val quiz = Quiz()` لإنشاء الكائن وتخزينه، ثم ثانياً `quiz.printQuiz()` لاستدعاء دالة عليه. `apply()` تدمج هاتين الخطوتين في تعبير واحد متسلسل: تستدعي `Quiz().apply { printQuiz() }` مباشرة بعد الإنشاء دون الحاجة لتخزين الكائن في متغير مؤقت أولاً لمجرد استدعاء دالة عليه. الميزة الإضافية المهمة هي أن `apply()` — خلافاً لـ`let()` التي قد تُعيد قيمة مختلفة — تُعيد دائماً **نفس الكائن الأصلي**، لذلك يمكنك في النهاية إسناد النتيجة لمتغير (`val quiz = Quiz().apply { ... }`) إن احتجت الكائن لاحقاً أيضاً.
+#### الشرح المبسّط:
+في القسم السابق كنا نكتب خطوتين منفصلتين: أولاً `val quiz = Quiz()` لإنشاء الكائن وتخزينه، ثم ثانياً `quiz.printQuiz()` لاستدعاء دالة عليه. `apply()` تدمج هاتين الخطوتين في تعبير واحد متسلسل: تستدعي `Quiz().apply { printQuiz() }` مباشرة بعد الإنشاء دون الحاجة لتخزين الكائن في متغير مؤقت أولاً لمجرد استدعاء دالة عليه. الميزة الإضافية المهمة هي أن `apply()` — خلافاً لـ`let()` التي قد تُعيد قيمة مختلفة — تُعيد دائماً **نفس الكائن الأصلي**، لذلك يمكنك في النهاية إسناد النتيجة لمتغير (`val quiz = Quiz().apply { ... }`) إن احتجت الكائن لاحقاً أيضاً.
 
 **لماذا؟** `apply()` مفيدة تحديداً في سيناريو "أنشئ الكائن ثم هيّئه فوراً" — تجعل الكود أكثر تسلسلاً وإيجازاً بدل الحاجة لمتغير وسيط لا فائدة حقيقية منه سوى استدعاء دالة واحدة عليه.
 

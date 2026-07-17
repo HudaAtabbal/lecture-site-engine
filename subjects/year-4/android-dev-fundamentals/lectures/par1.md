@@ -682,137 +682,164 @@ override fun onCreate(savedInstance: Bundle?) {
 
 ## الجزء الثالث: أسئلة اختيار من متعدد (MCQ)
 
-**Q1.** What is the primary foundation layer of the Android software stack?
+### السؤال 1 (متوسط)
+What is the primary foundation layer of the Android software stack?
 أ) Java API Framework
 ب) Linux Kernel
 ج) Android Runtime (ART)
 د) System Apps
 
+**الإجابة الصحيحة: ب**
 **التعليل:** الإجابة الصحيحة (ب) لأن المحاضرة تنص صراحة على أن "أساس منصّة أندرويد هو نواة Linux"، وكل الطبقات الأخرى (HAL، ART، Java API Framework، System Apps) مبنية فوقها.
 
 ---
 
-**Q2.** Which organization is described as the main contributor and commercial marketer of Android?
+### السؤال 2 (متوسط)
+Which organization is described as the main contributor and commercial marketer of Android?
 أ) Apple
 ب) Open Handset Alliance فقط بدون Google
 ج) Google
 د) IntelliJ
 
+**الإجابة الصحيحة: ج**
 **التعليل:** الإجابة الصحيحة (ج)؛ المحاضرة تذكر أن أندرويد طوّره تحالف Open Handset Alliance، لكن "المساهم الرئيسي والمسوِّق التجاري" هو تحديداً Google.
 
 ---
 
-**Q3.** Since which event has Android development been "Kotlin-first"?
+### السؤال 3 (متوسط)
+Since which event has Android development been "Kotlin-first"?
 أ) إطلاق أندرويد 1.0 سنة 2008
 ب) Google I/O سنة 2019
 ج) إطلاق Jetpack Compose
 د) إطلاق Android Studio
 
+**الإجابة الصحيحة: ب**
 **التعليل:** الإجابة الصحيحة (ب)؛ النص يذكر صراحة "Kotlin-first since Google I/O in 2019".
 
 ---
 
-**Q4.** Based on Google's internal data mentioned in the lecture, apps built with Kotlin are how much less likely to crash?
+### السؤال 4 (متوسط)
+Based on Google's internal data mentioned in the lecture, apps built with Kotlin are how much less likely to crash?
 أ) 5%
 ب) 10%
 ج) 20%
 د) 50%
 
+**الإجابة الصحيحة: ج**
 **التعليل:** الإجابة الصحيحة (ج)؛ النص يذكر رقماً محدداً: "20% less likely to crash based on Google's internal data".
 
 ---
 
-**Q5.** What API level corresponds to Android version 5.0 (Lollipop), the version where ART became the default runtime?
+### السؤال 5 (متوسط)
+What API level corresponds to Android version 5.0 (Lollipop), the version where ART became the default runtime?
 أ) API 19
 ب) API 21
 ج) API 23
 د) API 28
 
+**الإجابة الصحيحة: ب**
 **التعليل:** الإجابة الصحيحة (ب)؛ حسب جدول الإصدارات، Lollipop 5.0-5.1.1 يقابل API level 21-22، وهذا هو نفسه رقم API الذي ذكرته شريحة ART كنقطة التحول من Dalvik.
 
 ---
 
-**Q6.** According to the lecture, what does an API Level uniquely identify?
+### السؤال 6 (متوسط)
+According to the lecture, what does an API Level uniquely identify?
 أ) اسم التسويق التجاري لإصدار أندرويد
 ب) نسخة الـ framework API التي تقدمها منصّة أندرويد
 ج) رقم إصدار Kotlin المستخدَم
 د) رقم إصدار Gradle
 
+**الإجابة الصحيحة: ب**
 **التعليل:** الإجابة الصحيحة (ب)؛ التعريف الحرفي في المحاضرة: "API level is an integer value that uniquely identifies the framework API revision offered by a version of the Android platform".
 
 ---
 
-**Q7.** Which HAL characteristic allows apps to work with different camera hardware from different manufacturers without changing app code?
+### السؤال 7 (متوسط)
+Which HAL characteristic allows apps to work with different camera hardware from different manufacturers without changing app code?
 أ) أن HAL يكتب برامج تشغيل مباشرة لكل عتاد
 ب) أن HAL يوفّر واجهات معيارية موحّدة (standard interfaces) تخفي اختلاف العتاد
 ج) أن HAL جزء من Java API Framework مباشرة
 د) أن HAL يعمل فقط مع أجهزة Google Pixel
 
+**الإجابة الصحيحة: ب**
 **التعليل:** الإجابة الصحيحة (ب)؛ HAL "يوفر واجهات معيارية تكشف إمكانيات عتاد الجهاز أمام الإطار الأعلى مستوى"، فتتعامل التطبيقات مع واجهة موحدة بغض النظر عن نوع العتاد الفعلي.
 
 ---
 
-**Q8.** Compare Dalvik and ART: which compilation strategy does ART use?
+### السؤال 8 (متوسط)
+Compare Dalvik and ART: which compilation strategy does ART use?
 أ) Just-In-Time (JIT)، مثل Dalvik تماماً
 ب) Ahead-Of-Time (AOT)
 ج) لا يستخدم أي نوع ترجمة
 د) الترجمة اليدوية من المطور
 
+**الإجابة الصحيحة: ب**
 **التعليل:** الإجابة الصحيحة (ب)؛ جدول المقارنة في المحاضرة يوضح أن ART يستخدم AOT بينما Dalvik (القديم) كان يستخدم JIT.
 
 ---
 
-**Q9.** A developer wants to add support for drawing 2D/3D graphics in their app using native libraries exposed through a Java API. Which native library does the lecture mention as an example for this?
+### السؤال 9 (متوسط)
+A developer wants to add support for drawing 2D/3D graphics in their app using native libraries exposed through a Java API. Which native library does the lecture mention as an example for this?
 أ) Webkit
 ب) Libc
 ج) OpenGL ES
 د) OpenMAX AL
 
+**الإجابة الصحيحة: ج**
 **التعليل:** الإجابة الصحيحة (ج)؛ المحاضرة تذكر مثالاً محدداً: "you can access OpenGL ES through the Android framework's Java OpenGL API to add support for drawing and manipulating 2D and 3D graphics".
 
 ---
 
-**Q10.** Which Java API Framework manager is responsible for ensuring only one activity is in the foreground at a time?
+### السؤال 10 (متوسط)
+Which Java API Framework manager is responsible for ensuring only one activity is in the foreground at a time?
 أ) Window Manager
 ب) Package Manager
 ج) Activity Manager
 د) Resource Manager
 
+**الإجابة الصحيحة: ج**
 **التعليل:** الإجابة الصحيحة (ج)؛ النص يذكر أن Activity Manager "يضمن وجود نشاط واحد فقط في المقدمة في أي وقت".
 
 ---
 
-**Q11.** A developer wants their app to send an SMS message without building SMS functionality from scratch. What Android concept explains why this is possible?
+### السؤال 11 (متوسط)
+A developer wants their app to send an SMS message without building SMS functionality from scratch. What Android concept explains why this is possible?
 أ) Content Providers فقط
 ب) أن تطبيقات النظام (System Apps) توفر قدرات يمكن استدعاؤها من تطبيقات أخرى
 ج) أن كل تطبيق يجب أن يبني وظيفة SMS بنفسه إلزامياً
 د) HAL يوفر وظيفة SMS مباشرة
 
+**الإجابة الصحيحة: ب**
 **التعليل:** الإجابة الصحيحة (ب)؛ المحاضرة تنص أن تطبيقات النظام "تعمل كتطبيقات للمستخدمين وأيضاً لتوفير قدرات أساسية يمكن للمطورين الوصول إليها"، وتذكر مثال SMS تحديداً.
 
 ---
 
-**Q12.** In the following scenario, which component would a messaging app use to access data from the device's Contacts app securely?
+### السؤال 12 (متوسط)
+In the following scenario, which component would a messaging app use to access data from the device's Contacts app securely?
 أ) Notification Manager
 ب) Content Provider
 ج) Location Manager
 د) Window Manager
 
+**الإجابة الصحيحة: ب**
 **التعليل:** الإجابة الصحيحة (ب)؛ Content Providers "تمكّن التطبيقات من الوصول إلى بيانات من تطبيقات أخرى، مثل تطبيق جهات الاتصال... بطريقة آمنة ومنظمة".
 
 ---
 
-**Q13.** What does the term "Declarative UI" in Jetpack Compose mean, according to the lecture?
+### السؤال 13 (متوسط)
+What does the term "Declarative UI" in Jetpack Compose mean, according to the lecture?
 أ) وصف تفصيلي لكل خطوة لتحديث الواجهة يدوياً (imperatively)
 ب) وصف كيف يجب أن تبدو الواجهة، دون التركيز على عملية بنائها خطوة بخطوة
 ج) كتابة الواجهة بلغة XML منفصلة عن الكود
 د) استخدام لغة Java فقط بدل Kotlin
 
+**الإجابة الصحيحة: ب**
 **التعليل:** الإجابة الصحيحة (ب)؛ النص يوضح أن composable functions "تصف الشكل الذي يجب أن تبدو عليه الواجهة... بدلاً من التركيز على عملية بناء الواجهة".
 
 ---
 
-**Q14.** Given the code below, what will happen when the value of `name` changes from "Android" to "Compose"?
+### السؤال 14 (متوسط)
+Given the code below, what will happen when the value of `name` changes from "Android" to "Compose"?
 ```kotlin
 @Composable
 fun Greeting(name: String) {
@@ -827,30 +854,32 @@ fun Greeting(name: String) {
 ج) ستُعاد فقط تنفيذ/رسم "Hello $name" بينما يُتجاوز "Hello Everyone!" لعدم تغيّره
 د) لن يحدث أي تحديث للواجهة إطلاقاً
 
+**الإجابة الصحيحة: ج**
 **التعليل:** الإجابة الصحيحة (ج)؛ حسب مفهوم Recomposition، Compose "ذكي بما يكفي ليحسّن الأداء ويتجاوز أي عمل للعناصر التي لم تتغيّر"، وهذا موضّح صراحة في مثال الشريحة 34.
 
 ---
 
-**Q15.** Which folder inside an Android app module contains the `AndroidManifest.xml` file?
+### السؤال 15 (متوسط)
+Which folder inside an Android app module contains the `AndroidManifest.xml` file?
 أ) `java`
 ب) `res`
 ج) `manifests`
 د) `Gradle Scripts`
 
+**الإجابة الصحيحة: ج**
 **التعليل:** الإجابة الصحيحة (ج)؛ النص يذكر صراحة: "manifests: Contains the AndroidManifest.xml file".
 
 ---
 
-**Q16.** A team is deciding whether to migrate an existing Java-based Android project fully to Kotlin before adding any new features. Based on Kotlin's interoperability with Java, is this migration a strict requirement?
+### السؤال 16 (متوسط)
+A team is deciding whether to migrate an existing Java-based Android project fully to Kotlin before adding any new features. Based on Kotlin's interoperability with Java, is this migration a strict requirement?
 أ) نعم، يجب ترحيل كل الكود لـ Kotlin أولاً وإلا لن يعمل المشروع
 ب) لا، يمكن استخدام Kotlin وJava معاً في نفس المشروع دون ترحيل كل الكود
 ج) لا يمكن الجمع بينهما إطلاقاً تحت أي ظرف
 د) هذا غير متعلق بموضوع Interoperability
 
+**الإجابة الصحيحة: ب**
 **التعليل:** الإجابة الصحيحة (ب)؛ المحاضرة تنص صراحة أن Kotlin توفر "قابلية التشغيل البيني مع Java... يمكنك استخدام Kotlin جنباً إلى جنب مع Java دون الحاجة لترحيل كل كودك".
-
----
-
 ## الجزء الرابع: أسئلة تصحيح الكود
 
 **Question 1 (syntax):**

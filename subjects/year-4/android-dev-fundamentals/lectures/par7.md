@@ -1420,7 +1420,8 @@ navController.navigate("search") {
 
 ## الجزء الثالث: أسئلة اختيار من متعدد (MCQ)
 
-**Q1 (Comparison, Medium):** What is the key difference between `remember` and `rememberSaveable`?
+### السؤال 1 (متوسط)
+What is the key difference between `remember` and `rememberSaveable`?
 أ) `remember` is faster but `rememberSaveable` is slower
 ب) `remember` survives recomposition only, while `rememberSaveable` also survives configuration changes
 ج) `rememberSaveable` cannot store primitive types
@@ -1430,7 +1431,8 @@ navController.navigate("search") {
 
 ---
 
-**Q2 (Comparison, Medium):** Which statement best distinguishes a Stateful composable from a Stateless one?
+### السؤال 2 (متوسط)
+Which statement best distinguishes a Stateful composable from a Stateless one?
 أ) Stateless composables cannot display any text
 ب) Stateful composables hold their own internal state via remember; Stateless composables receive state via parameters
 ج) Stateless composables are always faster to render
@@ -1440,7 +1442,8 @@ navController.navigate("search") {
 
 ---
 
-**Q3 (Code Scenario, Hard):** In the following code, what happens to `count` on every recomposition?
+### السؤال 3 (صعب)
+In the following code, what happens to `count` on every recomposition?
 ```kotlin
 @Composable
 fun Counter() {
@@ -1459,7 +1462,8 @@ fun Counter() {
 
 ---
 
-**Q4 (Application, Medium):** Which of the following is the correct way to declare an observable state using delegate syntax?
+### السؤال 4 (متوسط)
+Which of the following is the correct way to declare an observable state using delegate syntax?
 أ) `val name = mutableStateOf("")`
 ب) `var name by remember { mutableStateOf("") }`
 ج) `var name = mutableStateOf("")`
@@ -1469,7 +1473,8 @@ fun Counter() {
 
 ---
 
-**Q5 (Comparison, Medium):** What does "Single source of truth" mean in the context of State Hoisting?
+### السؤال 5 (متوسط)
+What does "Single source of truth" mean in the context of State Hoisting?
 أ) The state is duplicated across multiple composables for redundancy
 ب) The state exists in exactly one place, avoiding conflicting copies of the same data
 ج) Only the top-level Activity can hold state
@@ -1479,7 +1484,8 @@ fun Counter() {
 
 ---
 
-**Q6 (Code Scenario, Hard):** In `LoginScreen`, if `showError` changes from `false` to `true`, what happens to the `LoginInput` composable instance?
+### السؤال 6 (صعب)
+In `LoginScreen`, if `showError` changes from `false` to `true`, what happens to the `LoginInput` composable instance?
 ```kotlin
 @Composable
 fun LoginScreen(showError: Boolean) {
@@ -1496,7 +1502,8 @@ fun LoginScreen(showError: Boolean) {
 
 ---
 
-**Q7 (Application, Hard):** Why is `key(movie.id)` necessary when displaying a list of movies with a `for` loop, if items might be reordered?
+### السؤال 7 (صعب)
+Why is `key(movie.id)` necessary when displaying a list of movies with a `for` loop, if items might be reordered?
 أ) It improves compile-time performance only
 ب) Without it, Compose uses execution order to identify instances, which can wrongly reuse or restart side effects when items move position
 ج) It is required syntactically or the code will not compile
@@ -1506,7 +1513,8 @@ fun LoginScreen(showError: Boolean) {
 
 ---
 
-**Q8 (Comparison, Medium):** How does Navigation in Jetpack Compose fundamentally differ from the traditional View system?
+### السؤال 8 (متوسط)
+How does Navigation in Jetpack Compose fundamentally differ from the traditional View system?
 أ) Compose Navigation requires Fragments to work
 ب) Compose Navigation is state-driven and updates the UI through recomposition, rather than manual FragmentTransactions
 ج) Compose Navigation does not support a back stack at all
@@ -1516,7 +1524,8 @@ fun LoginScreen(showError: Boolean) {
 
 ---
 
-**Q9 (Application, Medium):** What is the correct way to create a `NavController` in a Composable function?
+### السؤال 9 (متوسط)
+What is the correct way to create a `NavController` in a Composable function?
 أ) `val navController = NavController()`
 ب) `val navController = rememberNavController()`
 ج) `val navController = remember { NavController }`
@@ -1526,7 +1535,8 @@ fun LoginScreen(showError: Boolean) {
 
 ---
 
-**Q10 (Application, Medium):** Which route definition correctly declares a destination that accepts an `itemId` argument?
+### السؤال 10 (متوسط)
+Which route definition correctly declares a destination that accepts an `itemId` argument?
 أ) `composable("details") { DetailsScreen() }`
 ب) `composable("details/{itemId}") { backStackEntry -> ... }`
 ج) `composable("details", itemId) { ... }`
@@ -1536,7 +1546,8 @@ fun LoginScreen(showError: Boolean) {
 
 ---
 
-**Q11 (Code Scenario, Hard):** Given the back stack `[ home → details → settings → profile ]`, what is the result of `navController.popBackStack("details", true)`?
+### السؤال 11 (صعب)
+Given the back stack `[ home → details → settings → profile ]`, what is the result of `navController.popBackStack("details", true)`?
 أ) `[ home → details ]`
 ب) `[ home ]`
 ج) `[ home → details → settings ]`
@@ -1546,7 +1557,8 @@ fun LoginScreen(showError: Boolean) {
 
 ---
 
-**Q12 (Application, Hard):** A developer wants to prevent the user from returning to the login screen after a successful login. Which approach is correct?
+### السؤال 12 (صعب)
+A developer wants to prevent the user from returning to the login screen after a successful login. Which approach is correct?
 أ) `navController.navigate("home")`
 ب) `navController.navigate("home") { popUpTo("login") { inclusive = true } }`
 ج) `navController.popBackStack("login", false)`
@@ -1556,7 +1568,8 @@ fun LoginScreen(showError: Boolean) {
 
 ---
 
-**Q13 (Comparison, Medium):** What is the primary purpose of `launchSingleTop = true`?
+### السؤال 13 (متوسط)
+What is the primary purpose of `launchSingleTop = true`?
 أ) It deletes the entire back stack
 ب) It prevents creating a duplicate copy of the same destination if it is already on top of the back stack
 ج) It saves the state of a destination permanently
@@ -1566,7 +1579,8 @@ fun LoginScreen(showError: Boolean) {
 
 ---
 
-**Q14 (Application, Medium):** According to Unidirectional Data Flow principles, how should a composable request navigation to a new screen?
+### السؤال 14 (متوسط)
+According to Unidirectional Data Flow principles, how should a composable request navigation to a new screen?
 أ) By receiving the NavController directly as a parameter and calling `.navigate()` inside it
 ب) By exposing an event (lambda) that the caller handles, without knowing about NavController
 ج) By modifying a global static variable
@@ -1576,7 +1590,8 @@ fun LoginScreen(showError: Boolean) {
 
 ---
 
-**Q15 (Comparison, Medium):** What distinguishes a `Dialog` destination type from a `Hosted` destination type?
+### السؤال 15 (متوسط)
+What distinguishes a `Dialog` destination type from a `Hosted` destination type?
 أ) Dialog destinations start a new Activity, Hosted destinations do not
 ب) Hosted destinations fill the entire navigation host and hide previous destinations; Dialog destinations overlay content while previous destinations remain visible
 ج) There is no real difference between them
@@ -1586,16 +1601,14 @@ fun LoginScreen(showError: Boolean) {
 
 ---
 
-**Q16 (Code Scenario, Hard):** What happens if `popBackStack()` returns `false` and the developer does nothing about it?
+### السؤال 16 (صعب)
+What happens if `popBackStack()` returns `false` and the developer does nothing about it?
 أ) The app crashes immediately
 ب) The current destination remains unchanged and functions normally
 ج) `getCurrentDestination()` returns null and the user may see a blank screen
 د) The app automatically navigates to the home screen
 **الإجابة الصحيحة: ج**
 **التعليل:** الخيار (ج) صحيح ويطابق التحذير الصريح في المحاضرة عن هذه الحالة الحدّية بالتحديد. الخيار (أ) خاطئ؛ لا يحدث تعطّل مباشر بل شاشة فارغة. الخيار (ب) خاطئ لأن السجل أصبح فارغاً فعلياً في هذه الحالة. الخيار (د) خاطئ؛ لا يوجد سلوك تلقائي كهذا، بل يجب على المطوّر معالجته يدوياً.
-
----
-
 ## الجزء الرابع: أسئلة تصحيح الكود
 
 **Q1 — Type: `logic`**

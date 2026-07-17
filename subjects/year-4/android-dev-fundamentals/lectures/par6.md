@@ -933,7 +933,8 @@ Jetpack Compose يقوم على ثلاثية مترابطة: النمط التص
 
 ## الجزء الثالث: أسئلة اختيار من متعدد (MCQ)
 
-**Q1:** What is the main paradigm used by Jetpack Compose?
+### السؤال 1 (متوسط)
+What is the main paradigm used by Jetpack Compose?
 أ) Imperative programming
 ب) Declarative programming
 ج) Procedural programming
@@ -944,7 +945,8 @@ Jetpack Compose يقوم على ثلاثية مترابطة: النمط التص
 
 ---
 
-**Q2:** In the old imperative View System, what method is commonly used to locate a UI element?
+### السؤال 2 (متوسط)
+In the old imperative View System, what method is commonly used to locate a UI element?
 أ) `remember()`
 ب) `mutableStateOf()`
 ج) `findViewById()`
@@ -955,7 +957,8 @@ Jetpack Compose يقوم على ثلاثية مترابطة: النمط التص
 
 ---
 
-**Q3:** What does a `@Composable` function return?
+### السؤال 3 (متوسط)
+What does a `@Composable` function return?
 أ) A View object
 ب) An Int representing the layout ID
 ج) Nothing (Unit) — it describes the UI instead
@@ -966,7 +969,8 @@ Jetpack Compose يقوم على ثلاثية مترابطة: النمط التص
 
 ---
 
-**Q4:** Which of the following is NOT one of the three main phases of Compose?
+### السؤال 4 (متوسط)
+Which of the following is NOT one of the three main phases of Compose?
 أ) Composition
 ب) Layout
 ج) Drawing
@@ -977,7 +981,8 @@ Jetpack Compose يقوم على ثلاثية مترابطة: النمط التص
 
 ---
 
-**Q5:** In the Layout phase, what is the correct order of operations for a single node?
+### السؤال 5 (متوسط)
+In the Layout phase, what is the correct order of operations for a single node?
 أ) Place children → Measure children → Decide own size
 ب) Measure children → Decide own size → Place children
 ج) Decide own size → Measure children → Place children
@@ -988,7 +993,8 @@ Jetpack Compose يقوم على ثلاثية مترابطة: النمط التص
 
 ---
 
-**Q6:** According to the lecture, what is true about parent and child nodes during the Layout phase?
+### السؤال 6 (متوسط)
+According to the lecture, what is true about parent and child nodes during the Layout phase?
 أ) Parents are measured and sized before their children
 ب) Parents measure before their children, but are sized and placed after their children
 ج) Children are never measured, only parents
@@ -999,7 +1005,8 @@ Jetpack Compose يقوم على ثلاثية مترابطة: النمط التص
 
 ---
 
-**Q7:** What happens in the Drawing phase?
+### السؤال 7 (متوسط)
+What happens in the Drawing phase?
 أ) The tree is traversed and each node decides its size
 ب) The tree is traversed again from top to bottom, and each node draws itself
 ج) The composable functions are executed for the first time
@@ -1010,7 +1017,8 @@ Jetpack Compose يقوم على ثلاثية مترابطة: النمط التص
 
 ---
 
-**Q8:** Which composable is used to place items on top of one another?
+### السؤال 8 (متوسط)
+Which composable is used to place items on top of one another?
 أ) `Row`
 ب) `Column`
 ج) `Box`
@@ -1021,7 +1029,8 @@ Jetpack Compose يقوم على ثلاثية مترابطة: النمط التص
 
 ---
 
-**Q9:** What happens if two composable Text elements are placed inside a composable function without any layout guidance?
+### السؤال 9 (متوسط)
+What happens if two composable Text elements are placed inside a composable function without any layout guidance?
 أ) They are automatically arranged in a Row
 ب) They are automatically arranged in a Column
 ج) They are stacked on top of each other, making them unreadable
@@ -1032,7 +1041,8 @@ Jetpack Compose يقوم على ثلاثية مترابطة: النمط التص
 
 ---
 
-**Q10:** In a `Row`, which argument controls how children are distributed along the main (horizontal) axis?
+### السؤال 10 (متوسط)
+In a `Row`, which argument controls how children are distributed along the main (horizontal) axis?
 أ) `verticalAlignment`
 ب) `horizontalArrangement`
 ج) `horizontalAlignment`
@@ -1043,7 +1053,8 @@ Jetpack Compose يقوم على ثلاثية مترابطة: النمط التص
 
 ---
 
-**Q11:** What is the key difference between `padding` and `offset` modifiers?
+### السؤال 11 (متوسط)
+What is the key difference between `padding` and `offset` modifiers?
 أ) `padding` shifts an element visually without affecting its measurements, while `offset` adds space that is counted in measurements
 ب) `offset` shifts an element visually without affecting its measurements, while `padding` adds space that is counted in measurements
 ج) They are functionally identical
@@ -1054,7 +1065,8 @@ Jetpack Compose يقوم على ثلاثية مترابطة: النمط التص
 
 ---
 
-**Q12:** Why might a `size()` modifier not be fully respected?
+### السؤال 12 (متوسط)
+Why might a `size()` modifier not be fully respected?
 أ) Because `size()` only works inside `Box`
 ب) Because it might not satisfy the constraints coming from the layout's parent
 ج) Because `size()` is deprecated in Compose
@@ -1065,7 +1077,8 @@ Jetpack Compose يقوم على ثلاثية مترابطة: النمط التص
 
 ---
 
-**Q13:** What does `matchParentSize` require, in terms of scope?
+### السؤال 13 (متوسط)
+What does `matchParentSize` require, in terms of scope?
 أ) It works in any composable
 ب) It only works within `RowScope`
 ج) It only works within `ColumnScope`
@@ -1076,7 +1089,8 @@ Jetpack Compose يقوم على ثلاثية مترابطة: النمط التص
 
 ---
 
-**Q14:** If `fillMaxSize` is used instead of `matchParentSize` inside a `Box` where the sibling composable (like `ArtistCard`) defines the Box's size, what happens?
+### السؤال 14 (متوسط)
+If `fillMaxSize` is used instead of `matchParentSize` inside a `Box` where the sibling composable (like `ArtistCard`) defines the Box's size, what happens?
 أ) No difference — both produce identical results
 ب) The Spacer takes all available space, causing the Box itself to expand and fill all available space
 ج) A compilation error occurs
@@ -1087,7 +1101,8 @@ Jetpack Compose يقوم على ثلاثية مترابطة: النمط التص
 
 ---
 
-**Q15:** What is required for the `weight()` modifier to distribute space meaningfully between children of a `Row`?
+### السؤال 15 (متوسط)
+What is required for the `weight()` modifier to distribute space meaningfully between children of a `Row`?
 أ) `weight()` works independently regardless of the parent's own size
 ب) The parent `Row` must already have a defined total width to distribute (e.g. via `fillMaxWidth()`)
 ج) `weight()` only works with exactly two children
@@ -1098,7 +1113,8 @@ Jetpack Compose يقوم على ثلاثية مترابطة: النمط التص
 
 ---
 
-**Q16:** Consider this modifier chain: `Modifier.padding(16.dp).clickable(onClick = onClick)`. What area responds to clicks?
+### السؤال 16 (متوسط)
+Consider this modifier chain: `Modifier.padding(16.dp).clickable(onClick = onClick)`. What area responds to clicks?
 أ) The entire area including the padding
 ب) Only the area inside the padding, NOT the padding region itself
 ج) No area responds to clicks
@@ -1106,9 +1122,6 @@ Jetpack Compose يقوم على ثلاثية مترابطة: النمط التص
 
 **الإجابة الصحيحة: ب**
 **التعليل:** كما وُضّح في القسم 20، عندما يُطبَّق `padding` قبل `clickable`، تصبح منطقة الـpadding خارج نطاق الاستجابة للنقر، لأن `padding` "غلّف" العنصر أولاً وحدّد حدوداً جديدة قبل وصول `clickable`.
-
----
-
 ## الجزء الرابع: أسئلة تصحيح الكود
 
 ### Debug Question 1 — Type: syntax
