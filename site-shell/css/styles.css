@@ -158,6 +158,44 @@ body {
   background: linear-gradient(90deg, var(--color-primary), var(--color-secondary-accent)) !important;
 }
 
+.mcq-progress-track {
+  display: flex;
+  gap: 2px;
+  height: 0.5rem;
+  width: 100%;
+  border-radius: 9999px;
+  overflow: hidden;
+  background: var(--color-surface-container-high);
+}
+
+.mcq-progress-seg {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 100%;
+  background: transparent;
+  transition: background-color 0.25s ease;
+}
+
+.mcq-progress-seg--pending {
+  background: color-mix(in srgb, var(--color-outline-variant) 55%, transparent);
+}
+
+.mcq-progress-seg--correct {
+  background: var(--color-primary);
+}
+
+.mcq-progress-seg--wrong {
+  background: var(--color-error);
+}
+
+.dark .mcq-progress-track {
+  background: color-mix(in srgb, var(--dm-elevated-2, #1c2440) 80%, transparent);
+}
+
+.dark .mcq-progress-seg--pending {
+  background: color-mix(in srgb, var(--dm-border, #2b3a8f) 45%, transparent);
+}
+
 #jumpQuizBtn {
   background: linear-gradient(135deg, var(--color-primary-container), var(--color-primary)) !important;
   box-shadow: 0 4px 16px -4px var(--shadow-primary-md);

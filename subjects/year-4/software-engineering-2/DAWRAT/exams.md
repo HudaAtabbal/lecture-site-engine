@@ -2366,3 +2366,1800 @@ In response to the software crisis, which methodology was introduced to improve 
 د) ممارسات DevOps مفهوم حديث جداً (٢٠٠٠+)، بعيد زمنياً جداً عن أزمة الستينات.
 
 المحاضرة وصفت Waterfall كـ"أقدم وأشهر نموذج منظم رسمياً"، وهو الحل التاريخي المباشر لفوضى Build and Fix اللي كانت جزءاً أساسياً من مسببات أزمة البرمجيات الأصلية.
+
+## المحاضرة 2: Software Life Cycle Models (نماذج دورة حياة البرمجيات) (تابع — دورات لاحقة)
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 141 (سهل)
+V-model advantage over Waterfall for safety-critical (e.g., avionics)?
+أ) Sequential like Waterfall
+ب) Risk-focused spirals
+ج) Early parallel testing per phase
+د) Agile sprints
+**الإجابة الصحيحة: ج**
+**التعليل:**
+الميزة الجوهرية لـ`V-Model` هي أنه يخطط لمرحلة اختبار مقابلة (`corresponding testing phase`) لكل مرحلة تطوير منذ البداية (مثلاً: مواصفات النظام ↔ اختبار القبول، التصميم ↔ اختبار التكامل) — أي تخطيط الاختبار المبكر والمتوازي مع كل مرحلة تطوير، لا تأجيله لنهاية المشروع كما في `Waterfall` التقليدي.
+
+أ) كونه خطياً متسلسلاً مثل `Waterfall` هو تشابه بينهما لا ميزة إضافية لـ`V-Model` عليه.
+ب) التركيز على المخاطر عبر لفات حلزونية هو تحديداً وصف `Spiral Model`، لا `V-Model`.
+د) دورات `Agile` القصيرة (`sprints`) مفهوم مختلف تماماً عن `V-Model` الخطي.
+
+ملاحظة: `V-Model` لم يُشرح بالتفصيل في محاضرة `SDLC Models` (اللي غطّت `Build&Fix, Waterfall, Prototyping, Iterative Enhancement, Evolutionary, Spiral`)، والإجابة معتمدة على معرفة عامة قياسية عن `V-Model` كامتداد مباشر لفكرة `Waterfall` مع تخطيط اختبار مبكر.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 142 (سهل)
+Prototype model: Client rejects initial UI after feedback, next step?
+أ) Discard, restart Waterfall
+ب) Deploy as is
+ج) Throwaway, build final from scratch
+د) Refine iteratively (evolutionary)
+**الإجابة الصحيحة: د**
+**التعليل:**
+حسب دورة `Prototyping Model` اللي شرحتها المحاضرة: العميل يجرّب النموذج التجريبي، وبناءً على ملاحظاته (`evaluation`) يقوم المطورون بتنقيح المتطلبات (`refinement`) وإعادة الدورة إذا لزم الأمر — أي رفض الواجهة الأولية يعني ببساطة تكرار دورة أخرى من التنقيح، لا إلغاء المشروع بالكامل.
+
+أ) إلغاء كل شيء وإعادة البدء بـ`Waterfall` مبالغة غير ضرورية؛ التنقيح التكراري هو بالضبط آلية `Prototyping` المصمَّمة لهذه الحالة تحديداً.
+ب) نشر واجهة رُفضت من العميل مباشرة يناقض جوهر النموذج (الهدف هو التحقق قبل البناء النهائي).
+ج) الانتقال المباشر لبناء النسخة النهائية من الصفر يتجاهل قيمة التنقيح التكراري القريب المتاح أولاً.
+
+المحاضرة أكدت أن النموذج التجريبي بأكمله يُرمى لاحقاً في النهاية، لكن *قبل* الوصول لتلك المرحلة، الدورة تتكرر (تنقيح ← تقييم ← تنقيح) حتى نصل لمواصفة نهائية يوافق عليها العميل — وهذا بالضبط ما يصفه الخيار D.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 143 (سهل)
+Throwaway Prototype: Primary goal?
+أ) Production-ready software
+ب) Risk-free req. validation, discard
+ج) Incremental delivery
+د) Full Agile cycles
+**الإجابة الصحيحة: ب**
+**التعليل:**
+المحاضرة أكدت أن الهدف الحقيقي من `Prototyping` هو الخبرة والمعرفة المكتسبة أثناء تجريب النموذج مع العميل للتحقق من المتطلبات (`requirements validation`) بأقل مخاطرة ممكنة، وبعدها يُرمى النموذج بالكامل (`thrown away`) لأن بنيته الداخلية لم تُصمَّم بجودة كافية أصلاً.
+
+أ) النموذج التجريبي عمداً منخفض الأداء والموثوقية — ليس المقصود منه أن يكون جاهزاً للإنتاج إطلاقاً.
+ج) التسليم التدريجي (`Incremental delivery`) وصف `Iterative Enhancement`، لا `Prototyping`.
+د) دورات `Agile` الكاملة مفهوم مختلف تماماً.
+
+هذا يطابق حرفياً أهم نقطة أكدتها المحاضرة عن `Prototyping`: كود النموذج التجريبي بأكمله يُرمى، والفائدة الحقيقية هي الخبرة المكتسبة، لا المنتج نفسه.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 144 (سهل)
+Incremental model: 10 features, deliver after every 27 Risk if late features change early?
+أ) Low, isolated increments
+ب) High architecture rework
+ج) None, full plan upfront
+د) Agile daily adapts
+**الإجابة الصحيحة: أ**
+**التعليل:**
+في `Iterative Enhancement` (النموذج التزايدي)، كل زيادة (`increment`) مبنية بشكل شبه مستقل فوق الإصدارات السابقة — وبالتالي لو تغيّرت متطلبات ميزات لاحقة، الأثر على الزيادات المبكرة اللي سُلِّمت واستُخدمت فعلياً يبقى منخفضاً ومحصوراً (`low, isolated`)، لأنها لا تعتمد بشكل كامل على تفاصيل الميزات المستقبلية.
+
+ب) إعادة هيكلة معمارية كبيرة عكس فكرة الزيادات المستقلة القابلة للتسليم في هذا النموذج.
+ج) "لا خطة إطلاقاً" يناقض فكرة `Work Breakdown` المسبقة اللي تحدد الزيادات أصلاً قبل البدء.
+د) "التكيّف اليومي" وصف أقرب لممارسات `Agile` اليومية (`daily standups`)، لا `Incremental Model` الكلاسيكي بحد ذاته.
+
+هذا يربط بفائدة `Iterative Enhancement` الأساسية اللي شرحتها المحاضرة: تسليم قيمة حقيقية للعميل بسرعة وبشكل متكرر عبر إصدارات مستقلة نسبياً، بدل انتظار المشروع كله دفعة واحدة.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 145 (سهل)
+Iterative model vs Incremental: Iterative bulks/refines same product repeatedly; Incremental?
+أ) Same, synonymous
+ب) Spiral tasks only
+ج) throwaway each iter
+د) Deliver growing functional subsets
+**الإجابة الصحيحة: د**
+**التعليل:**
+`Incremental Model` (`Iterative Enhancement` بمصطلح المحاضرة) يسلّم في كل دورة زيادة وظيفية جديدة تُضاف فوق الإصدارات السابقة — أي مجموعات وظيفية متنامية (`growing functional subsets`) قابلة للاستخدام الفعلي في كل مرة.
+
+أ) "مترادفان تماماً" خطأ شائع حذّرت منه المحاضرة صراحة — الفرق الحقيقي هو "متى يصبح المنتج قابلاً للاستخدام فعلياً".
+ب) الربط بـ`Spiral` حصراً غير دقيق؛ `Incremental` مفهوم مستقل عن `Spiral`.
+ج) رمي كل تكرار (`throwaway each iteration`) وصف `Prototyping`، لا `Incremental`.
+
+ملاحظة: صياغة السؤال هنا تصف "Iterative" بأنه يكرر/ينقّح نفس المنتج (وهذا أقرب فعلياً لتعريف `Evolutionary Development` في مصطلحات المحاضرة)، بينما "Incremental" الذي يسلّم إصدارات متنامية قابلة للاستخدام هو تحديداً ما سمّته المحاضرة `Iterative Enhancement` — قد يوجد تضارب تسمية بين مصادر مختلفة، لكن التعريف الوظيفي في الخيار D يطابق مفهوم `Incremental` القياسي في أغلب الأدبيات.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 146 (سهل)
+V-model drawback for large evolving reqs (e.g., web app)?
+أ) No testing
+ب) Rigid sequence, late changes costly
+ج) No prototypes
+د) Agile-like
+**الإجابة الصحيحة: ب**
+**التعليل:**
+`V-Model` امتداد خطي صارم لـ`Waterfall` — يفترض معرفة المتطلبات بدقة من البداية، وبالتالي أي تغيير متأخر في متطلبات متطورة باستمرار (زي تطبيق ويب حديث) يصبح مكلفاً جداً بسبب التسلسل الصارم غير المرن.
+
+أ) `V-Model` يخطط للاختبار بشكل مبكر ومكثّف أصلاً (هذا ميزته لا عيبه)، فليس "غياب الاختبار" هو المشكلة.
+ج) غياب النماذج التجريبية (`prototypes`) صحيح جزئياً كوصف، لكنه ليس العيب الجوهري الأكبر المرتبط بـ"المتطلبات المتطورة باستمرار" تحديداً.
+د) `V-Model` هو عكس `Agile-like` تماماً — خطي صارم، لا مرن ومتكرر.
+
+هذا نفس عيب `Waterfall` الأساسي اللي شرحته المحاضرة (يفترض معرفة كاملة للمتطلبات من البداية) — و`V-Model` يرث هذا العيب لأنه امتداد لنفس الفلسفة الخطية.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 147 (سهل)
+Throwaway Prototype -> Evolutionary difference?
+أ) Both discarded
+ب) Throwaway risks higher
+ج)Evolutionary refined to product
+د) Same model
+**الإجابة الصحيحة: ج**
+**التعليل:**
+في `Evolutionary Development`، النموذج/المخرجات تتطور تدريجياً *لتصبح* المنتج النهائي نفسه (لا يُرمى شيء)، بينما في `Throwaway Prototyping` يُرمى النموذج بالكامل بعد انتهاء دوره الاستكشافي ويُبنى المنتج النهائي من الصفر.
+
+أ) "كلاهما يُرمى" خطأ مباشر — `Evolutionary` لا يرمي شيئاً، بل يبني فوق ما سبق تدريجياً.
+ب) "مخاطرة أعلى" مقارنة غير دقيقة وغير مرتبطة بجوهر الفرق الحقيقي بين النموذجين (وهو "هل يُرمى أم يتطور؟").
+د) "نفس النموذج" خطأ مباشر — الفرق الجوهري الذي أكدته المحاضرة هو بالضبط ما إذا كان العمل يُرمى أو يُبنى عليه.
+
+المحاضرة حذّرت صراحة من الخلط بين هذين النموذجين المتشابهين شكلياً (كلاهما دائري/تكراري) لكن مختلفين تماماً في المصير النهائي للكود المنتَج.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 148 (سهل)
+Incremental suitable when? (Partial delivery ok, hue reqs stable)
+أ) Yes, builds on prior
+ب) No, full system only (Waterfall)
+ج) High risk (Spiral)
+د) UI exploration (Proto)
+**الإجابة الصحيحة: أ**
+**التعليل:**
+`Incremental`/`Iterative Enhancement` مناسب تماماً عندما يكون التسليم الجزئي (`partial delivery`) مقبولاً والمتطلبات مستقرة نسبياً — كل زيادة تبني فوق الإصدارات السابقة (`builds on prior`) وتُسلَّم كمنتج قابل للاستخدام فعلياً.
+
+ب) الإصرار على "النظام الكامل فقط" وصف `Waterfall`، عكس مرونة `Incremental` في التسليم الجزئي.
+ج) المخاطر العالية سياق `Spiral`، لا `Incremental` تحديداً.
+د) استكشاف الواجهة سياق `Prototyping`، لا `Incremental`.
+
+## المحاضرة 3: Software Requirements (متطلبات البرمجيات) (تابع — دورات لاحقة)
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 149 (متوسط)
+Which type of requirement is concerned with how the system should respond to a particular input?
+أ) Functional requirement
+ب) Performance requirement
+ج) Security requirement
+د) Usability requirement
+و) None of the above
+**الإجابة الصحيحة: أ**
+**التعليل:**
+المتطلب الوظيفي (`Functional requirement`) يصف تحديداً "ماذا" يفعل النظام استجابة لمدخل معيّن — أي سلوك الاستجابة نفسه لمدخل محدد، وهذا هو التعريف الأساسي لـ`Functional Requirements` كما شرحته المحاضرة.
+
+ب) متطلب الأداء يخص سرعة/كفاءة الاستجابة (مثل زمن الاستجابة)، لا "ماذا" يحدث فعلياً كنتيجة للمدخل.
+ج) متطلب الأمان يخص حماية البيانات والوصول، لا الاستجابة الوظيفية لمدخل عادي.
+د) متطلب سهولة الاستخدام يخص تجربة المستخدم العامة، لا استجابة محددة لمدخل واحد.
+
+المحاضرة فرّقت بوضوح: الوظيفي يجاوب "شنو النظام يسوي؟" — وهذا يشمل تحديداً كيف يستجيب النظام لكل مدخل محدد يستقبله.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 150 (متوسط)
+How does OCL enhance traceability in requirements engineering?
+أ) OCL replaces stakeholder interviews
+ب) By documenting precise constraints linked to requirements, creating explicit trace chains from models to specifications
+ج) OCL is less expressive than natural language
+د) Traceability is unrelated in OCL
+ه) Traceability is automatic in UML
+**الإجابة الصحيحة: ب**
+**التعليل:**
+توثيق قيود `OCL` الدقيقة المرتبطة مباشرة بمتطلبات محددة يخلق سلاسل تتبع صريحة (`explicit trace chains`) من النماذج (`models`) إلى المواصفات (`specifications`) الأصلية — وهذا تطبيق مباشر لمفهوم `Traceability` اللي شرحته محاضرة إدارة المتطلبات (ربط كل متطلب بمصدره وتنفيذه).
+
+أ) `OCL` لا تلغي الحاجة لمقابلات أصحاب المصلحة (`stakeholder interviews`)؛ هي أداة توثيق وتحقق لاحقة، لا استخراج أولي للمتطلبات.
+ج) `OCL` أكثر دقة (`precise`) من اللغة الطبيعية تحديداً، لا أقل تعبيراً منها — هذا عكس الحقيقة.
+د) `Traceability` مرتبطة جداً بـ`OCL` عبر ربط القيود بمصدرها.
+ه) `Traceability` ليست تلقائية في `UML` وحده؛ تحتاج توثيقاً وربطاً صريحاً (زي `OCL` أو مصفوفة التتبع).
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 151 (متوسط)
+When performing requirements analysis, what technique helps resolve ambiguous and incomplete requirements for complex systems?
+أ) Postpone until coding begins.
+ب) Use of prototypes and scenarios to clarify and validate requirements, Teratively.
+ج) Ignore ambiguity initially.
+د) Rely solely on documentation.
+ه) Limit stakeholder involvement.
+**الإجابة الصحيحة: ب**
+**التعليل:**
+المحاضرة أكدت أن النمذجة الأولية (`Prototyping`) وأسلوب السيناريوهات (`scenarios`, زي `use cases`) هما تحديداً الأداتان اللي تساعدان على كشف الغموض بشكل تكراري (`iteratively`) — مثال كلمة "search" الشهير أثبت أن الغموض يظهر بوضوح فقط عند التجربة الفعلية مع المستخدم عبر نموذج أو سيناريو ملموس.
+
+أ) تأجيل حل الغموض لمرحلة الكود مكلف جداً (تصحيح خطأ متطلبات في الصيانة يكلّف 100 ضعف تصحيحه في مرحلة الجمع).
+ج) تجاهل الغموض عمداً في البداية يضاعف المخاطرة لاحقاً بدل حلها.
+د) الاعتماد فقط على التوثيق النصي هو بالضبط ما فشل في مثال "search" — النص وحده لم يمنع سوء الفهم.
+ه) تقليل مشاركة أصحاب المصلحة يقلل المعلومات المتاحة لحل الغموض، عكس المطلوب.
+
+هذا يربط مباشرة بفحوصات `Validation` الخمسة اللي شرحتها المحاضرة، وتحديداً تقنية "`prototyping` لكشف الغموض" المذكورة صراحة كإحدى تقنيات تطبيق هذه الفحوصات.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 152 (سهل)
+During requirement elicitation, ambiguous domain language causes misunderstandings. What is the most effective mitigation?
+أ) Skip formal documentation to maintain agility.
+ب) Use domain modeling techniques such as UML and glossary establishment.
+ج) Exclude less knowledgeable stakeholders.
+د) Increase coding prototyping early.
+ه) Rely on developers' interpretations.
+**الإجابة الصحيحة: ب**
+**التعليل:**
+بناء نموذج للمجال (`domain modeling`, زي مخططات `UML`) مع إنشاء قاموس مصطلحات (`glossary`) — تماماً كقسم `1.3 Definitions, Acronyms, Abbreviations` اللي شرحته محاضرة `SRS` — يحل جذرياً مشكلة اللغة الغامضة عبر تعريف كل مصطلح رسمياً بمعنى واحد متفق عليه بين كل الأطراف.
+
+أ) تخطي التوثيق الرسمي بحجة "المرونة" يزيد الغموض بدل حله؛ حتى `Agile` يحتاج حداً أدنى من التوضيح المشترك.
+ج) استبعاد أصحاب المصلحة الأقل معرفة تقنية يفقد معلومات مجال حقيقية مهمة (هم بالضبط من يفهمون المجال، لا التقنية).
+د) بناء نموذج برمجي مبكر (`coding prototyping`) خطوة تنفيذية سابقة لأوانها لمشكلة لغوية بحتة؛ الأنسب أولاً هو `prototypes`/`scenarios` وصفية لا برمجية.
+ه) الاعتماد على تفسير المطورين الشخصي هو بالضبط مصدر الخطر — كل طرف قد يفسّر المصطلح الغامض بطريقة مختلفة (تماماً كمثال "search" الشهير).
+
+مثال المحاضرة الشهير (كلمة "search" فُهمت بطريقتين متعارضتين) هو الدليل المباشر على أن حل الغموض اللغوي يحتاج تعريفاً رسمياً صريحاً (`glossary`/`domain model`)، لا الاعتماد على الفهم الضمني لأي طرف بمفرده.
+
+## المحاضرة 4: Design and Implementation (التصميم والتنفيذ) (تابع — دورات لاحقة)
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 153 (متوسط)
+What is the primary purpose of a Work Breakdown Structure (WBS) in software project management?
+أ) To allocate resources to project tasks
+ب) To define the project scope and objectives
+ج) To estimate the project budget
+د) To decompose project deliverables into manageable components
+و) None of the above
+**الإجابة الصحيحة: د**
+**التعليل:**
+`WBS` (Work Breakdown) حسب محاضرة إدارة المشاريع يقسّم مخرجات المشروع لمراحل (`Phases`) ثم خطوات (`Steps`) ثم أنشطة (`Activities`) دقيقة قابلة للتنفيذ والإسناد لشخص واحد — أي تجزئة العمل الكلي لأعمال مستقلة أصغر وأسهل إدارة.
+
+أ) توزيع الموارد نتيجة لاحقة تستفيد من `WBS`، لكن ليست الغرض المباشر منه.
+ب) تعريف النطاق والأهداف يسبق `WBS` عادة (يُستخدم كمدخل له)، لا هو نفسه.
+ج) تقدير الميزانية نشاط لاحق يعتمد على `WBS` لكن ليس غرضه الأساسي.
+
+هذا مطابق تماماً لمثال المحاضرة (بناء بيت): `Project` → `Phases` (تجهيز الأرض، بناء البيت) → `Steps` (تنظيف الأرض، زراعة العشب) → `Activities` (إزالة الأشجار، إزالة الجذوع).
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 154 (متوسط)
+How does modular design or asset facilitate efficient configuration management in agile projects?
+أ) Only centralized repositories matter.
+ب) Configuration management eliminates modularity benefits.
+ج) Modular design requires no version control.
+د) Modular design increases configuration overhead development with minimized impact.
+ه) Modules allow isolated versioning and parallel development with minimized impact.
+**الإجابة الصحيحة: ه**
+**التعليل:**
+التصميم المعياري (`Modular design`) يتيح لكل وحدة (`module`) أن تُصدَر وتُدار إصداراتها بشكل منفصل عن باقي الوحدات، وهذا يسمح بتطوير متوازٍ (`parallel development`) بأثر جانبي محدود على باقي النظام — وهذا بالضبط جوهر `Configuration Management` اللي شرحته محاضرة `Design and Implementation` عبر أنشطته الثلاثة (إدارة النسخ، دمج النظام، تتبع المشاكل).
+
+أ) المستودعات المركزية جزء واحد من الأدوات (زي `Subversion`)، لكنها ليست العامل الوحيد المهم.
+ب) عكس الحقيقة تماماً — `Configuration Management` يدعم فوائد المعيارية، لا يلغيها.
+ج) التصميم المعياري لا يعني إطلاقاً الاستغناء عن التحكم بالإصدار؛ بل يحتاجه أكثر لتتبع كل وحدة بدقة.
+د) زيادة العبء الإداري بدون فائدة يناقض الفكرة العملية الأساسية للمعيارية.
+
+هذا يربط مباشرة بأنشطة `Configuration Management` الثلاثة اللي شرحتها المحاضرة: إدارة النسخ تمكّن تتبع كل مكوّن على حدة، ودمج النظام يحدد أي نسخ استُخدمت لبناء كل إصدار — وكلاهما أسهل بكثير مع تصميم معياري واضح.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 155 (متوسط)
+What is the impact of poor version control practices on software testing and defect resolution?
+أ) No significant effect if developers write good code.
+ب) Improves testing speed.
+ج) Eliminates need for automated tests, and integrated defects.
+د) Only affects startups.
+ه) Causes integration conflicts, unreliable builds, and impaired defect traceability.
+**الإجابة الصحيحة: ه**
+**التعليل:**
+ضعف ممارسات التحكم بالإصدار (`Version Control`) يؤدي مباشرة لتعارضات دمج (`integration conflicts`) عند العمل الجماعي المتوازي، وبناءات غير موثوقة (`unreliable builds`) بسبب دمج نسخ خاطئة، وصعوبة تتبع مصدر أي خلل (`impaired defect traceability`) — وهذا بالضبط ما تحله أنشطة `Configuration Management` الثلاثة اللي شرحتها المحاضرة.
+
+أ) حتى المطورين الجيدين يحتاجون تحكماً بالإصدار عند العمل الجماعي؛ جودة الكود الفردي لا تلغي الحاجة له.
+ب) عكس الحقيقة تماماً — ضعف التحكم بالإصدار يبطئ الاختبار بسبب الالتباس حول أي نسخة قيد الاختبار فعلياً.
+ج) عكس المنطق تماماً — ضعف التحكم بالإصدار يزيد الحاجة للاختبار الآلي، لا يلغيه.
+د) المشكلة تصيب أي مشروع جماعي بغض النظر عن حجم الشركة، لا الشركات الناشئة فقط.
+
+المحاضرة ذكرت أدوات `ClearCase` و`Subversion` و`BugZilla` تحديداً لحل هذه المشاكل الثلاث — غيابها أو ضعف تطبيقها يعيد فتح كل هذه المشاكل مجدداً.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 156 (صعب)
+You notice configuration drift in production environment causing intermittent failures unique to some releases, beyond fixing development scripts, What configuration management practices would you enhance?
+أ) Ignore drift, focus on source code.
+ب) Institute infrastructure-as-code, enforce configuration baselines, and use automated auditing tools to detect and prevent drift proactively.
+ج) Increase manual confirmation checks..
+د) Reduce frequency of deployments.
+**الإجابة الصحيحة: ب**
+**التعليل:**
+اعتماد `Infrastructure-as-Code` (توصيف البنية التحتية كملفات كود قابلة للتتبع)، وفرض خطوط أساس تهيئة موحّدة (`configuration baselines`)، مع أدوات تدقيق آلية (`automated auditing tools`) لاكتشاف ومنع الانحراف (`drift`) قبل وقوعه — هذا امتداد مباشر لأنشطة `Configuration Management` الثلاثة اللي شرحتها المحاضرة (إدارة النسخ، دمج النظام، تتبع المشاكل) لكن على مستوى بيئة التشغيل (`environment`) لا الكود فقط.
+
+أ) تجاهل الانحراف والتركيز على الكود المصدري فقط يتجاهل جذر المشكلة الفعلي (بيئة التشغيل نفسها).
+ج) الفحص اليدوي المتكرر حل غير قابل للتوسع ومعرَّض للخطأ البشري، عكس الأتمتة الاستباقية المطلوبة.
+د) تقليل تكرار عمليات النشر يقلل الفرصة لاكتشاف الانحراف مبكراً، لا يحل مشكلته الجذرية.
+
+هذا امتداد منطقي لمبدأ `Configuration Management` اللي شرحته محاضرة `Design and Implementation`: تتبع كل نسخة ومنع دمج/تشغيل نسخ غير متوافقة — يُطبَّق هنا على تهيئة بيئة الإنتاج بدل الكود وحده.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 157 (TODO — متوسط)
+When planning software reuse, what challenge often arises when integrating third-party components into an existing architecture?
+أ) Automatic adherence to coding standards.
+**الإجابة الصحيحة: TODO**
+**التعليل:**
+هذا السؤال ناقص/تالف في الاستخراج بشكل واضح جداً: يحتوي فقط على خيار واحد (A)، بينما بقية الخيارات (B, C, D...) والإجابة الصحيحة مفقودة تماماً من النص المصدر. الخيار الوحيد المتاح (A: "الالتزام التلقائي بمعايير الترميز") غير منطقي أصلاً كـ"تحدٍّ" (المفروض يكون تحدياً سلبياً يواجه الفريق، لا نتيجة إيجابية تلقائية) — ما يرجّح أنه كان أحد الخيارات الخاطئة (`distractor`) في سؤال أكبر فُقدت بقيته أثناء الاستخراج.
+
+بما أن السؤال غير مكتمل جوهرياً (ناقص أغلب خياراته اللازمة لفهم السياق الكامل واختيار إجابة صحيحة)، يُترك TODO تماماً بدل محاولة تخمين إجابة من نص جزئي غير كافٍ إطلاقاً لتحديد المقصود الفعلي بالسؤال.
+
+## المحاضرة 5: Software Testing (اختبار البرمجيات) (تابع — دورات لاحقة)
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 158 (سهل)
+In black-box testing, test cases are designed based on:
+أ) Internal code structure
+ب) User requirements and specifications
+ج) Code implementation details
+د) Integration points between modules
+و) None of the above
+**الإجابة الصحيحة: ب**
+**التعليل:**
+`Black-box testing` يصمَّم حالات الاختبار بناءً فقط على متطلبات المستخدم والمواصفات الخارجية (المدخلات والمخرجات المتوقعة)، دون أي اعتبار لكيفية تنفيذ الكود داخلياً.
+
+أ) البنية الداخلية للكود أساس `White-box testing`، عكس `Black-box` تماماً.
+ج) تفاصيل التنفيذ (`implementation details`) تخص `White-box` أيضاً.
+د) نقاط التكامل بين الوحدات تخص `Integration testing`، لا `Black-box` تحديداً.
+
+هذا التمييز (المواصفات الخارجية مقابل الكود الداخلي) هو جوهر الفرق بين `Black-box` و`White-box` المتكرر في بنك الأسئلة بأكمله.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 159 (سهل)
+Regression testing is performed to:
+أ) Validate newly added features
+ب) Verify that the system meets user requirements
+ج) Ensure that changes do not adversely affect existing functionality
+د) Test for performance bottlenecks
+و) None of the above
+**الإجابة الصحيحة: ج**
+**التعليل:**
+المحاضرة عرّفت `Regression Testing` بأنه إعادة تشغيل اختبارات سابقة كل مرة يُعدَّل فيها الكود، للتأكد أن التعديل الجديد لم "يكسر" ميزة كانت تعمل بشكل صحيح سابقاً — مطابق حرفياً لنص السؤال.
+
+أ) اختبار الميزات الجديدة تحديداً نشاط تطوير مختلف تماماً، لا `Regression`.
+ب) التحقق من تلبية متطلبات المستخدم أقرب لـ`Validation`/`Acceptance Testing`، لا `Regression` تحديداً.
+د) اختبار اختناقات الأداء موضوع `Performance/Stress Testing` منفصل تماماً.
+
+المحاضرة أكدت أن الفائدة الكبرى للأتمتة تظهر بوضوح في `Regression Testing` — لأن إعادة هذا يدوياً مئات المرات مستحيلة عملياً، بينما الأتمتة تجعله سريعاً وممكناً.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 160 (سهل)
+Which testing technique is most suitable for finding defects related to boundary values and equivalence partitioning?
+أ) White-box testing
+ب) Black-box testing
+ج) Grey-box testing
+د) Regression testing
+و) None of the above
+**الإجابة الصحيحة: ب**
+**التعليل:**
+`Partition Testing` و`Boundary Value Analysis` — التقنيتان اللي شرحتهما المحاضرة بالتفصيل — تُبنى أساساً من مواصفات البرنامج (`program specification`) ووثائق المستخدم، أي بدون الحاجة لمعرفة الكود الداخلي، وهذا يجعلهما تقنيتين من عائلة `Black-box testing`.
+
+أ) `White-box` يعتمد الكود الداخلي، بينما `Partition`/`Boundary Value` مبنيتان على المواصفات الخارجية.
+ج) `Grey-box` يحتاج معرفة جزئية بالداخل، غير ضرورية هنا.
+د) `Regression testing` يخص إعادة اختبار بعد تعديل، لا اختيار حالات اختبار حدودية جديدة.
+
+المحاضرة شرحت أن تحديد الـ`partitions` يعتمد على مصادر ثلاثة: مواصفات البرنامج، وثائق المستخدم، أو الخبرة العملية — وكلها مصادر خارجية لا تتطلب معرفة الكود الداخلي، وهذا جوهر `Black-box`.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 161 (سهل)
+Which testing approach focuses on the behavior and functionality of the software without considering its internal structure?
+أ) White-box testing
+ب) Black-box testing
+ج) Grey-box testing
+د) Integration testing
+و) None of the above
+**الإجابة الصحيحة: ب**
+**التعليل:**
+`Black-box testing` بالتعريف يركّز فقط على السلوك والوظائف الظاهرة للنظام (المدخلات والمخرجات)، دون أي اعتبار للبنية الداخلية — مطابق حرفياً لنص السؤال.
+
+أ) `White-box` عكسه تماماً — يعتمد البنية الداخلية أساساً.
+ج) `Grey-box` معرفة جزئية بالداخل، وليس "بدون اعتبار" تماماً كما ينص السؤال.
+د) `Integration testing` يخص تفاعل المكونات، وليس بالضرورة "بدون اعتبار للبنية الداخلية".
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 162 (سهل)
+The main goal of validation in software testing is to:
+أ) Ensure that the system works correctly with other systems
+ب) Verify that the system meets specified requirements
+ج) Test individual units or modules of code
+د) Ensure that defects are identified and fixed early
+و) None of the above
+**الإجابة الصحيحة: ب**
+**التعليل:**
+`Validation` حسب المحاضرة تجاوب على سؤال "هل نبني المنتج الصحيح؟" — أي التأكد أن النظام يلبّي فعلاً احتياجات وتوقعات العميل الحقيقية، وهذا يشمل التحقق من مطابقته للمتطلبات المحددة.
+
+أ) العمل الصحيح مع أنظمة أخرى أقرب لـ`Interoperability`، وليس تعريف `Validation` العام.
+ج) اختبار وحدات فردية هو `Unit Testing`، مستوى مختلف تماماً عن مفهوم `Validation` الأشمل.
+د) تحديد وإصلاح الأخطاء مبكراً هدف `Development Testing` عموماً، لا تعريف `Validation` تحديداً.
+
+المحاضرة فرّقت بوضوح بين `Validation` ("هل بنينا الصحيح؟") و`Verification` ("هل بنيناه صح؟") — والسؤال هنا يخص `Validation` تحديداً.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 163 (سهل)
+Boundary value analysis and equivalence partitioning are techniques primarily associated with which type of testing?
+أ) System testing
+ب) Acceptance testing
+ج) Integration testing
+د) Black-box testing
+و) None of the above
+**الإجابة الصحيحة: د**
+**التعليل:**
+كما شرحت المحاضرة، `Boundary Value Analysis` و`Partition Testing` (وهو نفسه `Equivalence Partitioning`) تُبنيان من مواصفات البرنامج ووثائق المستخدم — أي بدون معرفة الكود الداخلي، وهذا يصنّفهما ضمن عائلة `Black-box testing` تحديداً، وليس أي مستوى اختبار معيّن (Unit/System/Acceptance).
+
+A, B, C) هذه مستويات اختبار (`levels`) تُطبَّق فيها تقنيات `Black-box` (من ضمن أخرى)، لكنها ليست هي نفسها "نوع" التقنية المطلوب هنا.
+
+المحاضرة أكدت أن أفضل القيم للاختبار داخل أي `partition` هي القيم الحدودية (`Boundary Values`) — لأن أشهر أخطاء `off-by-one` تظهر فقط عند هذه الحدود.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 164 (سهل)
+Black-box technique for workflow/GUI Best?
+أ) Path coverage
+ب) State transition testing
+ج) Loop unrolling
+د) Data flow
+**الإجابة الصحيحة: ب**
+**التعليل:**
+اختبار انتقال الحالات (`State Transition Testing`) هو الأنسب لأنظمة تعتمد على تدفق عمل (`workflow`) وواجهات مستخدم (`GUI`) لأنها تنتقل بين حالات متعددة استجابة لتفاعل المستخدم — تماماً مثل مثال `WeatherStation` في محاضرة `Design and Implementation` (`Shutdown, Running, Configuring...`) الذي وُثِّق عبر `state diagram`.
+
+أ) تغطية المسارات تقنية `White-box` تحتاج معرفة الكود الداخلي، لا `Black-box`.
+ج) "فك الحلقات" (`Loop unrolling`) تقنية تحسين/تحليل كود داخلي، لا تقنية اختبار `black-box` لواجهات المستخدم.
+د) تحليل تدفق البيانات (`Data flow analysis`) تقنية `White-box` أيضاً، تحتاج معرفة داخلية بالكود.
+
+`State Transition Testing` تقنية `Black-box` قياسية (لا تحتاج معرفة الكود الداخلي، فقط معرفة الحالات الممكنة والانتقالات بينها من منظور المستخدم) — وهذا يناسب طبيعة الـ`GUI`/`workflow` تحديداً.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 165 (صعب)
+Integration testing strategy: High fan-in module risk?
+أ) Top-down (stubs)
+ب) Bottom-up (drivers)
+ج) Big Bang
+د) Sandwich
+**الإجابة الصحيحة: ب**
+**التعليل:**
+موديول بـ`Fan-in` عالٍ (يُستدعى من وحدات كثيرة) يجب اختباره مبكراً وبعمق قبل أن يعتمد عليه الجميع — استراتيجية `Bottom-up` تبدأ باختبار الوحدات الأدنى مستوى أولاً (باستخدام `drivers` لمحاكاة الوحدات الأعلى)، وهذا يضمن أن الموديول عالي الاستدعاء (اللي غالباً يكون في مستوى منخفض/مساعد) يُختبر ويُثبَّت أولاً قبل أن يُبنى فوقه الكثير.
+
+أ) `Top-down` (باستخدام `stubs`) يبدأ من الأعلى للأسفل، فيؤجل اختبار الموديول عالي الـ`Fan-in` (المنخفض عادة) لوقت متأخر — عكس المطلوب لتقليل المخاطرة.
+ج) `Big Bang` يدمج كل شيء دفعة واحدة بدون تدرج، وهذا يزيد صعوبة عزل الأخطاء في موديول حرج كهذا.
+د) `Sandwich` مزيج من `Top-down` و`Bottom-up` معاً، لكنه ليس الاستراتيجية الأكثر تحديداً واستهدافاً لمشكلة `Fan-in` العالي وحدها.
+
+المحاضرة ربطت مستويات `Development Testing` (`Unit → Component → System`) بفكرة "اختبر الأصغر أولاً" — وموديول عالي `Fan-in` هو بالضبط الحالة اللي يستفيد أكثر من هذا المبدأ عبر `Bottom-up`.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 166 (متوسط)
+Why is automated regression testing critical in continuous integration environments?
+أ) Testing stops shrinks with automation.
+ب) Removes need for manual testing permanently.
+ج) Only measure performance.
+د) Focuses on UI only.
+ه) Identifies regression faults quickly, enabling fast fixes and reliable frequent delivery.
+**الإجابة الصحيحة: ه**
+**التعليل:**
+في بيئات `Continuous Integration`، الكود يتغيّر باستمرار عدة مرات يومياً — أتمتة `Regression Testing` تكتشف فوراً أي كسر لوظيفة كانت تعمل سابقاً، مما يتيح إصلاحاً سريعاً وتسليماً متكرراً وموثوقاً، تماماً كما أكدت محاضرة `Testing` عن فائدة الأتمتة الكبرى في هذا السياق تحديداً.
+
+أ) عبارة غير مفهومة/مشوَّهة لا تصف فائدة حقيقية.
+ب) إزالة الحاجة الكاملة للاختبار اليدوي مبالغة — بعض الاختبارات الاستكشافية تبقى يدوية.
+ج) قياس الأداء فقط تبسيط مخل؛ `Regression Testing` يخص التأكد من عدم كسر الوظائف الموجودة عموماً، لا الأداء تحديداً.
+د) الاقتصار على واجهة المستخدم فقط يتجاهل نطاق `Regression Testing` الأوسع (يشمل أي وظيفة).
+
+المحاضرة أكدت: "إعادة هذا يدوياً مئات المرات مستحيلة عملياً، بينما الأتمتة تجعله سريعاً وممكناً بضغطة زر" — وهذا بالضبط ما يجعله حرجاً في بيئات `CI` سريعة التغيير.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 167 (صعب)
+How would you evaluate the effectiveness of a test suite that shows 100% statement coverage yet misses critical defects in input validation logic?
+أ) Add more code.
+ب) Ignore coverage metrics and focus on post-release fixes
+ج) Increase test quantity blindly.
+د) Coverage metrics do not guarantee detection of semantics errors or boundary condition faults.
+ه) Coverage should never exceed 90%.
+**الإجابة الصحيحة: د**
+**التعليل:**
+تغطية 100% للأسطر (`Statement Coverage`) تعني فقط أن كل سطر *نُفِّذ* مرة واحدة على الأقل، لكنها لا تضمن إطلاقاً اختبار كل القيم الحدودية (`boundary conditions`) أو كل الحالات الدلالية الممكنة — وهذا بالضبط ما نبّهت له محاضرة `JUnit`: "تغطية 100% لا تعني خلوّ الكود من الأخطاء".
+
+أ) إضافة كود عشوائي لا يحل مشكلة نقص حالات الاختبار الحدودية.
+ب) تجاهل مقاييس التغطية والانتظار حتى ما بعد الإصدار يزيد كلفة الإصلاح بدل تقليلها (تصحيح خطأ بعد الإطلاق أغلى بكثير).
+ج) زيادة عدد الاختبارات "بشكل أعمى" بدون استهداف الحالات الحدودية لا يحل المشكلة الجوهرية.
+ه) لا توجد قاعدة عامة تحدد حداً أقصى تعسفياً كهذا لنسبة التغطية.
+
+هذا يربط مباشرة بتقنية `Boundary Value Analysis` اللي شرحتها محاضرة `Testing`: القيم الحدودية هي مصدر أخطاء `off-by-one` الأكثر شيوعاً، وتغطية الأسطر وحدها لا تضمن اختبارها فعلياً.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 168 (صعب)
+Given limited resources, how should you prioritize testing efforts to maximize risk mitigation?
+أ) Use risk analysis to prioritize tests addressing high-impact and high-likelihood changes.
+ب) Equally test all requirements to ensure compliance.
+ج) Delay testing until requirements stabilize.
+د) Focus exclusively on functional testing first.
+**الإجابة الصحيحة: أ**
+**التعليل:**
+استخدام تحليل المخاطر (`Risk Analysis`, عبر `Risk Exposure = Probability × Impact` اللي شرحتها محاضرة إدارة المشاريع) لترتيب أولويات الاختبار حسب أعلى تأثير واحتمالية معاً هو الأسلوب الأمثل عند محدودية الموارد — يركّز الجهد المحدود على أكثر المناطق خطورة فعلياً بدل توزيعه بالتساوي.
+
+ب) اختبار كل المتطلبات بالتساوي يضيّع الموارد المحدودة على مناطق منخفضة المخاطرة بقدر المناطق عالية المخاطرة.
+ج) تأجيل الاختبار حتى استقرار المتطلبات غير واقعي عملياً (المتطلبات تتغيّر باستمرار كما شرحته محاضرة `Requirements`) ويزيد كلفة الإصلاح المتأخر.
+د) الاقتصار على الاختبار الوظيفي فقط يتجاهل مخاطر غير وظيفية مهمة (أمان، أداء) قد تكون أعلى تأثيراً.
+
+هذا تطبيق مباشر لمعادلة `Risk Exposure` اللي شرحتها محاضرة إدارة المشاريع (مثال شجرة القرار حول `regression testing`) على سياق تخطيط الاختبار بالتحديد.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 169 (صعب)
+During this suite review, you identify redundant tests covering identical code paths. What is the optimal approach to balance efficiency and reliability?
+أ) Remove all redundant tests immediately.
+ب) Analyse redundancy for value, remove redundant duplicates, but retain tests covering distinct behavioral scenarios to maintain coverage.
+ج) Retain all tests regardless of duplication.
+د) Prefer to test ownership only.
+**الإجابة الصحيحة: ب**
+**التعليل:**
+تحليل كل اختبار مكرر بعناية قبل حذفه — نحذف فقط التكرار الحقيقي الذي لا يضيف قيمة (نفس المسار تماماً)، ونُبقي أي اختبار يغطي سيناريو سلوكي مختلف فعلياً حتى لو بدا مشابهاً ظاهرياً — هذا يوازن بين الكفاءة (تقليل وقت التنفيذ) والموثوقية (الحفاظ على التغطية الكاملة).
+
+أ) حذف كل التكرار "فوراً" بدون تحليل قد يحذف اختبارات تبدو متشابهة لكنها تغطي سيناريوهات سلوكية مختلفة فعلياً (خطر فقدان تغطية حقيقية).
+ج) الإبقاء على كل التكرار بلا داعٍ يهدر وقت تنفيذ الاختبار دون فائدة إضافية حقيقية.
+د) "تفضيل ملكية الاختبار فقط" معيار إداري غير مرتبط بجوهر مشكلة التكرار الفني نفسها.
+
+هذا يربط بمبدأ اختيار حالات اختبار *فعّالة* اللي شرحته محاضرة `Testing`: المعيار هو "هل تكشف الحالة خطأً مختلفاً؟" لا مجرد عدّ عدد الاختبارات الإجمالي.
+
+## المحاضرة 6: JUnit (اختبار الوحدة بلغة Java) (تابع — دورات لاحقة)
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 170 (سهل)
+JUnit is a framework used primarily for:
+أ) System integration testing
+ب) Load testing
+ج) Unit testing
+د) Acceptance testing
+و) None of the above
+**الإجابة الصحيحة: ج**
+**التعليل:**
+المحاضرة عرّفت `JUnit` من أول جملة كمكتبة `Java` مخصصة لكتابة اختبارات آلية على مستوى الوحدة (`Unit Testing`) — عادة `method` واحدة بمعزل عن باقي النظام.
+
+أ) اختبار تكامل النظام أوسع بكثير، يحتاج أدوات مختلفة غالباً.
+ب) اختبار الحِمل (`Load Testing`) موضوع منفصل تماماً عن `JUnit`.
+د) اختبار القبول (`Acceptance Testing`) يقوم به العميل، لا علاقة له بـ`JUnit`.
+
+هذا هو أساس محاضرة `JUnit` بأكملها: أداة لأتمتة `Unit Testing` تحديداً، مع مثال `Calculator.add` كتطبيق عملي بسيط.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 171 (سهل)
+Which statement about JUnit is true?
+أ) JUnit tests are written in Python.
+ب) JUnit tests are executed sequentially.
+ج) JUnit tests do not require assertions.
+د) JUnit provides annotations to define test methods.
+و) None of the above
+**الإجابة الصحيحة: د**
+**التعليل:**
+المحاضرة شرحت بالتفصيل مجموعة `annotations` (زي `@Test`, `@Before`, `@After`, `@BeforeClass`, `@AfterClass`, `@Ignore`) لتحديد دورة حياة كل اختبار — وهذا مطابق تماماً للخيار D.
+
+أ) `JUnit` مكتبة `Java` حصراً، لا `Python`.
+ب) الترتيب التسلسلي ليس قاعدة عامة مضمونة في `JUnit` (لا يُفترض الاعتماد على ترتيب تنفيذ معيّن بين test methods مختلفة).
+ج) عكس الحقيقة تماماً — الاختبار بدون `assert statements` لا يتحقق فعلياً من أي شيء، وهذا جوهر عملية الاختبار بأكملها.
+
+`@Test` نفسها هي الـ`annotation` الأساسية اللي تحدد أن الدالة هي اختبار فعلي، وهذا أول ما شرحته المحاضرة عن `JUnit annotations`.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 172 (سهل)
+What is the primary benefit of using a testing framework like JUnit?
+أ) It allows for manual execution of test cases.
+ب) It provides tools for load testing.
+ج) It automates the execution of unit tests.
+د) It facilitates exploratory testing.
+و) None of the above
+**الإجابة الصحيحة: ج**
+**التعليل:**
+`JUnit` مكتبة تساعد على كتابة اختبارات آلية (`automated tests`) للكود بدل الاختبار اليدوي المتكرر — وهذا هو جوهر فائدتها العملية اللي شرحتها المحاضرة، خاصة في سياق `Regression Testing`.
+
+أ) التنفيذ اليدوي عكس الغرض الأساسي من استخدام `JUnit` أصلاً.
+ب) اختبار الحِمل (`Load Testing`) ليس مجال عمل `JUnit`.
+د) الاختبار الاستكشافي (`Exploratory Testing`) نشاط يدوي غير منظَّم، عكس الأتمتة المنهجية اللي توفرها `JUnit`.
+
+## المحاضرة 7: Project Management and Planning (تخطيط وإدارة المشاريع البرمجية) (تابع — دورات لاحقة)
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 173 (سهل)
+Who is typically responsible for developing the initial draft of the Work Breakdown Structure (WBS) in a software project?
+أ) Project manager
+ب) Business analyst
+ج) Systems architect
+د) Quality assurance manager
+و) None of the above
+**الإجابة الصحيحة: أ**
+**التعليل:**
+مدير المشروع (`Project Manager`) هو المسؤول الأساسي عن الجدولة والتخطيط (`Scheduling`) حسب المحاضرة، وبناء `WBS` جزء جوهري من مسؤولياته المبكرة لتنظيم عمل الفريق كاملاً.
+
+ب) محلل الأعمال يركّز على جمع وتوثيق المتطلبات، لا تجزئة العمل الإداري.
+ج) مهندس النظم يركّز على التصميم التقني، لا التخطيط الإداري للمشروع.
+د) مدير ضمان الجودة يركّز على المعايير والمراجعات، لا بناء هيكلية العمل الأولية.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 174 (سهل)
+Which statement best describes the hierarchical structure of a Work Breakdown Structure (WBS)?
+أ) It organizes project activities based on their cost implications.
+ب) It represents a chronological sequence of project tasks.
+ج) It categorizes project deliverables into levels of detail.
+د) It outlines the interdependencies between project stakeholders.
+و) None of the above
+**الإجابة الصحيحة: ج**
+**التعليل:**
+`WBS` هرمي بطبيعته: `Project` → `Phases` → `Steps` → `Activities` — أي تصنيف مخرجات المشروع (`deliverables`) عبر مستويات تفصيل متتالية من الأعم للأخص.
+
+أ) ترتيبه ليس مبنياً على التكلفة أساساً، بل على التجزئة المنطقية للعمل.
+ب) الترتيب الزمني (`chronological sequence`) وظيفة `Activity Graph`/`Gantt Chart`، لا `WBS` نفسه (اللي يهتم بالتجزئة الهيكلية لا التوقيت).
+د) اعتماديات أصحاب المصلحة موضوع مختلف تماماً، لا هيكلية `WBS`.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 175 (سهل)
+In a Work Breakdown Structure (WBS), the lowest level of decomposition typically represents:
+أ) Milestones
+ب) Project phases
+ج) Work packages
+د) Project objectives
+و) None of the above
+**الإجابة الصحيحة: ج**
+**التعليل:**
+أدنى مستوى في `WBS` هو الأنشطة الدقيقة القابلة للتنفيذ والإسناد لشخص واحد — وهذا ما يُعرف عموماً في أدبيات إدارة المشاريع بـ"حزم العمل" (`Work Packages`)، مطابقة لمستوى `Activities` في مثال المحاضرة.
+
+أ) المعالم (`Milestones`) نقاط زمنية تُعلن اكتمال نشاط، ليست "مستوى تجزئة" بحد ذاتها.
+ب) مراحل المشروع (`Phases`) هي أعلى مستوى في الهرمية، لا أدناها.
+د) أهداف المشروع مفهوم عام أوسع، ليس مستوى تجزئة محدداً في `WBS`.
+
+المحاضرة رتّبت الهرمية بوضوح: `Project` → `Phases` (الأعلى) → `Steps` → `Activities` (الأدنى، القابلة للإسناد لفرد واحد) — وهذا المستوى الأخير هو ما يُسمى عملياً "Work Packages".
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 176 (سهل)
+What is the main benefit of using a Work Breakdown Structure (WBS) in software project management?
+أ) It helps in tracking project progress against a baseline.
+ب) It ensures that project stakeholders are informed about project status.
+ج) It provides a framework for identifying project risks.
+د) It facilitates clear communication of project scope and tasks
+و) None of the above
+**الإجابة الصحيحة: د**
+**التعليل:**
+`WBS` بتجزئته الهرمية الواضحة (`Project` → `Phases` → `Steps` → `Activities`) يوضّح نطاق المشروع ومهامه بشكل بصري ومنظَّم لكل الفريق — وهذا هو أساس التواصل الواضح حول نطاق ومهام المشروع.
+
+أ) تتبع التقدم مقابل خط أساس وظيفة `Gantt Chart`/`CPM` الأقرب، وليست الفائدة الأساسية المباشرة لـ`WBS` نفسه.
+ب) إبقاء أصحاب المصلحة مطلعين نتيجة جانبية للتواصل الواضح، لا الفائدة المباشرة الأولى.
+ج) تحديد المخاطر موضوع `Risk Management` منفصل تماماً عن `WBS`.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 177 (سهل)
+Which technique is commonly used to create a Work Breakdown Structure (WBS) in software project management?
+أ) Brainstorming sessions
+ب) Earned Value Analysis (EVA)
+ج) Monte Carlo simulation
+د) SWOT analysis
+و) None of the above
+**الإجابة الصحيحة: أ**
+**التعليل:**
+جلسات العصف الذهني (`Brainstorming sessions`) مع الفريق تقنية شائعة عملياً لتحديد كل مخرجات المشروع وتجزئتها لمراحل وخطوات وأنشطة أولية قبل التنظيم النهائي لـ`WBS`.
+
+ب) `Earned Value Analysis` تقنية لقياس أداء المشروع لاحقاً، لا لإنشاء `WBS` نفسه.
+ج) محاكاة `Monte Carlo` تقنية تقدير احتمالي للمخاطر/التكلفة، لا لبناء هيكلية العمل.
+د) تحليل `SWOT` تقنية تخطيط استراتيجي عام، غير مخصص لبناء `WBS`.
+
+ملاحظة: هذه التقنية العملية المحددة (`Brainstorming` لبناء `WBS`) لم تُذكر بالاسم صراحة في محاضرة إدارة المشاريع، والإجابة معتمدة على معرفة عامة قياسية شائعة في إدارة المشاريع تكمّل ما شرحته المحاضرة عن `Work Breakdown` كمفهوم.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 178 (متوسط)
+The primary purpose of using numbering or coding schemes in a Work Breakdown Structure (WBS) is to:
+أ) Identify the responsible project team members for each task.
+ب) Track project costs associated with each work package.
+ج) Establish a hierarchical relationship between project tasks.
+د) Determine the critical path for project scheduling.
+و) None of the above
+**الإجابة الصحيحة: ج**
+**التعليل:**
+أنظمة الترقيم (زي 1.1، 1.2.1...) في `WBS` تعكس مباشرة الهرمية بين المراحل والخطوات والأنشطة — رقم كل عنصر يوضح مكانه بالضبط ضمن التسلسل الهرمي الأكبر.
+
+أ) تحديد المسؤولين موضوع إسناد المهام، وليس غرض الترقيم نفسه.
+ب) تتبع التكاليف نتيجة استخدام لاحقة ممكنة، لا الغرض الأساسي من الترقيم.
+د) تحديد المسار الحرج وظيفة `CPM`، منفصلة تماماً عن ترقيم `WBS`.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 179 (متوسط)
+How does the Work Breakdown Structure (WBS) contribute to effective project management?
+أ) By defining the project budget and timeline
+ب) By identifying project risks and mitigation strategies
+ج) By facilitating resource allocation and task assignment
+د) By ensuring compliance with industry standards and regulations
+و) None of the above
+**الإجابة الصحيحة: ج**
+**التعليل:**
+بعد تجزئة المشروع لأنشطة دقيقة قابلة للإسناد لشخص واحد عبر `WBS`، يصبح توزيع الموارد وإسناد المهام لكل فرد في الفريق أوضح وأسهل بكثير — وهذا الأثر العملي المباشر لبناء `WBS` صحيح.
+
+أ) تعريف الميزانية والجدول الزمني نشاط لاحق يستفيد من `WBS` كمدخل، لا غرضه المباشر.
+ب) تحديد المخاطر موضوع `Risk Management` منفصل تماماً.
+د) الامتثال للمعايير موضوع `Quality Assurance`، غير مرتبط مباشرة بـ`WBS`.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 180 (صعب)
+How should change management address scope creep without jeopardizing team morale and delivery?
+أ) Reject all change requests.
+ب) Enforce rigid early freeze requirements.
+ج) Ignore stakeholder feedback.
+د) Increase overtime hours.
+ه) Implement formal change control balancing needs and capabilities
+**الإجابة الصحيحة: ه**
+**التعليل:**
+إدارة التغيير الرسمية (`formal change control`) اللي توازن بين احتياجات أصحاب المصلحة والقدرات الفعلية للفريق (وقت، موارد، ميزانية) هي الحل المتوازن — تسمح بتقييم كل طلب تغيير بدل رفضه أو قبوله عشوائياً، وهذا يحمي معنويات الفريق (`morale`) وجدول التسليم معاً.
+
+أ) رفض كل طلبات التغيير قد يعني تجاهل احتياجات حقيقية للعميل، ما يضر برضاه لاحقاً.
+ب) التجميد المبكر الصارم (`rigid early freeze`) يناقض واقع أن المتطلبات تتغيّر دائماً بطبيعتها (كما شرحته محاضرة `Requirements`).
+ج) تجاهل ملاحظات أصحاب المصلحة يضر بجودة النظام النهائي وثقة العميل.
+د) زيادة ساعات العمل الإضافي حل قصير المدى يضر بمعنويات الفريق مباشرة، عكس المطلوب بالسؤال.
+
+هذا يربط بمفهوم `Scope Creep` وإدارة المتطلبات اللي شرحته محاضرة `Requirements`: العملية الرسمية لتقييم أثر كل تغيير مقترح (لا رفضه أو قبوله تلقائياً) هي ما يحمي المشروع من فوضى `Scope Creep` غير المُدار.
+
+## المحاضرة 8: Software Measurement (قياس البرمجيات) (تابع — دورات لاحقة)
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 181 (سهل)
+Which of the following statements about Cyclomatic Complexity (CC) is true?
+أ) CC measures the size of a class by counting its methods and attributes.
+ب) CC measures the number of decision points in a method.
+ج) CC measures the number of child classes inheriting from a superclass.
+د) CC measures the coupling between classes in a software system.
+و) None of the above
+**الإجابة الصحيحة: ب**
+**التعليل:**
+`Cyclomatic Complexity` (CC) حسب معادلة `V(G) = e − n + 2p` تقيس عدد نقاط القرار (`decision points`) — زي `if`, `while`, `for` — داخل الدالة الواحدة، وهذا هو ما يحدد عدد المسارات المستقلة (`independent paths`).
+
+أ) عدّ الـ methods والـ attributes هو تعريف `WMC`/حجم الفئة، مو `CC`.
+ج) عدد الفئات الفرعية الموروثة هو `NOC` (Number of Children)، مقياس مختلف تماماً.
+د) الاقتران بين الفئات هو `CBO` (Coupling Between Objects)، لا علاقة له بـ `CC`.
+
+مثال المحاضرة المحلول (دالة `showClients`) أظهر أن `E=7, N=6, P=1` تعطي `V(G)=3` — أي 3 مسارات مستقلة ناتجة مباشرة عن نقاط القرار (`if`/loop) داخل الدالة.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 182 (متوسط)
+What is the significance of a high Cyclomatic Complexity (CC) value in a method?
+أ) It indicates that the method has many conditionals and potential paths.
+ب) It suggests that the method has a large number of lines of code.
+ج) It signifies that the method is highly cohesive.
+د) It indicates a low level of coupling with other classes.
+و) None of the above
+**الإجابة الصحيحة: أ**
+**التعليل:**
+`CC` عالية تعني أن الدالة فيها عدد كبير من نقاط القرار (`conditionals`) ومسارات تنفيذ محتملة (`potential paths`) — والقاعدة العملية اللي شرحتها المحاضرة: لو تجاوز `V(G)` الرقم 10، احتمال وجود أخطاء يرتفع بشكل ملحوظ.
+
+ب) `LOC` مقياس حجم منفصل تماماً؛ دالة طويلة قد تكون بسيطة المنطق (`CC` منخفضة) رغم طولها.
+ج) التماسك (`Cohesion`) يقاس بـ `LCOM`، لا علاقة مباشرة له بـ `CC`.
+د) الاقتران يقاس بـ `CBO`، ولا علاقة مباشرة بـ `CC`.
+
+المحاضرة أكدت أن `CC` تُستخدم كإشارة تحذير لفرق `QA` لتحديد أولويات الاختبار — لأنها تعكس تحديداً كثرة المسارات المنطقية المحتملة، لا حجم الكود.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 183 (سهل)
+What does the Lack of Cohesion in Methods (LCOM) metric measure?
+أ) The number of methods that are dependent on each other.
+ب) The number of attributes that are unused by any method.
+ج) The degree to which methods in a class share data.
+د) The degree to which methods in a class are logically connected.
+و) None of the above
+**الإجابة الصحيحة: ج**
+**التعليل:**
+`LCOM` يُحسب فعلياً بأخذ مجموعة المتغيرات (`attributes`) المستخدمة في كل دالة، ثم عدّ المجموعات المنفصلة (`disjoint`) بعد تقاطعها — أي أن حسابه مبني بالكامل على مدى مشاركة (`sharing`) الدوال لنفس البيانات (`data`) الداخلية للفئة.
+
+أ) "الدوال المعتمدة على بعضها" وصف غير دقيق لآلية حساب `LCOM` الفعلية (المبنية على تقاطع مجموعات المتغيرات، لا استدعاء دوال لبعضها).
+ب) عدّ الخصائص غير المستخدمة إطلاقاً مقياس مختلف تماماً، لا `LCOM`.
+د) "الدرجة المنطقية للترابط" وصف عام صحيح لـ `Cohesion` كمفهوم، لكنه ليس تعريف آلية حساب `LCOM` تحديداً كما شرحتها المحاضرة (وهو أيضاً معكوس دلالياً، لأن `LCOM` يقيس *غياب* الترابط لا وجوده).
+
+`LCOM` عالٍ يعني أن الفئة فعلياً تخدم أكثر من مسؤولية وتحتاج تُقسّم — وهذا الحكم مبني حصراً على مدى تقاطع مجموعات البيانات (`data`) المستخدمة بين الدوال.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 184 (سهل)
+Coupling Between Objects (CBO) measures:
+أ) The number of methods a class inherits from its superclass.
+ب) The level of interaction between different classes.
+ج) The number of attributes a class contains.
+د) The depth of inheritance of a class.
+و) None of the above
+**الإجابة الصحيحة: ب**
+**التعليل:**
+`CBO` يهتم تحديداً بالعلاقات *خارج* شجرة الوراثة — أي مستوى التفاعل والاعتماد بين فئات مختلفة عبر استخدام دوال بعضها البعض (مثال المحاضرة: `Class B` مرتبطة مع `A` و`C` و`D` فـ `CBO(B) = 3`).
+
+أ) عدد الدوال الموروثة من الأب لا علاقة له بـ `CBO`؛ الوراثة مقياس منفصل (`DIT`/`NOC`).
+ج) عدد الخصائص مقياس حجم مختلف تماماً، لا اقتران.
+د) عمق الوراثة هو `DIT` تحديداً، مقياس مختلف عن `CBO`.
+
+القاعدة الذهبية المتكررة بالمحاضرة: `Keep low coupling but high cohesion` — و`CBO` هو المقياس المباشر لأول شق من هذه القاعدة.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 185 (سهل)
+Depth of Inheritance Tree (DIT) helps in understanding:
+أ) The number of methods overridden by subclasses.
+ب) The maximum number of methods in a class.
+ج) The hierarchy depth from a class to its furthest ancestor.
+د) The number of child classes directly inheriting from a superclass.
+و) None of the above
+**الإجابة الصحيحة: ج**
+**التعليل:**
+`DIT` يقيس أقصى مسافة (`maximum distance`) بين فئة الجذر (اللي `DIT` لها دائماً = 0) وأي فئة في شجرة الوراثة — أي عمق الهرمية من الفئة لأبعد سلف (`furthest ancestor`) لها.
+
+أ) عدّ الدوال المُعاد تعريفها (`overridden`) مقياس مختلف، لا `DIT`.
+ب) أقصى عدد دوال في فئة واحدة هو `WMC` وليس `DIT`.
+د) عدد الفئات الفرعية المباشرة هو `NOC` (Number of Children)، مقياس آخر مختلف تماماً عن `DIT`.
+
+المحاضرة ربطت `DIT` العميق بمقايضة حقيقية: إعادة استخدام أكبر (`reuse`) مقابل تعقيد تصميم أكبر — كلما زاد `DIT`، زاد عدد الدوال الموروثة المطلوب اختبارها.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 186 (TODO — سهل)
+When evaluating software metrics, which characteristic is indicative of a highly cohesive class?
+أ) High Weighted Methods per Class (WMC) and low Cyclomatic Complexity (CC).
+ب) High Lack of Cohesion in Methods (LCOM) and low Coupling Between Objects (CBO).
+ج) High Cyclomatic Complexity (CC) and low Depth of Inheritance Tree (DIT).
+د) Low Weighted Methods per Class (WMC) and high Number of Children (NOC).
+و) None of the above
+**الإجابة الصحيحة: TODO**
+**التعليل:**
+لا يوجد خيار صحيح فعلياً هنا — الفئة عالية التماسك (`highly cohesive`) يجب أن تتصف بـ`LCOM` **منخفض** (لأن `LCOM` يقيس *غياب* التماسك، فكلما ارتفع كلما كان التماسك أسوأ)، بينما الخيار B يذكر "High LCOM" وهو عكس المطلوب تماماً — تناقض داخلي في صياغة الخيار الصحيح المفترض.
+
+أ) لا علاقة واضحة أو موثّقة بين `WMC`/`CC` وبين التماسك مباشرة.
+ج) `CC` و`DIT` مقياسا تعقيد ووراثة، لا علاقة مباشرة موثّقة بالتماسك.
+د) `WMC` و`NOC` أيضاً غير مرتبطين مباشرة بمفهوم التماسك حسب ما شرحته المحاضرة.
+
+بما أن الفئة عالية التماسك يجب أن يكون لها `LCOM` منخفض تحديداً (والخيار B يذكر "High LCOM" بالخطأ، وربما هذا خطأ استخراج/كتابة في السؤال الأصلي حيث كان المقصود "Low LCOM")، تُرك السؤال TODO للمراجعة اليدوية بدل اختيار إجابة تتناقض مع تعريف `LCOM` الصحيح.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 187 (سهل)
+Which metric is used to evaluate the complexity of control flow within methods?
+أ) Depth of Inheritance Tree (DIT)
+ب) Weighted Methods per Class (WMC)
+ج) Cyclomatic Complexity (CC)
+د) Coupling Between Objects (CBO)
+و) None of the above
+**الإجابة الصحيحة: ج**
+**التعليل:**
+`Cyclomatic Complexity` تُحسب تحديداً من مخطط تدفق التحكم (`Control Flow Graph`) للدالة عبر المعادلة `V(G) = e − n + 2p` — وهي المقياس المخصص بالضبط لتقييم تعقيد تدفق التحكم (`control flow`) داخل الدوال.
+
+أ) `DIT` يقيس عمق الوراثة، لا تدفق التحكم داخل دالة.
+ب) `WMC` مجموع `CC` على مستوى الفئة كاملة، لا دالة واحدة تحديداً.
+د) `CBO` يقيس الاقتران بين الفئات، لا تعقيد التحكم الداخلي.
+
+هذا تكرار مباشر لتعريف `CC` الأساسي اللي شرحته المحاضرة بمعادلته وأمثلته المحلولة (دالة `showClients`).
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 188 (متوسط)
+How does the Number of Children (NOC) metric contribute to software design evaluation?
+أ) It indicates the number of subclasses that extend a superclass.
+ب) It measures the average number of methods per class.
+ج) It evaluates the number of attributes per class.
+د) It quantifies the level of interaction between classes.
+و) None of the above
+**الإجابة الصحيحة: أ**
+**التعليل:**
+`NOC` (Number of Children) يعدّ تحديداً عدد الفئات الفرعية المباشرة (`direct subclasses`) اللي ترث من فئة معيّنة — وهذا مطابق حرفياً للخيار A.
+
+ب) متوسط عدد الدوال لكل فئة مقياس مختلف تماماً (أقرب لـ `WMC` بمعنى آخر).
+ج) عدد الخصائص لكل فئة لا علاقة له بـ `NOC`.
+د) مستوى التفاعل بين الفئات هو `CBO`، لا `NOC`.
+
+المحاضرة أكدت أن `NOC` عالٍ يعطي مؤشراً على تأثير كبير لتلك الفئة على التصميم العام — أي خطأ فيها ينتشر لعدد كبير من الفئات الفرعية دفعة واحدة.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 189 (سهل)
+What does the lack of Cohesion in Methods (LCOM) value of zero imply about a class?
+أ) The class has no methods.
+ب) The class has perfectly cohesive methods.
+ج) The class has a very high number of methods.
+د) The class has very low Cyclomatic Complexity (CC).
+و) None of the above
+**الإجابة الصحيحة: ب**
+**التعليل:**
+`LCOM = 0` يعني عدم وجود أي مجموعات منفصلة (`disjoint sets`) من الدوال بعد تقاطع مجموعات المتغيرات المستخدمة — أي أن كل دوال الفئة تشترك في استخدام نفس البيانات بشكل متماسك تماماً، وهذا هو التماسك المثالي (`perfectly cohesive`).
+
+أ) عدم وجود دوال إطلاقاً ليس المعنى الصحيح؛ `LCOM=0` يفترض وجود دوال متماسكة فعلياً، لا غيابها.
+ج) عدد الدوال الكبير لا علاقة له بقيمة `LCOM` تحديداً.
+د) `CC` منخفض مقياس منفصل تماماً عن `LCOM`.
+
+هذا يربط مباشرة بآلية حساب `LCOM` اللي شرحتها المحاضرة: عدد المجموعات المنفصلة بعد التقاطع — وصفر مجموعة منفصلة يعني تماسكاً كاملاً بين كل الدوال.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 190 (سهل)
+Coupling Between Objects (CBO) increases when:
+أ) Classes are loosely coupled.
+ب) Classes have fewer methods.
+ج) Classes have many dependencies on other classes.
+د) Classes inherit from multiple superclasses.
+و) None of the above
+**الإجابة الصحيحة: ج**
+**التعليل:**
+`CBO` يرتفع كلما زاد عدد الفئات الأخرى التي تعتمد عليها الفئة (أو تعتمد عليها) عبر استخدام دوالها — أي كثرة الاعتماديات (`dependencies`) خارج شجرة الوراثة.
+
+أ) الاقتران المنخفض (`loosely coupled`) عكس ما يزيد `CBO`، بل يخفّضه.
+ب) عدد الدوال لا علاقة مباشرة له بـ `CBO`؛ الاقتران يخص الاعتماد على فئات أخرى، لا عدد الدوال الداخلية.
+د) الوراثة المتعددة تخص `DIT`، لا `CBO` (اللي يهتم فقط بالعلاقات *خارج* شجرة الوراثة كما أكدت المحاضرة).
+
+القاعدة الذهبية `Keep low coupling but high cohesion` تعني أن الفئات الأكثر استقلالية (اعتماديات أقل على فئات أخرى) هي الأسهل إعادة استخداماً واختباراً.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 191 (سهل)
+Which software metric helps identify potential maintenance issues due to complex interdependencies between classes?
+أ) Depth of Inheritance Tree (DIT)
+ب) Coupling Between Objects (CBO)
+ج) Cyclomatic Complexity (CC)
+د) Number of Children (NOC)
+و) None of the above
+**الإجابة الصحيحة: ب**
+**التعليل:**
+الاعتماديات المعقدة (`complex interdependencies`) بين فئات مختلفة هي تحديداً ما يقيسه `CBO` — كلما زاد الاقتران زادت حساسية النظام للتغييرات واحتجنا اختباراً أكثر عند الصيانة.
+
+أ) `DIT` يخص عمق الوراثة، لا الاعتماديات بين فئات غير مرتبطة وراثياً.
+ج) `CC` يخص تعقيد المنطق الداخلي لدالة واحدة، لا الترابط بين فئات.
+د) `NOC` يخص عدد الفئات الفرعية، لا الاعتماديات المتبادلة.
+
+هذا يربط مباشرة بالقاعدة الذهبية للمحاضرة: الاقتران المرتفع (`high CBO`) يضر بالتصميم المعياري ويزيد حساسية النظام للتغييرات — وهذا بالضبط "مشاكل الصيانة الناتجة عن ترابطات معقدة".
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 192 (سهل)
+What does a high Depth of Inheritance Tree (DIT) indicate about a class?
+أ) The class has many methods.
+ب) The class has deep inheritance relationships.
+ج) The class has low cohesion.
+د) The class has many child classes.
+و) None of the above
+**الإجابة الصحيحة: ب**
+**التعليل:**
+`DIT` مرتفع يعني أن الفئة تقع في مستوى عميق جداً من شجرة الوراثة (مسافة كبيرة عن فئة الجذر)، أي علاقات وراثة عميقة (`deep inheritance relationships`).
+
+أ) عدد الدوال مقياس منفصل (`WMC`)، لا `DIT`.
+ج) التماسك يقاس بـ `LCOM`، لا علاقة مباشرة موثّقة بـ `DIT`.
+د) عدد الفئات الفرعية (الأبناء) هو `NOC`، لا `DIT` (الذي يقيس العمق نحو الأسلاف لا الأبناء).
+
+المحاضرة ربطت `DIT` العميق بمقايضة: إعادة استخدام أكبر لكن تعقيد تصميم أكبر أيضاً — كل ما زاد العمق، زاد عدد الدوال الموروثة المطلوب فهمها واختبارها.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 193 (صعب)
+WMC for class with 3 methods (CC={1,2,4}, value)?
+أ) 3
+ب) Max 4
+ج) 2.33
+د) 7
+**الإجابة الصحيحة: د**
+**التعليل:**
+`WMC` (Weighted Methods per Class) = مجموع `Cyclomatic Complexity` لكل دوال الفئة، وليس عددها أو أقصى قيمة فيها. هنا: 1 + 2 + 4 = 7.
+
+أ) عدد الدوال (3) وحده ليس `WMC`؛ هو مجرد عدد بدون "الوزن" (`weighted`).
+ب) أقصى قيمة (`Max 4`) ليست تعريف `WMC`؛ هذا مقياس مختلف (`max complexity`) لا `WMC` نفسه.
+ج) المتوسط (2.33) ليس `WMC` أيضاً — الأدبيات تستخدم المجموع (`sum`)، لا المتوسط (`average`).
+
+المحاضرة أعطت قاعدة عملية: `WMC` بقيمة 20 لفئة تُعتبر جيدة، لكن يُفضَّل عدم تجاوز 40 — وهذا الرقم دائماً ناتج جمع (`sum`) قيم `CC` كلها معاً، لا حساب `average` أو `max`.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 194 (صعب)
+CC for the following code while (x<n) { cond += x; if (x==1) break; }
+أ) Independent
+ب) 2
+ج) 4
+د) 3
+**الإجابة الصحيحة: د**
+**التعليل:**
+عدد نقاط القرار (`decision points`) هنا اثنان: شرط `while` وشرط `if` الداخلي. القاعدة العملية: `CC = عدد نقاط القرار + 1` = 2 + 1 = 3.
+
+أ) "Independent" ليست رقماً؛ السؤال يطلب قيمة `V(G)` رقمية محددة.
+ب) 2 يساوي عدد نقاط القرار فقط بدون إضافة الـ +1 الأساسية لأي دالة (حتى بدون أي شرط، `CC` الأدنى = 1).
+ج) 4 يفترض ثلاث نقاط قرار، بينما الكود فيه شرطان فقط (`while` و`if`).
+
+هذا تطبيق مباشر لمعادلة `V(G) = e − n + 2p` اللي شرحتها المحاضرة عبر مثال `showClients` المحلول (E=7, N=6, P=1 → V(G)=3) — نفس المنطق الحسابي هنا.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 195 (صعب)
+CBO for a class that calls methods from 2 other classes, rvs 1 more?
+أ) 2
+ب) 1 (outgoing only)
+ج) 3
+د) Bidirectional
+**الإجابة الصحيحة: ج**
+**التعليل:**
+`CBO` (Coupling Between Objects) يعدّ إجمالي عدد الفئات المختلفة المرتبطة بها الفئة الحالية — سواء عبر استدعاء (`calls`, صادر/outgoing) أو استقبال (`receives`, وارد/incoming). هنا: فئتان تُستدعى دوالهما + فئة واحدة إضافية تستقبل منها استدعاءً = 3 فئات مختلفة مرتبطة إجمالاً.
+
+أ) 2 يحسب فقط الفئات المستدعاة (`outgoing`)، متجاهلاً الفئة الثالثة (`receives`).
+ب) الاقتصار على `outgoing only` يتجاهل نص السؤال صراحة ("rvs 1 more" أي "receives from 1 more").
+د) "Bidirectional" ليس رقماً؛ مثال المحاضرة (`Class B` مرتبطة مع `A` و`C` و`D` فـ `CBO(B)=3`) يحسب العدد الإجمالي للفئات المرتبطة بغض النظر عن الاتجاه.
+
+المحاضرة أكدت أن `CBO` يهتم بكل العلاقات *خارج* شجرة الوراثة بغض النظر عن اتجاهها (صادرة أو واردة) — وهذا يفسّر لماذا نجمع كل الفئات الثلاث المختلفة معاً.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 196 (صعب)
+LCOM for a class of 4 methods access 2 disjoint field sets (2 each), LCOM=
+أ) 4/6
+ب) 0
+ج) 0.5
+د) 1
+**الإجابة الصحيحة: د**
+**التعليل:**
+حسب آلية حساب `LCOM` اللي شرحتها المحاضرة (عدّ عدد المجموعات المنفصلة تماماً `disjoint sets` بعد تقاطع مجموعات المتغيرات المستخدمة لكل دالة): هنا الدوال الأربع تنقسم لمجموعتين منفصلتين تماماً (2 دوال تستخدم مجموعة حقول، ودالتان تستخدمان مجموعة حقول أخرى بدون أي تقاطع). بموجب الصيغة الشائعة `LCOM = (عدد المجموعات المنفصلة) − 1` = 2 − 1 = 1.
+
+أ) 4/6 يفترض حساباً بصيغة `P−Q` (أزواج لا تشترك ÷ إجمالي الأزواج) لم تُشرح بهذا الشكل الدقيق في المحاضرة.
+ب) صفر يعني تماسكاً كاملاً (كل الدوال في مجموعة واحدة مترابطة)، عكس الانقسام لمجموعتين منفصلتين هنا تماماً.
+ج) 0.5 لا يطابق أي صيغة حساب `LCOM` مذكورة في المحاضرة.
+
+هذا يربط مباشرة بمثال المحاضرة: `LCOM=0` يعني تماسكاً مثالياً (مجموعة واحدة فقط)، وكل ما زاد عدد المجموعات المنفصلة، ارتفعت قيمة `LCOM` وزاد مؤشر الحاجة لتقسيم الفئة لأكثر من فئة (مبدأ المسؤولية الواحدة).
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 197 (سهل)
+Threshold: CC > ? indicates high risk?
+أ) 6
+ب) 5
+ج) 20
+د) 10
+ه) None of the above
+**الإجابة الصحيحة: د**
+**التعليل:**
+المحاضرة نصّت صراحة على القاعدة العملية: "إذا تجاوز `V(G)` الرقم 10، احتمال وجود أخطاء يرتفع بشكل ملحوظ" — وتُستخدم كإشارة تحذير لفرق `QA` لتحديد أولويات الاختبار.
+
+A, B) 6 و5 أرقام أقل من العتبة الفعلية المذكورة بالمحاضرة.
+ج) 20 رقم أعلى من العتبة الفعلية (20 هو حد `WMC` المقبول للفئة كاملة، مو حد `CC` لدالة واحدة).
+ه) بما أن الخيار D (10) صحيح ومطابق للمحاضرة، فلا داعي لـ"none of the above".
+
+## المحاضرة 9: Software Measurement — الجزء الثاني (قياس البرمجيات) (تابع — دورات لاحقة)
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 198 (TODO — صعب)
+Fan-in for module M-Called by 3 modules, Value?
+أ) NaN
+ب) 1
+ج) Outgoing calls
+د) Reuses ELS
+**الإجابة الصحيحة: TODO**
+**التعليل:**
+هذا السؤال يبدو تالفاً في الاستخراج: `Fan-in` (عدد الدوال/الوحدات اللي "تنادي" على وحدة معيّنة، كما عرّفته المحاضرة) لموديول يُستدعى من 3 وحدات (`Called by 3 modules`) يجب أن يساوي رقمياً **3** — لكن هذه القيمة غير موجودة إطلاقاً بين الخيارات الأربعة المتاحة (`NaN`, `1`, `Outgoing calls`, `Reuses ELS`).
+
+ب) القيمة "1" لا تطابق نص السؤال (3 modules calling M).
+ج) "Outgoing calls" هو تعريف `Fan-out` بالضبط لا `Fan-in` (اللي هو `incoming calls`) — عكس المفهوم المطلوب.
+د) "Reuses ELS" عبارة غير مفهومة ولا تطابق أي مفهوم قياسي مرتبط بـ`Fan-in`.
+
+بما أن القيمة الصحيحة (3) غير متوفرة بين الخيارات، وخياري C وD يبدوان مشوَّهين أو غير مرتبطين منطقياً بالسؤال، يُترك TODO للمراجعة اليدوية بدل تخمين إجابة رياضياً خاطئة.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 199 (صعب)
+Fan-out for function: Calls 3 functions, 2 external libs.
+أ) Components
+ب) 5
+ج) 2
+د) 3
+**الإجابة الصحيحة: ب**
+**التعليل:**
+`Fan-out` يعدّ إجمالي عدد الدوال الأخرى اللي هذه الدالة *هي* تناديها (`calls out`)، بما فيها استدعاءات المكتبات الخارجية. هنا: 3 دوال داخلية + 2 مكتبات خارجية = 5 استدعاءات إجمالية صادرة.
+
+أ) "Components" ليست رقماً، لا تجيب على السؤال.
+ج) 2 يحسب المكتبات الخارجية فقط، متجاهلاً الدوال الثلاث الداخلية.
+د) 3 يحسب الدوال الداخلية فقط، متجاهلاً المكتبتين الخارجيتين.
+
+المحاضرة عرّفت `Fan-out` كعدد الدوال اللي الدالة "هي" تناديها — بغض النظر عن كون الاستدعاء لدالة داخل النظام أو مكتبة خارجية، فكلاهما يُحتسب ضمن الإجمالي.
+
+## المحاضرة 10: Software Requirements Specification (مواصفات متطلبات البرمجيات) (تابع — دورات لاحقة)
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 200 (سهل)
+Which document serves as a basis for the agreement between the customer and the software development team?
+أ) Software Design Document (SDD)
+ب) System Architecture Document (SAD)
+ج) Software Requirement Specification (SRS)
+د) Test Plan Document (TPD)
+و) None of the above
+**الإجابة الصحيحة: ج**
+**التعليل:**
+المحاضرة وصفت `SRS` صراحة كـ"عقد" غير رسمي (`contract`) بين فريق التطوير والعميل — بحيث الكل متفق من البداية شنو النظام المفروض يسويه بالضبط.
+
+أ) `SDD` وثيقة تصميم تقنية داخلية، وليست "عقداً" مع العميل مباشرة.
+ب) وثيقة المعمارية جزء تقني من التصميم، لا اتفاق تعاقدي مع العميل.
+د) خطة الاختبار وثيقة تقنية لاحقة، لا أساس الاتفاق الأولي.
+
+مثال المحاضرة (نظام `ACME Library Management System`) وضّح هذا الدور: الجمهور المستهدف لـ`SRS` يشمل ممثلي العميل وممثلي الفريق التقني معاً — وهذا بالضبط طبيعة "العقد" المشترك.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 201 (سهل)
+Who is typically responsible for preparing the Software Requirement Specification (SRS)?
+أ) Project manager
+ب) System architect
+ج) Quality assurance team
+د) Business analyst
+و) None of the above
+**الإجابة الصحيحة: د**
+**التعليل:**
+`Business analyst` هو الدور المسؤول تقليدياً عن جمع متطلبات العميل وترجمتها لوثيقة `SRS` منظمة، عبر التواصل المباشر مع أصحاب المصلحة (`stakeholders`) من الطرفين.
+
+أ) مدير المشروع يخطط وينسّق المشروع، لكن كتابة `SRS` التفصيلية ليست مسؤوليته المباشرة عادة.
+ب) مهندس النظام (`System Architect`) يستخدم `SRS` كمدخل للتصميم، لكنه لا يكتبها هو نفسه غالباً.
+ج) فريق ضمان الجودة يتحقق من مطابقة النظام لـ`SRS` لاحقاً، لا يكتبها.
+
+ملاحظة: هذا الدور التنظيمي المحدد (من يكتب `SRS` بالضبط) لم يُذكر صراحة بهذه التسمية في المحاضرة (اللي ركّزت على "خمس فئات مستخدمين" لـ`SRS` بدل "من يكتبها")، والإجابة معتمدة على معرفة عامة قياسية في هندسة المتطلبات.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 202 (سهل)
+Which section of the SRS document typically includes information about the system's hardware and software interfaces?
+أ) Functional requirements
+ب) Non-functional requirements
+ج) External interfaces
+د) User characteristics
+و) None of the above
+**الإجابة الصحيحة: ج**
+**التعليل:**
+المحاضرة شرحت بالتفصيل قسم `2.1 Product Perspective` وتفرعاته الثمانية، من ضمنها `2.1.3 Hardware Interfaces` و`2.1.4 Software Interfaces` — وكلاهما يقعان تحت مظلة `External Interfaces` العامة.
+
+أ) المتطلبات الوظيفية تصف "ماذا" يفعل النظام، لا واجهات الهاردوير/السوفتوير تحديداً.
+ب) المتطلبات غير الوظيفية تصف قيوداً عامة، وليست القسم المخصص لتعداد الواجهات التقنية تحديداً.
+د) خصائص المستخدمين قسم وصفي عن من يستخدم النظام، لا واجهاته التقنية.
+
+مثال المحاضرة (نظام `ACME`) حدد بدقة: كل جهاز `PC` يحتاج كرت شبكة `Ethernet`، وقارئ باركود يتصل عبر `serial port` — كلها ضمن `External Interfaces`.
+
+## المحاضرة 11: Software Requirements Specification - 2 (وثيقة متطلبات البرمجيات - الجزء الثاني) (تابع — دورات لاحقة)
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 203 (متوسط)
+What is the purpose of including the traceability matrix in the SRS document?
+أ) To map test cases to requirements for validation purposes.
+ب) To provide a detailed breakdown of project milestones.
+ج) To outline the software architecture and design patterns.
+د) To document user feedback and improvement suggestions.
+و) None of the above
+**الإجابة الصحيحة: أ**
+**التعليل:**
+مصفوفة التتبع (`Traceability Matrix`) تربط كل متطلب بحالات الاختبار المصمَّمة للتحقق منه — وهذا تطبيق عملي مباشر لمبدأ `Traceability` اللي شرحته محاضرة إدارة المتطلبات: القدرة على ربط كل متطلب بمصدره وبتنفيذه/اختباره لاحقاً.
+
+ب) تفصيل معالم المشروع (`Milestones`) موضوع `Project Plan`، منفصل تماماً.
+ج) البنية المعمارية وأنماط التصميم توثَّق في `SDD`، لا مصفوفة التتبع.
+د) توثيق ملاحظات المستخدمين نشاط مختلف تماماً (`User Feedback`).
+
+هذا يربط مباشرة بمهام إدارة المتطلبات الثلاث اللي شرحتها المحاضرة: تتبع كل متطلب، الحفاظ على الروابط بين المتطلبات، وتقييم أثر التغيير — ومصفوفة التتبع أداة عملية لتنفيذ هذه المهام.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 204 (سهل)
+Which section of the SRS document typically includes details about the performance requirements of the software?
+أ) Functional requirements
+ب) Non-functional requirements
+ج) System constraints
+د) User characteristics
+و) None of the above
+**الإجابة الصحيحة: ب**
+**التعليل:**
+متطلبات الأداء (`Performance Requirements`) هي أحد الأبواب السبعة لقسم `Specific Requirements` اللي شرحتها المحاضرة، وتقع ضمن فئة `Non-functional Requirements` الأوسع (قيود الجودة زي الأداء والأمان وسهولة الاستخدام).
+
+أ) المتطلبات الوظيفية تصف الوظائف نفسها، لا معايير أدائها الكمّية.
+ج) قيود النظام (`Constraints`) عامة أوسع (قوانين، حدود هاردوير) وليست قسم الأداء تحديداً، رغم أنها فئة مرتبطة.
+د) خصائص المستخدمين وصفية عن من يستخدم النظام، لا معايير الأداء.
+
+المحاضرة صنّفت `Performance Requirements` كأحد الأبواب السبعة لـ`Specific Requirements`، وكلها تندرج مفاهيمياً تحت مظلة `Non-functional Requirements` بمعناها الواسع.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 205 (سهل)
+Which aspect of the SRS document is crucial for ensuring that the software can be maintained and enhanced in the future?
+أ) Requirements prioritization
+ب) Change control procedures
+ج) User acceptance criteria
+د) Performance metrics
+و) None of the above
+**الإجابة الصحيحة: ب**
+**التعليل:**
+إجراءات التحكم بالتغيير (`Change Control Procedures`) هي التطبيق العملي لإدارة المتطلبات (`Requirements Management`) اللي شرحتها المحاضرة — تتبع التغييرات وتقييم أثرها هو ما يضمن قابلية تطوير النظام وصيانته مستقبلاً دون فوضى.
+
+أ) ترتيب أولويات المتطلبات (`Apportioning`) يخص توزيع العمل عبر الإصدارات، لا الصيانة المستقبلية مباشرة.
+ج) معايير قبول المستخدم تخص `Acceptance Testing`، لا آلية التطوير المستقبلي للنظام.
+د) مقاييس الأداء تقيس جودة حالية، لا آلية إدارة التغيير المستقبلي.
+
+المحاضرة أكدت أن إدارة المتطلبات يجب أن تبدأ من أول مسودة للوثيقة، وتشمل تتبع كل متطلب وتقييم أثر أي تغيير مقترح — وهذا بالضبط ما يجعل النظام قابلاً للصيانة والتوسعة لاحقاً بأمان.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 206 (سهل)
+Which type of requirement specifies constraints on the system's development process and implementation?
+أ) Functional requirement
+ب) Non-functional requirement
+ج) Performance requirement
+د) Design requirement
+و) None of the above
+**الإجابة الصحيحة: د**
+**التعليل:**
+`Design Constraints` هو أحد الأبواب السبعة الرسمية لقسم `Specific Requirements` اللي شرحتها المحاضرة، ويحدد تحديداً قيوداً على عملية التطوير والتنفيذ (زي إلزامية استخدام تقنية معينة أو معيار برمجي محدد).
+
+أ) المتطلب الوظيفي يصف "ماذا" يفعل النظام، لا قيود عملية التطوير نفسها.
+ب) غير الوظيفي فئة أوسع (تشمل الأداء والأمان...)، وليست تحديداً "قيود التطوير والتنفيذ".
+ج) متطلب الأداء بُعد واحد فقط من غير الوظيفي، وليس قيود التطوير العامة.
+
+المحاضرة عدّدت السبعة أبواب لـ`Specific Requirements`: `External Interfaces`, `Functions`, `Performance Requirements`, `Logical Database Requirements`, `Design Constraints`, `Software System Attributes`, وطرق التنظيم — و`Design Constraints` هو الباب المخصص تحديداً لقيود التطوير.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 207 (متوسط)
+What is the purpose of including assumptions and dependencies in the SRS document?
+أ) To outline the risks associated with the software development.
+ب) To provide a justification for prioritizing certain requirements.
+ج) To clarify the context and limitations of the requirements.
+د) To define the acceptance criteria for the software project.
+و) None of the above
+**الإجابة الصحيحة: ج**
+**التعليل:**
+`Assumptions and Dependencies` حسب المحاضرة هي كل العوامل الخارجية غير المضمونة (زي توفر نظام تشغيل معيّن) والتي إذا تغيّرت يجب إعادة النظر في الـ`SRS` كاملة — أي أنها توضّح السياق والحدود الحقيقية اللي بُنيت عليها المتطلبات.
+
+أ) قائمة المخاطر موضوع `Risk Management` المنفصل تماماً.
+ب) تبرير أولويات المتطلبات موضوع `Apportioning of Requirements`، بند مختلف.
+د) معايير القبول موضوع `Acceptance Testing`، منفصل تماماً.
+
+مثال المحاضرة الكلاسيكي: افتراض توفر نظام تشغيل معيّن على الجهاز المستهدف — لو تبيّن لاحقاً أنه غير متوفر فعلاً، فإن الوثيقة كلها تحتاج مراجعة، وهذا بالضبط توضيح "حدود وسياق" المتطلبات.
+
+## المحاضرة 12: Software Quality (جودة البرمجيات) (تابع — دورات لاحقة)
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 208 (متوسط)
+Which of the following best defines software quality?
+أ) Low number of defects found during testing
+ب) Adherence to project timelines
+ج) Implementation of advanced programming techniques
+د) Conformance to explicit and implicit requirements
+و) None of the above
+**الإجابة الصحيحة: د**
+**التعليل:**
+هذا التعريف مطابق حرفياً لتعريفي `IEEE` و`ISO` اللذين شرحتهما المحاضرة: الجودة هي الدرجة التي يحقق فيها النظام المتطلبات المحددة رسمياً *و* احتياجات المستخدم الضمنية (`implicit`) غير المكتوبة — وهذا بالضبط "Conformance to explicit and implicit requirements".
+
+أ) قلة عدد الأخطاء نتيجة محتملة للجودة، لكنها ليست التعريف الشامل نفسه (`Correctness` عامل واحد من 12).
+ب) الالتزام بالجدول الزمني معيار إداري، لا تعريف الجودة نفسه.
+ج) استخدام تقنيات برمجة متقدمة لا يضمن الجودة بحد ذاته (قد تكون معقدة وصعبة الصيانة رغم "تقدمها").
+
+المحاضرة أكدت أن برنامجاً قد يطابق الوثيقة حرفياً 100% لكنه يبقى "سيء الجودة" لو لم يلبِّ الاحتياجات الضمنية غير المكتوبة — وهذا بالضبط سبب أهمية كلمة "implicit" في التعريف.
+
+## المحاضرة الكل: أسئلة عامة (تابع — دورات لاحقة)
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 209 (صعب)
+Weighted Methods per Class (WMC) is calculated as:
+أ) The total number of methods in a class.
+ب) The sum of the Cyclomatic Complexity (CC) of all methods in a class.
+ج) The ratio of methods to attributes in a class.
+د) The average number of methods across all classes in a system.
+و) None of the above
+**الإجابة الصحيحة: ب**
+**التعليل:**
+`WMC` (Weighted Methods per Class) يُحسب بجمع قيم `Cyclomatic Complexity` لكل دوال الفئة معاً — وهذا هو التعريف الدقيق حسب مقاييس `Chidamber & Kemerer` اللي شرحتها المحاضرة.
+
+أ) عدّ الدوال فقط (بدون وزن `CC`) تعريف أبسط لا يطابق `WMC` الفعلي (لهذا تسمى "Weighted" أي موزونة بالتعقيد، لا معدودة فقط).
+ج) نسبة الدوال للخصائص مفهوم مختلف تماماً، لا علاقة له بـ `WMC`.
+د) متوسط عدد الدوال عبر النظام كامل مقياس مختلف (على مستوى النظام لا الفئة).
+
+المحاضرة أعطت قاعدة عملية: `WMC` بقيمة 20 لفئة تُعتبر جيدة، لكن يُفضّل عدم تجاوز 40 — وهذا الرقم هو نتيجة جمع `CC` لكل الدوال، لا عدّها فقط.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 210 (سهل)
+Which metric is most closely associated with measuring the maintainability of software systems?
+أ) Cyclomatic Complexity (CC)
+ب) Lack of Cohesion in Methods (LCOM)
+ج) Number of Children (NOC)
+د) Coupling Between Objects (CBO)
+و) None of the above
+**الإجابة الصحيحة: أ**
+**التعليل:**
+المحاضرة صرّحت أن `Cyclomatic Complexity` العالية تُستخدم كمؤشر مباشر على انخفاض `Maintainability` وانخفاض `Reliability` معاً — وهي أكثر مقياس ذُكر صراحة كـ"مؤشر على صعوبة الصيانة" في محاضرات `Measurement`.
+
+ب) `LCOM` مرتبط بجودة التصميم (المسؤولية الواحدة) وقد يؤثر على الصيانة بشكل غير مباشر، لكن الربط الصريح بـ`Maintainability` في المحاضرة كان لـ`CC` تحديداً.
+ج) `NOC` يخص هيكل الوراثة (العرض)، لا علاقة مباشرة موثّقة بالصيانة.
+د) `CBO` يخص الاقتران؛ اقتران مرتفع يصعّب الصيانة، لكنه ليس المقياس "الأكثر ارتباطاً" المذكور صراحة في المحاضرة لهذا الغرض تحديداً.
+
+هذا يربط مباشرة بمحاضرة `Software Measurement`: `Internal Attributes` (زي `CC`) تُستخدم كمؤشرات على `External Attributes` (زي `Maintainability`) الصعبة القياس المباشر.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 211 (سهل)
+Which metric is useful for identifying classes that might be candidates for refactoring due to high complexity?
+أ) Weighted Methods per Class (WMC)
+ب) Lack of Cohesion in Methods (LCOM)
+ج) Cyclomatic Complexity (CC)
+د) Number of Children (NOC)
+و) None of the above
+**الإجابة الصحيحة: ج**
+**التعليل:**
+المحاضرة أكدت أن `CC` تُستخدم كإشارة تحذير لفرق `QA` ولتحديد أولويات الاختبار والصيانة — وهي المقياس القياسي لتحديد الدوال/الفئات المعقدة اللي تحتاج `Refactoring` (تجاوز `V(G)=10` مؤشر خطر واضح).
+
+أ) `WMC` مؤشر مفيد أيضاً (مجموع `CC`)، لكن `CC` نفسها أكثر تحديداً ومباشرة كمقياس تحذير للتعقيد المفرد المستهدف بالـ`Refactoring`.
+ب) `LCOM` يشير لمشكلة تصميمية مختلفة (تعدد المسؤوليات)، لا التعقيد المنطقي تحديداً.
+د) `NOC` يخص هيكل الوراثة، لا علاقة مباشرة بالتعقيد الداخلي.
+
+هذا يربط `Software Measurement` بـ `Refactoring` مباشرة: `CC` العالية هي أشهر "`Code Smell`" رقمي موثّق يستدعي تطبيق تقنيات مثل `Extract Method` أو `Compose Method`.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 212 (سهل)
+Which testing technique is primarily concerned with internal logic and structure of the code?
+أ) White-box testing
+ب) Black-box testing
+ج) Grey-box testing
+د) Integration testing
+و) None of the above
+**الإجابة الصحيحة: أ**
+**التعليل:**
+`White-box testing` يصمَّم حالاته بناءً على معرفة كاملة بالبنية الداخلية للكود (المسارات، الشروط، الحلقات) — مطابق تماماً لنص السؤال "internal logic and structure".
+
+ب) `Black-box testing` يعتمد المواصفات الخارجية فقط، بدون أي معرفة بالكود الداخلي.
+ج) `Grey-box testing` معرفة جزئية فقط بالداخل، لا معرفة كاملة.
+د) `Integration testing` يخص تفاعل المكونات ببعضها، لا البنية الداخلية لكود واحد تحديداً.
+
+هذا الفرق (`White-box` مقابل `Black-box`) هو أهم مفهوم متكرر بين محاضرتي `Testing` و`JUnit` معاً.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 213 (سهل)
+Grey-box testing combines elements of both white-box and black-box testing, focusing on:
+أ) Testing at the user interface level only
+ب) Testing based on code coverage criteria
+ج) Testing with partial knowledge of the internal code structure
+د) Testing with automated scripts only
+و) None of the above
+**الإجابة الصحيحة: ج**
+**التعليل:**
+`Grey-box testing` مزيج بين النهجين — المُختبِر عنده معرفة جزئية (`partial knowledge`) بالبنية الداخلية للكود، يستخدمها لتصميم اختبارات أذكى، لكن دون رؤية كاملة كما في `White-box`.
+
+أ) الاقتصار على واجهة المستخدم فقط وصف أقرب لـ`Black-box` وليس المزيج الموصوف بـ`Grey-box`.
+ب) معايير تغطية الكود (`code coverage`) تحتاج معرفة كاملة بالكود، أقرب لـ`White-box` الصرف.
+د) الاعتماد على سكربتات آلية فقط ليس تعريف `Grey-box`؛ يخص الأتمتة بشكل عام.
+
+ملاحظة: `Grey-box testing` لم يُشرح بالتفصيل في محاضرات المادة (`Testing` أو `JUnit`) بنفس هذا العمق، لكنه امتداد منطقي مباشر للفرق بين `White-box` و`Black-box` اللي شرحتهما المحاضرتان بوضوح.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 214 (متوسط)
+What is the primary purpose of a Software Requirement Specification (SRS)?
+أ) To describe the design architecture of the software system.
+ب) To provide a detailed description of the software's user interface.
+ج) To define the functional and non-functional requirements of the software.
+د) To outline the project management plan for software development.
+و) None of the above
+**الإجابة الصحيحة: ج**
+**التعليل:**
+`SRS` هي البيان الرسمي لما يجب على المطورين تنفيذه، وتشمل متطلبات المستخدم (`User Requirements`) والمواصفة التفصيلية لمتطلبات النظام (`System Requirements`) — أي الوظيفية وغير الوظيفية معاً، وتعمل عملياً كـ"عقد" بين المطوّر والعميل.
+
+أ) المعمارية توثَّق في `SDD` (Software Design Description)، وثيقة منفصلة تأتي بعد `SRS`.
+ب) واجهة المستخدم جزء واحد فقط من `SRS` (ضمن `External Interfaces`)، وليست غرضها الأساسي الشامل.
+د) خطة إدارة المشروع وثيقة منفصلة تماماً (`Project Plan`).
+
+`SRS` مبنية على معيار `IEEE 830` اللي شرحته المحاضرات: `Introduction`, `General/Overall Description`, و`Specific Requirements` — وكل هذا يخدم هدفاً واحداً: تعريف الوظيفي وغير الوظيفي بدقة.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 215 (سهل)
+In an SRS document, what does the term "use case" refer to?
+أ) A description of how the software will be tested.
+ب) A specific sequence of actions performed by the system.
+ج) The project timeline for software development.
+د) A list of potential risks associated with the software project.
+و) None of the above
+**الإجابة الصحيحة: ب**
+**التعليل:**
+`Use Case` يمثّل تفاعلاً محدداً بين الفاعلين (`actors`) والنظام، أي سلسلة أفعال محددة (`specific sequence of actions`) ينفذها النظام استجابة لحافز معيّن — كما شرحته محاضرة `Design and Implementation` ضمن `Interaction Model`.
+
+أ) وصف كيفية الاختبار موضوع `Test Plan`، لا `Use Case`.
+ج) الجدول الزمني موضوع `Project Plan`، لا علاقة له بـ`Use Case`.
+د) قائمة المخاطر موضوع `Risk Management`، منفصل تماماً.
+
+كل `Use Case` يُوثَّق بجدول فيه: النظام، اسم الحالة، الفاعلين، الوصف الكامل، الحافز، والاستجابة — وهذا التسلسل المحدد للأفعال هو جوهر تعريف `Use Case`.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 216 (سهل)
+In an SRS document, what does the term "validation" refer to?
+أ) Ensuring that the software complies with legal regulations.
+ب) Checking that the software meets specified requirements.
+ج) Verifying the software's compatibility with different operating systems.
+د) Testing the software for performance under load conditions.
+و) None of the above
+**الإجابة الصحيحة: ب**
+**التعليل:**
+`Validation` حسب محاضرتي `Testing` و`Requirements` تعني التحقق من أن النظام يلبّي فعلاً المتطلبات المحددة واحتياجات المستخدم الحقيقية — "هل بنينا المنتج الصحيح؟".
+
+أ) الامتثال للقوانين موضوع `Regulatory Compliance`، جزء واحد محتمل من `Non-functional Requirements` لا تعريف `Validation` العام.
+ج) التوافق مع أنظمة تشغيل مختلفة أقرب لـ`Portability`، مقياس مختلف.
+د) اختبار الأداء تحت حِمل هو `Stress/Performance Testing`، نوع اختبار محدد لا تعريف `Validation` الشامل.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 217 (سهل)
+What does the term "feasibility study" typically address in relation to the SRS document?
+أ) The technical capabilities required to develop the software.
+ب) The financial costs associated with software development.
+ج) The market demand for the software product.
+د) The timeline for completing software development milestones.
+و) None of the above
+**الإجابة الصحيحة: أ**
+**التعليل:**
+دراسة الجدوى (`Feasibility Study`) في سياق هندسة المتطلبات تركّز أساساً على تقييم القدرات التقنية المطلوبة لتطوير النظام فعلياً — هل الحل التقني ممكن أصلاً ضمن الموارد والتقنية المتاحة؟
+
+ب) الجدوى المالية (`Financial Feasibility`) بُعد آخر من دراسة الجدوى العامة، لكن ليس البُعد "التقني" المباشر المرتبط بالـ`SRS` تحديداً.
+ج) الطلب السوقي بُعد تسويقي أوسع، ليس جزءاً مباشراً من محتوى `SRS` التقني.
+د) الجدول الزمني موضوع `Project Plan`، لا دراسة الجدوى نفسها.
+
+ملاحظة: "Feasibility Study" لم يُشرح بالتفصيل الدقيق ضمن محاضرات `SRS` (10/11) بهذه التسمية المحددة، والإجابة معتمدة على معرفة عامة قياسية في هندسة المتطلبات تكمّل ما درسناه عن `Assumptions and Dependencies` و`Constraints`.
+
+**المصدر:** [نمط 2023-2024 — الفصل الثاني]
+### السؤال 218 (سهل)
+Which project management process involves validating the completeness and correctness of the Work Breakdown Structure (WBS)?
+أ) Scope verification
+ب) Quality assurance
+ج) Risk management
+د) Change control
+و) None of the above
+**الإجابة الصحيحة: أ**
+**التعليل:**
+`Scope Verification` هي العملية القياسية في إدارة المشاريع للتحقق من أن `WBS` يغطي فعلاً كل نطاق المشروع بشكل كامل وصحيح، بدون نقص أو تكرار.
+
+ب) ضمان الجودة (`Quality Assurance`) يخص معايير تطوير المنتج نفسه، لا اكتمال `WBS` تحديداً.
+ج) إدارة المخاطر موضوع منفصل تماماً.
+د) التحكم بالتغيير يخص إدارة التعديلات على المتطلبات لاحقاً، لا التحقق الأولي من `WBS`.
+
+ملاحظة: مصطلح "Scope Verification" تحديداً لم يُستخدم بهذا الاسم في محاضرة إدارة المشاريع، والإجابة معتمدة على معرفة عامة قياسية في إدارة المشاريع تكمّل مفهوم `Scope` كأحد بنود `Project Plan` الأربعة عشر.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 219 (صعب)
+High RFC correlates with?
+أ) No inherit
+ب) Low coupling
+ج) Perfect cohesion
+د) High complexity
+**الإجابة الصحيحة: د**
+**التعليل:**
+`RFC` (Response For a Class) يعدّ مجموع الدوال اللي ممكن تُستدعى استجابة لرسالة توصل للفئة — كلما زاد هذا العدد، زاد عدد المسارات المحتملة والتفاعلات الممكنة، وهذا يرتبط مباشرة بارتفاع التعقيد الكلي للفئة.
+
+أ) لا علاقة مباشرة بين `RFC` والوراثة تحديداً؛ `RFC` يخص الاستجابة للرسائل بشكل عام.
+ب) `RFC` مرتفع غالباً يعني اقتراناً أعلى (فئة تتفاعل مع دوال كثيرة)، لا اقتراناً منخفضاً.
+ج) التماسك المثالي (`LCOM=0`) مفهوم منفصل تماماً عن `RFC`، ولا علاقة مباشرة موثّقة بينهما بهذا الاتجاه.
+
+هذا يربط `RFC` بنفس فلسفة `CC` و`WMC`: كل مقياس يعدّ "عدد المسارات/الاستجابات الممكنة" يرتبط إحصائياً بارتفاع التعقيد وصعوبة الفهم والاختبار.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 220 (سهل)
+Agile principle violation in Scrum:fixed 6 month sprints?
+أ) Product backlog
+ب) Daily standups
+ج) Short time-boxed
+د) Retrospectives
+**الإجابة الصحيحة: ج**
+**التعليل:**
+أحد أهم مبادئ `Scrum`/`Agile` هو أن تكون الدورات (`sprints`) قصيرة ومحددة زمنياً بدقة (`short time-boxed`, عادة 2-4 أسابيع) — سبرنت ثابت لمدة 6 أشهر يخالف هذا المبدأ الجوهري تماماً، لأنه يفقد الفائدة الأساسية من الدورات القصيرة (تغذية راجعة سريعة ومتكررة).
+
+أ) وجود `Product Backlog` ممارسة سليمة بحد ذاتها، غير منتهَكة هنا.
+ب) الاجتماعات اليومية (`Daily Standups`) ممارسة منفصلة، لا علاقة لها بطول السبرنت.
+د) اجتماعات المراجعة (`Retrospectives`) ممارسة منفصلة أيضاً، لا تتأثر مباشرة بطول السبرنت نفسه.
+
+هذا يربط بمبدأ `Agile Manifesto` الأساسي: "تسليم برمجيات شغّالة بشكل متكرر" — وسبرنت 6 أشهر يناقض هذا المبدأ جذرياً، لأنه يعيد بنية `Waterfall` الطويلة داخل غلاف يُسمّى "Scrum" بالاسم فقط.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 221 (سهل)
+White-box: Statement coverage needs?
+أ) All branches
+ب) Every line executed once
+ج) All paths
+د) MC/DC
+**الإجابة الصحيحة: ب**
+**التعليل:**
+`Statement Coverage` (تغطية الجُمل/الأسطر) تشترط فقط أن يُنفَّذ كل سطر/جملة في الكود مرة واحدة على الأقل أثناء الاختبار — وهذا أضعف مستويات التغطية وأسهلها تحقيقاً.
+
+أ) تغطية كل الفروع (`branch coverage`) مستوى أقوى؛ يشترط تنفيذ كل نتيجة ممكنة لكل شرط (صح/خطأ)، لا مجرد تنفيذ السطر.
+ج) تغطية كل المسارات (`path coverage`) أقوى مستوى، يشترط تغطية كل تركيبة ممكنة من المسارات عبر الدالة كاملة.
+د) `MC/DC` (Modified Condition/Decision Coverage) مستوى متقدم جداً يُستخدم في الأنظمة الحرجة للسلامة، أعقد بكثير من مجرد تنفيذ الأسطر.
+
+المحاضرة (`JUnit`/`Testing`) ربطت `Coverage` بنسبة الأسطر المُنفَّذة أثناء الاختبار — و`Statement Coverage` هو أبسط تجسيد مباشر لهذا التعريف الأساسي.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 222 (سهل)
+What's the main advantage of integrating metrics collection tools with automated build systems?
+أ) integrating bulk data for manual review
+ب) Replaces manual testing
+ج) Only tracks project schedule
+د) Tools add overhead slowing builds
+ه) Provide real time feedback for quality
+**الإجابة الصحيحة: ه**
+**التعليل:**
+دمج أدوات جمع المقاييس (زي `SourceCodeMetrics` أو `Metrics` اللي ذكرتها محاضرة `Measurement`) مع أنظمة البناء الآلي (`automated build systems`) يوفر تغذية راجعة فورية (`real time feedback`) عن جودة الكود مع كل تعديل، بدل انتظار مراجعة يدوية لاحقة.
+
+أ) "تجميع بيانات ضخمة للمراجعة اليدوية" يناقض فكرة الأتمتة والفورية نفسها.
+ب) استبدال الاختبار اليدوي بالكامل مبالغة — المقاييس أداة تكميلية، لا بديل عن الاختبار.
+ج) الاقتصار على تتبع الجدول الزمني فقط يتجاهل الفائدة الأوسع لمقاييس الجودة (`CC`, `Coverage`, `Defect Density`...).
+د) عكس الفائدة الفعلية تماماً — الهدف تسريع اكتشاف المشاكل، لا إبطاء البناء.
+
+هذا يربط بأدوات المحاضرة (`SourceCodeMetrics` في `NetBeans`, `Metrics` في `Eclipse`) اللي تحسب المقاييس آلياً بدل الحساب اليدوي — ودمجها مع البناء الآلي يعطي هذه الفائدة فورياً مع كل تعديل بالكود.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 223 (سهل)
+In OCL, what is the main advantage of specifying invariants on classes compared to embedding validation logic in code?
+أ) OCL invariants are executer faster than code
+ب) Invariants provide a formal, declarative specification independent of implementation facilitating early validation
+ج) Embedding logic is more reusable
+د) OCL cannot represent complex constraints
+**الإجابة الصحيحة: ب**
+**التعليل:**
+`OCL` (Object Constraint Language) يعطي مواصفة صريحة رسمية وتصريحية (`formal, declarative`) لقيود الفئة، منفصلة تماماً عن أي كود تنفيذي معيّن — وهذا يتيح التحقق منها مبكراً (`early validation`) حتى قبل كتابة الكود الفعلي، بعكس منطق التحقق المطمور داخل الكود نفسه.
+
+أ) لا علاقة لـ`OCL` بسرعة التنفيذ؛ هو لغة مواصفات (`specification language`) لا تنفيذية أصلاً.
+ج) تضمين منطق التحقق داخل الكود عادة أقل قابلية لإعادة الاستخدام (مرتبط بلغة/منصة معيّنة)، عكس `OCL` المستقل عن التنفيذ.
+د) `OCL` قادرة فعلياً على التعبير عن قيود معقدة جداً (متعددة الفئات)، رغم أنها قد تصبح مطوَّلة (نقطة تُذكر بسؤال آخر بنفس الدورة).
+
+ملاحظة: `OCL` لم تُشرح في محاضرات المادة المتوفرة (اللي ركّزت على `UML` structural/dynamic models عموماً)، والإجابة معتمدة على معرفة عامة قياسية في هندسة المتطلبات والتصميم الشكلي (`formal specification`) تكمّل مفهوم `Design Models` اللي شرحته محاضرة `Design and Implementation`.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 224 (متوسط)
+How does OCL support model-driven development in ensuring model consistency?
+أ) By Generating all code automatically without constraints
+ب) By Specifying precise semantic conditions that must always hold true, enabling tool based model verification
+ج) By Documenting code comments
+د) By Replacing UML diagrams
+ه) By validating project scheduales
+**الإجابة الصحيحة: ب**
+**التعليل:**
+`OCL` تتيح تحديد شروط دلالية دقيقة (`precise semantic conditions`) يجب أن تبقى صحيحة دائماً على نموذج `UML`، وهذا يمكّن أدوات التحقق الآلي (`tool-based model verification`) من فحص اتساق النموذج قبل توليد الكود أو حتى أثناء التطوير.
+
+أ) توليد الكود تلقائياً بدون قيود يناقض جوهر وجود `OCL` أصلاً (اللي هي إضافة قيود، لا إزالتها).
+ج) توثيق تعليقات الكود نشاط مختلف تماماً عن مواصفة رسمية للقيود.
+د) `OCL` تُستخدم *مع* مخططات `UML` لتوضيح قيود لا يمكن التعبير عنها رسومياً، لا لتحل محلها.
+ه) لا علاقة لـ`OCL` بجداول المشروع الزمنية إطلاقاً.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 225 (سهل)
+What limitation does OCL have when expressing cross-cutting system-wide constraints?
+أ) It can only specify single-class properties
+ب) OCL can specify complex multi-class constraints but can become verbose and hard to maintain for large systems
+ج) It enforces constraints at runtime only
+د) It cannot specify cardinality constraints
+ه) It replaces all testing efforts
+**الإجابة الصحيحة: ب**
+**التعليل:**
+`OCL` قادرة فعلياً على التعبير عن قيود معقدة تشمل عدة فئات معاً، لكن كلما زاد نطاق النظام وتعقيد القيود، أصبحت عبارات `OCL` طويلة ومطوَّلة (`verbose`) وصعبة الصيانة على المدى الطويل — وهذه هي حدودها العملية الحقيقية، لا عجزها الكامل عن التعبير.
+
+أ) الادعاء بأنها "تقتصر على خاصية فئة واحدة فقط" خطأ مباشر — `OCL` تدعم قيوداً متعددة الفئات (زي مثال `context Order` في سؤال آخر بنفس الدورة).
+ج) `OCL` قيود تصريحية، وليست بالضرورة مقتصرة على التنفيذ وقت التشغيل فقط؛ يمكن التحقق منها تصميمياً أيضاً.
+د) `OCL` تدعم فعلياً التعبير عن قيود العدد (`cardinality`) بوضوح.
+ه) `OCL` أداة تكميلية للتصميم الشكلي، لا بديلاً كاملاً عن الاختبار.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 226 (متوسط)
+How can OCL preconditions complement system testing strategies?
+أ) Preconditions invalidate databases
+ب) Preconditions ensure method contracts are respected before execution, enabling static analysis and targeted test generation
+ج) Preconditions only validate user input UI-side
+د) Preconditions replace integration tests
+ه) preconditions generate cod automatically
+**الإجابة الصحيحة: ب**
+**التعليل:**
+شروط `OCL` المسبقة (`preconditions`) تحدد بدقة الحالة الواجب توفرها قبل تنفيذ عملية معيّنة (عقد الدالة `method contract`) — وهذا يتيح تحليلاً ساكناً (`static analysis`) وتوليد حالات اختبار موجَّهة (`targeted test generation`) تحديداً حول هذه الشروط الحدودية.
+
+أ) لا علاقة لـ`preconditions` بإبطال قواعد البيانات مباشرة.
+ج) `preconditions` تخص عقد الدالة البرمجية عموماً، لا مجرد التحقق من مدخلات واجهة المستخدم فقط.
+د) `preconditions` تكمّل اختبار التكامل، لا تحل محله بالكامل.
+ه) `OCL` لا تولّد كوداً تنفيذياً؛ هي لغة مواصفات فقط.
+
+هذا يربط بمفهوم `pre/postconditions` مقابل `invariants` اللي شرحه سؤال آخر بنفس الدورة: `preconditions` تحدد الحالة المطلوبة *قبل* تنفيذ العملية تحديداً.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 227 (سهل)
+What is a common pitfall when using OCL to specify multiplicity constraints in UML?
+أ) OCL does not support multiplicity
+ب) Incorrectly translating UML multiplicities to OCL collection size expressions can lead to incomplete constraint checking
+ج) Multiplicity is enforced by compilers
+د) Multiplicities apply only to attributes, not associations
+ه) OCL  automatically infers multiplicity
+**الإجابة الصحيحة: ب**
+**التعليل:**
+الخطأ الشائع الفعلي هو ترجمة قيود التعدد (`multiplicity`) في `UML` (زي "0..*" أو "1..1") لتعبيرات حجم مجموعة (`collection size expressions`) في `OCL` بشكل غير دقيق — مما يؤدي لفحص قيود ناقص لا يغطي كل الحالات الحدودية فعلياً.
+
+أ) `OCL` تدعم فعلياً التعبير عن `multiplicity` عبر عمليات المجموعات (`->size()`, وغيرها).
+ج) المترجمات (`compilers`) لا تفرض قيود `multiplicity` هذه تلقائياً؛ هذا دور `OCL`/أدوات التحقق النموذجي.
+د) قيود `multiplicity` تنطبق على العلاقات (`associations`) بقدر ما تنطبق على الخصائص، لا الخصائص فقط.
+ه) `OCL` لا تستنتج `multiplicity` تلقائياً؛ يجب تحديدها صراحة من المصمم.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 228 (صعب)
+When refining an OCL constraint specifying self.age > 18 on a Person class, how should exceptions or domain variations be handled?
+أ) Ignore exceptions for simplicity
+ب) Model exceptions explicitly using OCL conditional expressions or extend the metamodel with stereotypes
+ج) Document exceptions outside the model only
+د) Assume all domain instances follow the rule strictly
+**الإجابة الصحيحة: ب**
+**التعليل:**
+الاستثناءات أو تنويعات المجال (`domain variations`) يجب أن تُنمذَج صراحة داخل `OCL` نفسها عبر تعبيرات شرطية (`conditional expressions`, زي `if-then-else`) أو عبر توسيع النموذج الفوقي (`metamodel`) بإضافة `stereotypes` مخصصة تعبّر عن الحالة الاستثنائية بشكل رسمي.
+
+أ) تجاهل الاستثناءات لأجل البساطة يفقد النموذج دقته ويسمح بحالات غير صحيحة تمر دون فحص.
+ج) توثيق الاستثناءات خارج النموذج فقط (كملاحظة نصية) يفصلها عن آلية التحقق الآلي، فتفقد قيمتها العملية.
+د) افتراض التزام كل الحالات بالقاعدة بصرامة يتجاهل واقع أن النماذج الحقيقية غالباً فيها استثناءات مشروعة (زي حالات قانونية خاصة).
+
+هذا يربط بمرونة `OCL` كلغة رسمية: القدرة على التعبير عن حالات استثنائية داخل القيد نفسه (لا خارجه) هي ما يجعلها أداة تحقق آلي موثوقة فعلياً.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 229 (متوسط)
+In what way do OCL invariants differ from pre- and postconditions during modeling behaviour?
+أ) Invariants apply to system startup only
+ب) Invariants specify conditions hailing at all times; preconditions specify required states before operations; postconditions specify expected states after operations
+ج) They are interchangeable OCL cannot express exceptions
+د) Preconditions replace invariants
+ه) postcondition are optional
+**الإجابة الصحيحة: ب**
+**التعليل:**
+هذا الفرق الثلاثي دقيق ومهم: الثابتات (`invariants`) يجب أن تبقى صحيحة **دائماً** طوال دورة حياة الكائن، بينما الشروط المسبقة (`preconditions`) تحدد الحالة المطلوبة قبل تنفيذ عملية معيّنة فقط، والشروط اللاحقة (`postconditions`) تحدد الحالة المتوقعة بعد انتهائها فقط — كل نوع يغطي "متى" مختلف تماماً.
+
+أ) الثابتات لا تقتصر على بداية تشغيل النظام فقط؛ يجب أن تبقى صحيحة طوال الوقت.
+ج) الثلاثة ليست قابلة للتبادل إطلاقاً؛ كل نوع يخدم غرضاً زمنياً مختلفاً تماماً.
+د) الشروط المسبقة لا تحل محل الثابتات؛ كلاهما يعملان معاً بأدوار مختلفة.
+ه) الشروط اللاحقة ليست اختيارية إذا أردنا ضماناً كاملاً لسلوك العملية المتوقع.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 230 (متوسط)
+Why might OCL specifications become a barrier in fast-paced agile projects, and how can this be mitigated?
+أ) OCL always speeds up agile processes
+ب) Writing and maintaining OCL constraints require upfront effort; mitigated by selective application and tool support integrated with agile workflows
+ج) OCL replaces acceptance tests
+د) OCL is universally adopted in agile
+ه) Agile does not require constraint
+**الإجابة الصحيحة: ب**
+**التعليل:**
+كتابة وصيانة قيود `OCL` تتطلب جهداً مسبقاً (`upfront effort`) قد يتعارض مع سرعة `Agile` وتغيّر المتطلبات المستمر — والحل العملي هو التطبيق الانتقائي (`selective application`, فقط على الأجزاء الحرجة) مع دعم أدوات متكاملة ضمن سير عمل `Agile` بدل التوثيق الشامل لكل شيء.
+
+أ) `OCL` تضيف جهداً إضافياً في البداية، لا تسرّع `Agile` تلقائياً.
+ج) `OCL` أداة تحقق تصميمي شكلي، لا بديل عن اختبارات القبول الوظيفية.
+د) `OCL` ليست معتمدة عالمياً في مشاريع `Agile`؛ استخدامها أقل شيوعاً بسبب التوتر مع السرعة المطلوبة.
+ه) مشاريع `Agile` تحتاج قيوداً وضوابط جودة أيضاً، لكن بشكل أخف وأكثر انتقائية.
+
+هذا يربط بنفس التوتر اللي شرحته محاضرة `Requirements` بين `SRS` الرسمية الشاملة و`user stories` الأخف في `Agile` — نفس المبدأ ينطبق هنا على `OCL`: التوثيق الرسمي الكامل له كلفة يجب موازنتها بحسب سياق المشروع.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 231 (متوسط)
+In an OCL constraint specifying context Order inv: self.items->forAll(price) > 0}, what is the semantic intersection and how does this facilitate mode validation?
+أ) It restricts prices to be exactly zero, simplifying calculations.
+ب) Applies only to the first item in the collection.
+ج) It ensures that every item in the order has a positive price, enabling automatic consistency checks of business rules.
+د) It imposes no actual constant at runtime.
+**الإجابة الصحيحة: ج**
+**التعليل:**
+عبارة `forAll` في `OCL` تطبَّق على **كل** عنصر في المجموعة (`items`) بدون استثناء — فتفرض أن كل عنصر في الطلب (`Order`) يملك سعراً موجباً، وهذا يمكّن فحصاً آلياً ومستمراً لاتساق قاعدة عمل (`business rule`) أساسية دون الحاجة لكتابة هذا التحقق يدوياً في كل مكان بالكود.
+
+أ) القيد لا "يقيّد السعر ليكون صفراً بالضبط"؛ بل يفرض أن يكون *أكبر* من صفر لكل عنصر.
+ب) `forAll` تشمل كل عناصر المجموعة، لا العنصر الأول فقط (هذا وصف `->first()` أو ما شابه، لا `forAll`).
+د) القيد يفرض فعلاً قاعدة تحقق حقيقية قابلة للفحص، وليس بلا أثر.
+
+هذا مثال تطبيقي مباشر على فكرة "الثابتات" (`invariants`) اللي يجب أن تبقى صحيحة دائماً على كل عناصر المجموعة، وهو نفس مبدأ سؤال آخر بنفس الدورة عن الفرق بين `invariants` و`pre/postconditions`.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 232 (متوسط)
+Which of the following best explains why metrics must be interpreted in project context to avoid misleading conclusions?
+أ) Only standard values matter.
+ب) Metrics values are universal.
+ج) Metrics near directly translate into productivity.
+د) Metrics has no impact.
+ه) Metrics are influenced by project size, domain complexity, and practices and must be contextualized.
+**الإجابة الصحيحة: ه**
+**التعليل:**
+المحاضرة نبّهت مراراً (خصوصاً عند شرح `LOC` و`Defect Density`) أن المقاييس تتأثر بعوامل السياق: حجم المشروع، تعقيد المجال، وممارسات الفريق — ولهذا لازم تُفسَّر ضمن سياقها، لا كأرقام مطلقة قابلة للمقارنة بلا شروط بين مشاريع مختلفة تماماً.
+
+أ) "فقط القيم القياسية تهم" يتجاهل ضرورة السياق الذي أكدته المحاضرة صراحة.
+ب) "قيم عالمية" عكس الحقيقة تماماً — مثال `LOC` وحده أثبت أنه يعتمد على اللغة والسياق.
+ج) الترجمة المباشرة للإنتاجية مبالغة (نفس الخطأ اللي حذّرت منه المحاضرة بخصوص `LOC` كمقياس إنتاجية مضلل أحياناً).
+د) "لا تأثير للمقاييس" يناقض الغرض الكامل من محاضرتي `Software Measurement`.
+
+مثال `Defect Density` نفسه يوضح هذا: تطبيع العدد بحجم النظام (`LOC`/`FP`) هو بالضبط الآلية اللي تجعل المقارنة عادلة بين سياقات مختلفة، وبدونها الأرقام المطلقة وحدها مضلِّلة.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 233 (سهل)
+Which metric would best guide prioritization for refactoring legacy code with high defect rates?
+أ) Test execution speed.
+ب) Number of comments.
+ج) Lines of code only.
+د) UI performance.
+ه) Combined cyclomatic complexity and historical defect density.
+**الإجابة الصحيحة: ه**
+**التعليل:**
+الجمع بين `Cyclomatic Complexity` (مؤشر التعقيد الداخلي) و`Defect Density` التاريخية (سجل فعلي للأخطاء) يعطي صورة أدق بكثير من أي مقياس منفرد لتحديد أولويات `Refactoring` — الكود المعقد *و*كثير الأخطاء تاريخياً هو أعلى مرشح فعلي للتحسين.
+
+أ) سرعة تنفيذ الاختبار لا علاقة لها بجودة أو تعقيد الكود نفسه.
+ب) عدد التعليقات مقياس سطحي لا يعكس التعقيد الفعلي أو معدل الأخطاء.
+ج) `LOC` وحده مقياس حجم بسيط، لا يعكس التعقيد أو الأخطاء التاريخية (كما نبّهت المحاضرة مراراً عن قصوره).
+د) أداء واجهة المستخدم غير مرتبط مباشرة بجودة الكود الداخلي المرشَّح لـ`Refactoring`.
+
+هذا يربط مباشرة بمبدأ `Refactoring` اللي شرحته المحاضرة: "نبدأ بأسوأ `smell`" — والجمع بين `CC` و`Defect Density` هو أدق وسيلة كمّية لتحديد "الأسوأ" فعلياً بدل الاعتماد على الحدس وحده.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 234 (متوسط)
+How do process metrics like defect arrival rate complement product metrics in software quality management?
+أ) Product metrics alone are sufficient.
+ب) Process metrics replace product testing.
+ج) They are uncorrelated
+د) Process metrics only evaluate documentation
+ه) Process metrics reveal development health and defect trench impacting product quality
+**الإجابة الصحيحة: ه**
+**التعليل:**
+`Process Metrics` (زي معدل وصول الأخطاء `defect arrival rate`) تكشف صحة عملية التطوير نفسها بمرور الوقت (اتجاهات الأخطاء، استقرار الفريق)، بينما `Product Metrics` تقيس خصائص المنتج النهائي — وكلاهما يكملان بعض لإعطاء صورة شاملة عن جودة البرمجية حسب `SQM` اللي شرحتها محاضرة `Quality`.
+
+أ) الاكتفاء بمقاييس المنتج وحدها يفوّت مؤشرات مبكرة عن مشاكل في العملية نفسها قبل ظهورها في المنتج النهائي.
+ب) `Process Metrics` لا تحل محل اختبار المنتج؛ هي مكمِّلة لا بديلة.
+ج) عكس الحقيقة — كلاهما مترابطان: عملية سيئة غالباً تنتج معدل أخطاء أعلى بالمنتج.
+د) `Process Metrics` أوسع بكثير من مجرد تقييم التوثيق (تشمل الجهد، الجدولة، معدل الأخطاء...).
+
+المحاضرة الأولى فرّقت بوضوح بين `Process Metrics` (تقيس عملية التطوير) و`Product Metrics` (تقيس المنتج) — وهذا السؤال يوضح كيف يخدم النوعان معاً هدف `Software Quality Management` الشامل.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 235 (متوسط)
+How does incremental delivery reduce risk in projects with dynamic requirements?
+أ) Deliver full documentation upfront.
+ب) Focus only on backend development early.
+ج) Delay testing to the end.
+د) Eliminate change control processes.
+ه) Enable early stakeholder feedback and adapt scope
+**الإجابة الصحيحة: ه**
+**التعليل:**
+التسليم التزايدي (`Incremental delivery`) يتيح تغذية راجعة مبكرة من أصحاب المصلحة بعد كل زيادة، مما يسمح بتكييف نطاق المشروع (`adapt scope`) قبل أن يتراكم خطأ فهم كبير — وهذا يقلل مخاطرة "اكتشاف مشكلة كبيرة متأخرة جداً" اللي كانت أكبر عيوب `Waterfall`.
+
+أ) توثيق شامل مسبق يناقض فلسفة `Incremental` نفسها (تسليم قيمة حقيقية تدريجياً، لا وثائق فقط).
+ب) التركيز على الخلفية (`backend`) فقط دون تسليم قيمة قابلة للتقييم لا يحقق فائدة التغذية الراجعة المبكرة.
+ج) تأجيل الاختبار للنهاية يزيد المخاطرة بدل تقليلها، عكس فلسفة `Incremental` تماماً.
+د) إلغاء عمليات التحكم بالتغيير يزيد فوضى `Scope Creep` بدل ضبطها.
+
+هذا يربط مباشرة بفائدة `Iterative Enhancement` الأساسية اللي شرحتها محاضرة `SDLC`: تسليم قيمة حقيقية بسرعة وبشكل متكرر يتيح تصحيح المسار مبكراً بدل انتظار نهاية المشروع كله.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 236 (متوسط)
+What role do design patterns play in ensuring system flexibility and maintainability?
+أ) Increase development time without benefit.
+ب) Replace need for documentation.
+ج) Encourage tight coupling for efficiency.
+د) Inforce Monolithic architecture.
+ه) Provide proven solutions to recurring problems facilitating communication and code reuse.
+**الإجابة الصحيحة: ه**
+**التعليل:**
+أنماط التصميم (`Design Patterns`, زي `Factory`, `Strategy`, `Decorator`, `Visitor`, `State` اللي ذكرتها محاضرة `Refactoring` كحلول لـ`Code Smells` محددة) هي حلول مُجرَّبة (`proven solutions`) لمشاكل تصميمية متكررة، وتسهّل التواصل بين المطورين (لغة مشتركة لوصف الحل) وإعادة استخدام الكود.
+
+أ) رغم وجود جهد تعلّم أولي، الفائدة طويلة المدى (مرونة، صيانة أسهل) تفوق هذا الجهد بكثير — لا "بدون فائدة".
+ب) الأنماط لا تلغي الحاجة للتوثيق؛ هي مكمِّلة له (تعطي أسماء موحّدة يسهل توثيقها).
+ج) عكس الحقيقة تماماً — الأنماط عادة تُشجّع اقتراناً منخفضاً (`low coupling`)، لا اقتراناً محكماً.
+د) الأنماط غالباً تُشجّع تصميماً معيارياً (`modular`)، عكس البنية الأحادية الكتلة (`Monolithic`).
+
+المحاضرة ربطت `Design Patterns` مباشرة بحل `Code Smells` محددة (`Long Method`, `Conditional Complexity`, `Indecent Exposure`...) — وكل نمط هو حل مُجرَّب لمشكلة تصميمية متكررة معروفة.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 237 (صعب)
+A complex scientific software requires correctness guarantees beyond conventional testing, How can formal methods and software metrics be integrated programmatically to improve product confidence?
+أ) Formal methods replace all metrics
+ب) Use formal specifications for critical components complemented by metrics tracking verification progress and residual defect trends.
+ج) Metrics alone suffice for correctness.
+د) Formal methods and metrics conflict.
+ه) Adopt living documentation practices with iterative elicitation, frequent stakeholder involvement, and traceability tools enabling controlled change.
+**الإجابة الصحيحة: ب**
+**التعليل:**
+استخدام المواصفات الشكلية (`formal specifications`) للمكونات الحرجة فقط (مو النظام كله، لأنها مكلفة)، مع تتبّع تقدم التحقق واتجاهات الأخطاء المتبقية عبر مقاييس البرمجيات (زي `Defect Density` و`Failure Rate` اللي شرحتها محاضرة `Measurement`) — هذا يجمع دقة الإثبات الرياضي مع الرصد الكمّي العملي المستمر.
+
+أ) `Formal Methods` لا تلغي الحاجة للمقاييس؛ الاثنان مكمِّلان لبعض (إثبات + رصد كمّي).
+ج) المقاييس وحدها لا تضمن "الصحة" (`correctness`) الرياضية المطلقة المطلوبة في برمجيات علمية حساسة.
+د) لا يوجد تعارض جوهري بينهما؛ يمكن دمجهما كما وضّح الخيار الصحيح.
+ه) هذا الخيار يصف ممارسات إدارة متطلبات مرنة عامة (توثيق حي، استخراج تكراري) وليس تحديداً دمج `Formal Methods` مع المقاييس كما يطلب السؤال.
+
+هذا يربط `Failure Rate` و`Defect Density` (محاضرة `Measurement`) بفكرة أوسع: حتى مع إثبات شكلي رياضي، المراقبة الكمّية المستمرة للعيوب المتبقية تبقى ضرورية لبناء ثقة عملية كاملة بالمنتج.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 238 (صعب)
+Analyzing defect reports, you find a correlation between high module coupling and late-stage defects. How should this insight influence your test planning and refactoring priorities?
+أ) Ignore couplings testing.
+ب) Prioritize testing complex, highly coupled modules early; refactor to reduce coupling and improve maintainability where risk is highest.
+ج) Focus testing on low-coupling modules only.
+د) Increase complexity to improve modularity.
+**الإجابة الصحيحة: ب**
+**التعليل:**
+بما أن `CBO` المرتفع مرتبط تاريخياً بأخطاء متأخرة، فالمنطقي هو اختبار الوحدات عالية الاقتران مبكراً وبعمق (قبل أن تتراكم عليها اعتماديات أكثر)، مع إعادة هيكلة (`refactor`) هذه الوحدات لتقليل الاقتران وتحسين قابلية الصيانة في أماكن المخاطرة الأعلى تحديداً — تطبيق مباشر للقاعدة الذهبية `Keep low coupling but high cohesion`.
+
+أ) تجاهل اختبار الاقتران يتجاهل بيانات فعلية موثّقة (الارتباط الإحصائي المكتشف بين الاقتران والأخطاء المتأخرة).
+ج) الاقتصار على الوحدات منخفضة الاقتران فقط يتجاهل تحديداً الوحدات الأعلى خطورة اللي تحتاج الاهتمام الأكبر.
+د) زيادة التعقيد عمداً "لتحسين المعيارية" تناقض منطقي مباشر — المعيارية الجيدة تعني اقتراناً *أقل*، لا تعقيداً أكثر.
+
+هذا يربط `CBO` (محاضرة `Measurement`) بـ`Refactoring` مباشرة: الاقتران المرتفع مؤشر تصميمي يستدعي تطبيق تقنيات تقليل الاقتران (زي `Factory Pattern` لإخفاء التفاصيل الداخلية) في أماكن المخاطرة الأعلى بالضبط.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 239 (صعب)
+Your project met reveals high LOC growth. How would you interpret your coverage, what actions would you consider?
+أ) Metrics are unreliable.
+ب) Potential code bloat and complexity increase may not reflect defect rates; consider metrics on complexity, code reviews, and refactoring.
+ج) Increase new feature development.
+د) Ignore LOC and focus on testing only.
+**الإجابة الصحيحة: ب**
+**التعليل:**
+نمو `LOC` الكبير قد يعكس تضخماً في الكود (`code bloat`) وزيادة تعقيد حقيقية، لكنه لا يعكس بالضرورة معدل الأخطاء الفعلي (كما نبّهت المحاضرة: `LOC` مقياس حجم بسيط لا يعكس التعقيد الحقيقي) — لذلك الإجراء الصحيح هو النظر لمقاييس تعقيد إضافية (`CC`, `WMC`)، مراجعات كود (`code reviews`)، واحتمال الحاجة لـ`Refactoring`.
+
+أ) "المقاييس غير موثوقة بالكامل" استنتاج مبالغ فيه؛ المشكلة في تفسير مقياس واحد بمعزل عن غيره، لا في المقاييس نفسها.
+ج) زيادة تطوير ميزات جديدة يتجاهل المشكلة الأساسية (تضخم الكود المحتمل) ويزيدها سوءاً.
+د) تجاهل `LOC` تماماً والتركيز فقط على الاختبار يفوّت فرصة تشخيص السبب الجذري المحتمل (تعقيد متزايد).
+
+هذا يربط مباشرة بتحذير المحاضرة من الاعتماد على `LOC` وحده: يجب قراءته دائماً مع مقاييس تعقيد أخرى (`CC`) لفهم الصورة الكاملة قبل اتخاذ أي قرار.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 240 (TODO — صعب)
+A project's SRS includes highly volatile non-functional requirements impacting system security and performance. How would you prioritize testing efforts to maximize risk mitigation?
+أ) Minimize non-functional requirements such as performance or security demands.
+ب) Guaranteed backward compatibility.
+ج) Elimination of integration testing.
+د) Simplification of configuration management.
+**الإجابة الصحيحة: TODO**
+**التعليل:**
+هذا السؤال يبدو تالفاً في الاستخراج: نص السؤال يسأل تحديداً "كيف نُرتّب أولويات الاختبار لتقليل المخاطر؟"، لكن كل الخيارات الأربعة المتاحة (تقليل المتطلبات غير الوظيفية، ضمان التوافق العكسي، حذف اختبار التكامل، تبسيط إدارة الإعدادات) هي أفعال سلبية أو غير منطقية لا تجيب فعلياً على "كيف نُرتّب أولويات الاختبار" — ولا واحد منها يصف استراتيجية ترتيب أولويات معقولة (بعكس سؤال مشابه بنفس الدورة أعطى إجابة صحيحة واضحة عبر خيار "Use risk analysis to prioritize...").
+
+أ) تقليل المتطلبات غير الوظيفية عمداً يتناقض تماماً مع نص السؤال نفسه (النظام يحتاج أمناً وأداءً حرجين، لا تقليلهما).
+ب) ضمان التوافق العكسي غير مرتبط بترتيب أولويات الاختبار حسب المخاطرة.
+ج) حذف اختبار التكامل يزيد المخاطرة بدل تقليلها.
+د) تبسيط إدارة الإعدادات موضوع منفصل تماماً عن ترتيب أولويات الاختبار.
+
+بما أن الخيار الصحيح المنطقي (على غرار "استخدام تحليل المخاطر لترتيب الاختبارات حسب التأثير والاحتمالية" في سؤال مشابه بنفس الدورة) غير موجود إطلاقاً بين الخيارات المتاحة، يُترك السؤال TODO للمراجعة اليدوية بدل اختيار إجابة تتناقض مع نص السؤال نفسه.
+
+**المصدر:** [نمط 2025-2026]
+### السؤال 241 (متوسط)
+How does the principle of "separation of concerns" affect maintainability in large scale software systems?
+أ) It limits code reuse.
+ب) It increases testing complexity.
+ج) It is only applicable to UI development.
+د) It reduces complexity by modularizing concerns, facilitating parallel development, and easier updates.
+ه) It increases coupling by spreading functionality.
+**الإجابة الصحيحة: د**
+**التعليل:**
+"فصل الاهتمامات" (`Separation of Concerns`) يقسّم النظام لوحدات معيارية (`modular`) كل واحدة مسؤولة عن جانب واحد محدد — هذا يقلل التعقيد الكلي، يسمح بتطوير متوازٍ (`parallel development`) بأثر جانبي محدود، ويجعل التحديثات المستقبلية أسهل وأكثر أماناً.
+
+أ) فصل الاهتمامات عادة *يحسّن* إعادة الاستخدام (وحدات مستقلة أسهل استخداماً في سياقات أخرى)، لا يحدّها.
+ب) الفصل الجيد يبسّط الاختبار عملياً (كل وحدة تُختبر بمعزل تام)، لا يعقّده.
+ج) المبدأ عام جداً وينطبق على أي طبقة من النظام (بيانات، منطق أعمال، واجهة)، لا الواجهة فقط.
+ه) عكس الحقيقة تماماً — فصل الاهتمامات الجيد يقلل الاقتران (`coupling`)، لا يزيده.
+
+هذا يربط مباشرة بمبدأ `Refactoring` اللي شرحته المحاضرة (`Extract Class` عند اكتشاف أن فئة واحدة تقوم بعمل فئتين) وبالقاعدة الذهبية `Keep low coupling but high cohesion` من محاضرة `Measurement`.

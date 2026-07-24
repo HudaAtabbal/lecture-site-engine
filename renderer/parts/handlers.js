@@ -117,6 +117,9 @@ function renderMcqCard(q, cardId, { showSource = true } = {}) {
       <strong class="text-primary">التعليل:</strong>
       <div class="mt-sm">${renderMcqExplain(q.explain)}</div>
     </div>
+    <button type="button" data-mcq-reset class="mcq-reset-btn hidden mt-md inline-flex items-center gap-xs px-md py-sm rounded-lg border border-outline-variant bg-surface-container-high text-on-surface font-label-md hover:bg-surface-variant transition-all" aria-label="إعادة تعيين الإجابة">
+      ${ms('restart_alt', false, 'text-sm')} إعادة تعيين الإجابة
+    </button>
   </article>`;
   return html;
 }
@@ -144,14 +147,22 @@ function renderMcqGroup(q, partId) {
 export function renderMCQ(questions, partId) {
   const totalCount = questions.reduce((n, q) => n + (q.type === 'group' ? q.questions.length : 1), 0);
 
-  let html = `<div class="mcq-progress sticky top-16 z-10 bg-surface-container-lowest dark:bg-[#10121f]/90 border border-outline-variant dark:border-[#1e40af] rounded-xl p-md mb-lg custom-shadow box-animate box-hover backdrop-blur-sm" data-part="${partId}">
-    <div class="flex items-center gap-md mb-sm">
-      ${ms('quiz', false, 'text-primary')}
-      <span class="font-label-md text-on-surface-variant">تقدّم الاختبار: <strong class="text-primary mcq-score">0</strong> / ${totalCount}</span>
+  let html = `<div class="mcq-progress sticky top-16 z-10 bg-surface-container-lowest dark:bg-[#10121f]/90 border border-outline-variant dark:border-[#1e40af] rounded-xl p-md mb-lg custom-shadow box-animate box-hover backdrop-blur-sm" data-part="${partId}" data-total="${totalCount}">
+    <div class="flex items-center justify-between gap-md mb-sm flex-wrap">
+      <div class="flex items-center gap-md">
+        ${ms('quiz', false, 'text-primary')}
+        <span class="font-label-md text-on-surface-variant">تقدّم الإجابة: <strong class="text-on-surface mcq-answered-count">0</strong> / ${totalCount}</span>
+      </div>
+      <div class="flex items-center gap-sm font-label-md flex-wrap">
+        <span class="text-primary">✓ <strong class="mcq-score">0</strong></span>
+        <span class="text-on-surface-variant">·</span>
+        <span class="text-error">✗ <strong class="mcq-wrong-count">0</strong></span>
+        <button type="button" data-mcq-reset-all class="mcq-reset-all-btn hidden inline-flex items-center gap-xs px-sm py-xs rounded-lg border border-outline-variant bg-surface-container-high text-on-surface font-label-md hover:bg-error-container hover:text-on-error-container hover:border-error/40 transition-all" aria-label="إعادة تعيين كل التقدّم">
+          ${ms('restart_alt', false, 'text-sm')} إعادة تعيين التقدّم
+        </button>
+      </div>
     </div>
-    <div class="h-1.5 bg-surface-container-high rounded-full overflow-hidden">
-      <div class="mcq-progress-fill h-full bg-primary rounded-full transition-all duration-300" style="width:0%"></div>
-    </div>
+    <div class="mcq-progress-track" role="img" aria-label="شريط تقدّم الإجابات"></div>
   </div>
   <div class="space-y-lg">`;
 

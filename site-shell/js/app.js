@@ -63,6 +63,7 @@ const {
   renderCodeGuide,
   buildTocData,
   initInteractivity,
+  applyMcqPick,
   setRefContext,
   clearRefContext,
   ms,
@@ -275,11 +276,52 @@ function renderReviewFeatured() {
   });
 }
 
+function dawratAnswerQid(cardOrId) {
+  const id = typeof cardOrId === 'string' ? cardOrId : (cardOrId?.id || '');
+  return id ? `dawrat::${id}` : '';
+}
+
 function examStats(exam) {
   const mcqPart = exam.parts?.find(p => p.type === 'mcq');
   const count = mcqPart?.questions?.reduce((n, q) => n + (q.type === 'group' ? q.questions.length : 1), 0) || 0;
   return { count };
 }
+
+function restoreDawratAnswers(root = document.getElementById('content')) {
+  if (!root || !appState.quizStats) return;
+  root.querySelectorAll('.mcq-card[id]').forEach(card => {
+    const qid = dawratAnswerQid(card);
+    const saved = appState.quizStats.getAnswerChoice(qid);
+    if (!saved?.picked) return;
+    applyMcqPick(card, saved.picked, { animate: false, dispatchEvent: false });
+  });
+}
+
+function persistDawratAnswer(detail) {
+  if (currentExamIndex < 0 || !appState.quizStats) return;
+  const cardId = detail?.cardId || '';
+  const picked = detail?.pickedKey;
+  if (!cardId || !picked) return;
+  const qid = dawratAnswerQid(cardId);
+  appState.quizStats.saveAnswerChoice(qid, picked, !!detail.isCorrect);
+  // Also keep mastery-style counts for this dawrat question.
+  appState.quizStats.recordAnswer(qid, !!detail.isCorrect);
+}
+
+function clearPersistedDawratAnswer(detail) {
+  if (currentExamIndex < 0 || !appState.quizStats) return;
+  const cardId = detail?.cardId || '';
+  if (!cardId) return;
+  appState.quizStats.clearAnswerChoice(dawratAnswerQid(cardId));
+}
+
+function clearAllPersistedDawratAnswers(detail) {
+  if (currentExamIndex < 0 || !appState.quizStats) return;
+  const ids = detail?.cardIds || [];
+  if (!ids.length) return;
+  appState.quizStats.clearAnswerChoices(ids.map(dawratAnswerQid));
+}
+
 
 /** Unlike renderReviewFeatured (always just item[0]), a subject can have
  * more than one دورات file — render one card per item, in a grid that reads
@@ -445,6 +487,7 @@ function loadExamView(index, anchorHash) {
   if (needsRender) {
     currentExamIndex = index;
     mountReviewHtml(item, renderCodeGuide(item.exam, '📝 دورات سنوات سابقة'));
+    restoreDawratAnswers();
 
     document.getElementById('sidebarCourseTitle').textContent = shortLectureTitle(item.exam.title);
     document.getElementById('sidebarCourseSub').textContent = item.exam.tag || '';
@@ -2131,6 +2174,13 @@ async function init() {
   initInteractivity();
   window.addEventListener('study:mcq-answered', (e) => {
     trackMcqAnswered(e.detail || {});
+    persistDawratAnswer(e.detail || {});
+  });
+  window.addEventListener('study:mcq-reset', (e) => {
+    clearPersistedDawratAnswer(e.detail || {});
+  });
+  window.addEventListener('study:mcq-reset-all', (e) => {
+    clearAllPersistedDawratAnswers(e.detail || {});
   });
   initScrollFab();
   initJumpSummary();
