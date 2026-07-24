@@ -304,6 +304,7 @@ function renderExamArchiveSection() {
         </div>
         <div class="flex-1 text-right">
           <h3 class="font-headline-sm text-headline-sm text-on-surface mb-xs">${esc(item.exam.title)}</h3>
+          ${item.exam.tag ? `<p class="font-label-md text-label-md text-on-surface-variant mb-xs">${esc(item.exam.tag)}</p>` : ''}
           <span class="inline-flex items-center gap-xs px-sm py-xs bg-surface-container-high rounded-full font-label-md text-label-md text-on-surface-variant">
             ${ms('quiz', false, 'text-sm text-tertiary')} ${stats.count} سؤال
           </span>
@@ -390,6 +391,46 @@ function loadReviewView(index, anchorHash) {
   else if (needsRender) window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+function showDawratNoticePopup(notice) {
+  if (!notice) return;
+  let modal = document.getElementById('dawratNoticeModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'dawratNoticeModal';
+    modal.className = 'lecture-notes-modal hidden';
+    modal.setAttribute('aria-hidden', 'true');
+    modal.innerHTML = `
+      <div class="lecture-notes-modal__backdrop" data-close-dawrat-notice></div>
+      <div class="lecture-notes-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="dawratNoticeTitle">
+        <div class="lecture-notes-modal__head">
+          <h2 id="dawratNoticeTitle" class="font-headline-sm text-headline-sm text-on-surface">تنبيه: الملف غير جاهز بعد</h2>
+          <button type="button" class="lecture-notes-modal__close" data-close-dawrat-notice aria-label="إغلاق">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <p id="dawratNoticeBody" class="font-body-md text-body-md text-on-surface" style="margin:0;line-height:1.7"></p>
+        <button type="button" data-close-dawrat-notice class="mt-md bg-primary text-on-primary py-sm px-lg rounded-lg font-bold font-label-md hover:opacity-90 transition-all self-start">حسناً، فهمت</button>
+      </div>`;
+    document.body.appendChild(modal);
+    modal.querySelectorAll('[data-close-dawrat-notice]').forEach(el => {
+      el.addEventListener('click', () => {
+        modal.classList.add('hidden');
+        modal.setAttribute('aria-hidden', 'true');
+      });
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+        modal.classList.add('hidden');
+        modal.setAttribute('aria-hidden', 'true');
+      }
+    });
+  }
+  const body = document.getElementById('dawratNoticeBody');
+  if (body) body.textContent = notice;
+  modal.classList.remove('hidden');
+  modal.setAttribute('aria-hidden', 'false');
+}
+
 function loadExamView(index, anchorHash) {
   const item = appState.examItems[index];
   if (!item) return;
@@ -399,6 +440,7 @@ function loadExamView(index, anchorHash) {
   setJumpQuizVisible(false);
 
   const needsRender = currentExamIndex !== index || !document.getElementById(item.exam.id);
+  const notice = item.exam.notice || appState.examManifest?.notice || '';
 
   if (needsRender) {
     currentExamIndex = index;
@@ -410,6 +452,8 @@ function loadExamView(index, anchorHash) {
     document.getElementById('mobileTocCourseTitle').textContent = shortLectureTitle(item.exam.title);
     document.getElementById('mobileTocCourseSub').textContent = item.exam.tag || '';
     document.getElementById('mobileTocMatIcon').textContent = item.matIcon || 'history_edu';
+
+    if (notice) showDawratNoticePopup(notice);
   } else {
     buildSidebar(item.toc);
     showView('lecture');

@@ -166,6 +166,7 @@ async function buildExamsJson(subjectDir, examsOut, parser) {
         id: entry.id || srcPath.replace(/\.md$/i, ''),
         title: entry.label || manifest.title || 'دورات سنوات سابقة',
         tag: manifest.subtitle || '',
+        notice: entry.notice || manifest.notice || '',
         parts: [mcqPart],
       };
       const jsonName = srcPath.replace(/\.md$/i, '.json');
