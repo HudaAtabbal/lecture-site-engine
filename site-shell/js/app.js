@@ -64,6 +64,7 @@ const {
   buildTocData,
   initInteractivity,
   applyMcqPick,
+  updateMCQProgress,
   setRefContext,
   clearRefContext,
   ms,
@@ -290,10 +291,15 @@ function examStats(exam) {
 function restoreDawratAnswers(root = document.getElementById('content')) {
   if (!root || !appState.quizStats) return;
   root.querySelectorAll('.mcq-card[id]').forEach(card => {
+    if (card.dataset.locked === '1') return;
     const qid = dawratAnswerQid(card);
     const saved = appState.quizStats.getAnswerChoice(qid);
     if (!saved?.picked) return;
     applyMcqPick(card, saved.picked, { animate: false, dispatchEvent: false });
+  });
+  // Always paint the green/red/gray progress track (even with 0 answers).
+  root.querySelectorAll('.section-block[data-part-type="mcq"]').forEach(section => {
+    updateMCQProgress(section);
   });
 }
 
@@ -500,6 +506,8 @@ function loadExamView(index, anchorHash) {
   } else {
     buildSidebar(item.toc);
     showView('lecture');
+    // Re-apply saved answers if the DOM was still mounted but cards were reset.
+    restoreDawratAnswers();
   }
 
   const hash = anchorHash && anchorHash !== item.exam.id ? anchorHash : item.exam.id;

@@ -162,7 +162,7 @@ export function renderMCQ(questions, partId) {
         </button>
       </div>
     </div>
-    <div class="mcq-progress-track" role="img" aria-label="شريط تقدّم الإجابات"></div>
+    <div class="mcq-progress-track" role="img" aria-label="شريط تقدّم الإجابات">${Array.from({ length: totalCount }, () => '<span class="mcq-progress-seg mcq-progress-seg--pending"></span>').join('')}</div>
   </div>
   <div class="space-y-lg">`;
 

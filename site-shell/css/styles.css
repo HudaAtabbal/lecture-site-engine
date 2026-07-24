@@ -161,11 +161,12 @@ body {
 .mcq-progress-track {
   display: flex;
   gap: 2px;
-  height: 0.5rem;
+  height: 0.65rem;
   width: 100%;
   border-radius: 9999px;
   overflow: hidden;
   background: var(--color-surface-container-high);
+  border: 1px solid color-mix(in srgb, var(--color-outline-variant) 70%, transparent);
 }
 
 .mcq-progress-seg {
@@ -177,7 +178,7 @@ body {
 }
 
 .mcq-progress-seg--pending {
-  background: color-mix(in srgb, var(--color-outline-variant) 55%, transparent);
+  background: color-mix(in srgb, var(--color-outline-variant) 70%, transparent);
 }
 
 .mcq-progress-seg--correct {
