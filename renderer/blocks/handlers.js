@@ -74,7 +74,7 @@ function diagramSpecNoteHtml() {
   );
 }
 
-function renderMermaid(block) {
+export function renderMermaid(block) {
   const title = esc(block.title || 'مخطط');
   const code = esc(block.code || '');
   return `<div class="mermaid-container box-animate box-hover">
