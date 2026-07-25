@@ -1,95 +1,69 @@
 # المحاضرة 1 — الوحدة A: الأساسيات ودورة حياة البرمجيات (محاضرة 1 + 2)
 
-> طبقة مراجعة إضافية — ملخص مفاهيم + أسئلة من دورات سابقة وأسلوب الدكتور.
-> المصدر الأساسي للأسئلة الحقيقية: بنك دورات 2023–2026.
+> طبقة مراجعة — الفقرة أولاً، وتحقق سريع تحتها عند الحاجة.
 
 ---
 
-## ملخص: الفقرة 1: أزمة البرمجيات وتكاليفها
+## ملخص المفاهيم
+
+### الفقرة 1: أزمة البرمجيات وتكاليفها
 
 **من المحاضرة:** محاضرة 1، §1 | **تذكير:** "Software: still come late, exceed budget, full of residual faults."
 
 3 أعراض (تأخر، تجاوز ميزانية، أخطاء متبقية)، والسبب الجذري هو التعقيد (`complexity`) مش نقص الأدوات.
 
----
-
-## أسئلة اختيار من متعدد (MCQ) — الفقرة 1: أزمة البرمجيات وتكاليفها
-
+#### تحقق سريع:
 **المصدر:** [نمط 2024-2025 — الفصل الأول]
-### السؤال 1 (متوسط)
 What is the primary cause of the "software crisis" as identified in the 1960s?
 أ) Rapidly increasing hardware capabilities
 ب) The rise of open-source software
 ج) The introduction of agile methodologies
 د) Inability to meet user requirements and project deadlines
-**الإجابة الصحيحة: د**
-**التعليل:**
-أرقام IBM (31% إلغاء، 53% تجاوز ميزانية بمعدل 189%) كلها مظاهر فشل تلبية متطلبات المستخدم والمواعيد. الترجمة: `crisis` = أزمة، `deadlines` = المواعيد النهائية.
+**الإجابة: د**
+> أرقام IBM (31% إلغاء، 53% تجاوز ميزانية بمعدل 189%) كلها مظاهر فشل تلبية متطلبات المستخدم والمواعيد. الترجمة: `crisis` = أزمة، `deadlines` = المواعيد النهائية.
 
----
 
+#### تحقق سريع:
 **المصدر:** [نمط 2024-2025 — الفصل الأول]
-### السؤال 2 (متوسط)
 Which of the following best describes a consequence of the software crisis?
 أ) Decreased demand for software engineers
 ب) Increased costs and delays in software development projects
 ج) Improved collaboration between development teams and stakeholders
 د) A shift towards more manual testing processes
-**الإجابة الصحيحة: ب**
-**التعليل:**
-نتيجة مباشرة موثّقة بالأرقام (تجاوز 189% بالميزانية). العكس تماماً لخيارات أ وج.
+**الإجابة: ب**
+> نتيجة مباشرة موثّقة بالأرقام (تجاوز 189% بالميزانية). العكس تماماً لخيارات أ وج.
 
----
 
+#### تحقق سريع:
 **المصدر:** [نمط 2024-2025 — الفصل الأول]
-### السؤال 3 (متوسط)
 In response to the software crisis, which methodology was introduced to improve software development processes?
 أ) Waterfall model
 ب) Agile methodologies
 ج) Spiral model
 د) DevOps practices
-**الإجابة الصحيحة: أ**
-**التعليل:**
-(Waterfall)
-
-تاريخياً أول نموذج منظّم رسمياً ظهر كردّ مباشر على فوضى `Build and Fix`. `Agile` وDevOps ظهروا لاحقاً بعقود، وSpiral جا بعده لسبب مختلف (المخاطر).
-
-لاحظي إنو أسئلة هالفقرة بتربط دايماً سبب↔نتيجة↔حل، مو بس استرجاع رقم.
+**الإجابة: أ**
+> تاريخياً أول نموذج منظّم رسمياً ظهر كردّ مباشر على فوضى `Build and Fix`. `Agile` وDevOps ظهروا لاحقاً بعقود، وSpiral جا بعده لسبب مختلف (المخاطر).
 
 
----
-
-## ملخص: الفقرة 2: تعريف SE + أساطير البرمجيات
+### الفقرة 2: تعريف SE + أساطير البرمجيات
 
 **من المحاضرة:** محاضرة 1، §2.1 و §5 | **تذكير:** "Addition of more software engineers will make up the delay" — أسطورة، مش حقيقة (قانون Brooks).
 
----
-
-## أسئلة اختيار من متعدد (MCQ) — الفقرة 2: تعريف SE + أساطير البرمجيات
-
-**المصدر:** [سؤال بأسلوب الدكتور — من تأليفي]
-### السؤال 4 (متوسط)
+#### تحقق سريع:
 Which of the following is one of the software myths mentioned in the lecture?
 أ) Freezing requirements early always guarantees zero delays
 ب) Adding more programmers to a late project will speed up its completion
 ج) Automated testing can fully eliminate the need for a design phase
 د) Reusable components always reduce the cost of every future project
-**الإجابة الصحيحة: ب**
-**التعليل:**
-أسطورة قانون Brooks الحرفية بالمحاضرة. الترجمة: `myth` = أسطورة/معتقد خاطئ شائع.
-
-حفظي التسعة أساطير بدقة كافية تميزيهن عن نقيضهن الصحيح، مش بس وجودهن.
+**الإجابة: ب**
+> أسطورة قانون Brooks الحرفية بالمحاضرة. الترجمة: `myth` = أسطورة/معتقد خاطئ شائع.
 
 
----
-
-## ملخص: الفقرة 2ب: صفات مهندس البرمجيات
+### الفقرة 2ب: صفات مهندس البرمجيات
 
 **من المحاضرة:** محاضرة 1، §2.2 | 3 مسؤوليات تميّزه عن "مبرمج عادي": نهج منظم وموثّق (`systematic approach`)، اختيار الأدوات المناسبة حسب المشكلة، واستغلال الموارد المتاحة بكفاءة.
 
----
-
-## ملخص: الفقرة 3: Program / Software / Product / Process
+### الفقرة 3: Program / Software / Product / Process
 
 **من المحاضرة:** محاضرة 1، §3.1 و §9.2 | **تذكير:** "Product: is what is delivered to the customer... Process: way in which we produce software."
 
@@ -102,61 +76,41 @@ Which of the following is one of the software myths mentioned in the lecture?
 
 **القاعدة الذهبية:** `Product` = شو، `Process` = كيف.
 
----
-
-## أسئلة اختيار من متعدد (MCQ) — الفقرة 3: Program / Software / Product / Process
-
-**المصدر:** [سؤال بأسلوب الدكتور — من تأليفي]
-### السؤال 5 (متوسط)
+#### تحقق سريع:
 According to the lecture, which of the following completes the definition: Software = Program + Documentation + ...?
 أ) Marketing Plan
 ب) Operating Procedures
 ج) Test Budget
 د) Customer Contract
-**الإجابة الصحيحة: ب**
-**التعليل:**
-المكوّن الثالث الحرفي بتعريف Software.
+**الإجابة: ب**
+> المكوّن الثالث الحرفي بتعريف Software.
 
 
----
-
-## ملخص: الفقرة 3ب: هيكل التوثيق + إجراءات التشغيل
+### الفقرة 3ب: هيكل التوثيق + إجراءات التشغيل
 
 **من المحاضرة:** محاضرة 1، §3.2-3.3 | التوثيق (`Documentation`) 4 فئات حسب مرحلة التطوير: Analysis/Specification (DFD, Context Diagram)، Design (Flow Charts, ERD)، Implementation (Source Code Listing)، Testing (Test Data/Results). إجراءات التشغيل (`Operating Procedures`) نوعان: `User Manuals` (للمستخدم: Overview, Beginner's Guide, Tutorial, Reference) و`Operational Manuals` (للفريق التقني: Installation Guide, System Administration Guide).
 
 **📌 الترجمة:** `Cross-Reference Listing` = قائمة الإحالة المرجعية، `Entity-Relationship Diagram` = مخطط العلاقة بين الكيانات.
 
----
-
-## ملخص: الفقرة 4: Generic مقابل Bespoke
+### الفقرة 4: Generic مقابل Bespoke
 
 **من المحاضرة:** محاضرة 1، §4.1 | مين يملك المواصفة (`specification` — الترجمة: المواصفة/الوثيقة التقنية) هو الفيصل: `Generic` = المطوّر يملكها، `Bespoke` = العميل يملكها.
 
----
-
-## أسئلة اختيار من متعدد (MCQ) — الفقرة 4: Generic مقابل Bespoke
-
-**المصدر:** [سؤال بأسلوب الدكتور — من تأليفي]
-### السؤال 6 (متوسط)
+#### تحقق سريع:
 A company builds a general accounting package and independently decides which features to include, then sells it to many businesses. This is:
 أ) Bespoke
 ب) Generic
 ج) Embedded
 د) Real-time
-**الإجابة الصحيحة: ب**
-**التعليل:**
-المطوّر يملك القرار = Generic.
+**الإجابة: ب**
+> المطوّر يملك القرار = Generic.
 
 
----
-
-## ملخص: الفقرة 4ب: مكونات منتج البرمجية (Software Product)
+### الفقرة 4ب: مكونات منتج البرمجية (Software Product)
 
 **من المحاضرة:** محاضرة 1، §4.2 | المنتج = كل ما يُصمَّم للتسليم، 10 عناصر: Source Code, Object Codes, Reports, Plan, Documents, Manuals, Data, Test Suites, Test Results, Prototypes.
 
----
-
-## ملخص: الفقرة 5: Good Software مقابل Software Process
+### الفقرة 5: Good Software مقابل Software Process
 
 **من المحاضرة:** محاضرة 1، §8 و §6.1 | قائمتان من 4 عناصر بيسهل تختلطوا:
 
@@ -167,199 +121,137 @@ A company builds a general accounting package and independently decides which fe
 | Efficiency (الكفاءة) | Validation (تحقق) |
 | Acceptability (القبول) | Evolution (تطوّر) |
 
----
-
-## أسئلة اختيار من متعدد (MCQ) — الفقرة 5: Good Software مقابل Software Process
-
-**المصدر:** [سؤال بأسلوب الدكتور — من تأليفي]
-### السؤال 7 (متوسط)
+#### تحقق سريع:
 Which pair correctly matches a Software Process activity with its purpose?
 أ) Validation — designing architecture
 ب) Specification — defining what the system should do
 ج) Evolution — writing initial code
 د) Development — checking customer requirements
-**الإجابة الصحيحة: ب**
-**التعليل:**
-باقي الأزواج مقلوبة عمداً.
+**الإجابة: ب**
+> باقي الأزواج مقلوبة عمداً.
 
 
----
-
-## ملخص: الفقرة 5ب: خصائص البرمجية (Software Characteristics) + تطبيقاتها
+### الفقرة 5ب: خصائص البرمجية (Software Characteristics) + تطبيقاتها
 
 **من المحاضرة:** محاضرة 1، §6.2 و §7 | 4 خصائص تميّزها عن الهاردوير: **لا تتآكل** (`does not wear out` — منحنى أعطالها ينخفض باستمرار، بعكس منحنى U للهاردوير)، **لا تُصنَّع بل تُنسَخ** (`not manufactured, just copied`)، **قابلة لإعادة الاستخدام**، و**مرنة** (`flexible`).
 
 8 أنواع تطبيقات: System Software (compilers, OS)، Real-time Software، Embedded Software، Business Software، Personal Computer Software، AI Software، Web-Based Software، Engineering & Scientific Software (CAD, SPSS, MATLAB).
 
----
-
-## ملخص: الفقرة 6: Deliverables مقابل Milestones
+### الفقرة 6: Deliverables مقابل Milestones
 
 **من المحاضرة:** محاضرة 1، §9.1 | `Deliverable` (مُخرَج) = شيء ملموس. `Milestone` (معلَم/محطة تقييم) = حدث يقيس التقدم.
 
----
-
-## أسئلة اختيار من متعدد (MCQ) — الفقرة 6: Deliverables مقابل Milestones
-
-**المصدر:** [سؤال بأسلوب الدكتور — من تأليفي]
-### السؤال 8 (متوسط)
+#### تحقق سريع:
 "Completion of the design documentation" is best classified as a:
 أ) Deliverable
 ب) Milestone
 ج) Software Myth
 د) Process Metric
-**الإجابة الصحيحة: ب**
-**التعليل:**
-مثال حرفي بالمحاضرة على Milestone.
+**الإجابة: ب**
+> مثال حرفي بالمحاضرة على Milestone.
 
 
----
-
-## ملخص: الفقرة 7: Measure / Measurement / Metrics
+### الفقرة 7: Measure / Measurement / Metrics
 
 **من المحاضرة:** محاضرة 1، §9.3 | `Measure` (مقياس فردي) → `Measurement` (فعل القياس) → `Metrics` (ربط عدة measures).
 
----
-
-## أسئلة اختيار من متعدد (MCQ) — الفقرة 7: Measure / Measurement / Metrics
-
+#### تحقق سريع:
 **المصدر:** [نمط 2023-2024 — الفصل الأول]
-### السؤال 9 (متوسط)
 A metric is:
 أ) an ISO standard unit
 ب) a qualitative measure of a system attribute
 ج) a quantitative measure of the degree to which a system component possesses a given attribute
 د) a qualitative attribute which determines degree of measurement
 ه) an attributed quantity in degrees
-**الإجابة الصحيحة: ج**
-**التعليل:**
-المقياس بطبيعته **كمّي** (quantitative) لا نوعي (qualitative) — هاد الفرق نفسه هو الفخ بخيار ب.
+**الإجابة: ج**
+> المقياس بطبيعته **كمّي** (quantitative) لا نوعي (qualitative) — هاد الفرق نفسه هو الفخ بخيار ب.
 
----
 
+#### تحقق سريع:
 **المصدر:** [نمط 2023-2024 — الفصل الأول]
-### السؤال 10 (متوسط)
 Why is it useful to measure aspects of a system?
 أ) Human perception is inaccurate
 ب) Numbers allow comparing, controlling, predicting
 ج) Measurements track progress
 د) Gives quality assessment
 ه) All of the above
-**الإجابة الصحيحة: ه**
-**التعليل:**
-كل الأسباب صحيحة ومكمّلة لبعض.
+**الإجابة: ه**
+> كل الأسباب صحيحة ومكمّلة لبعض.
 
----
 
+#### تحقق سريع:
 **المصدر:** [نمط 2023-2024 — الفصل الأول]
-### السؤال 11 (متوسط)
 What are the features of a poor metric?
 أ) complex, hard-to-measure, persuasive
 ب) complex, consistent, language-independent
 ج) simple, hard-to-measure, no units
 د) complex, subjective, inconsistent
 ه) complex, subjective, persuasive
-**الإجابة الصحيحة: د**
-**التعليل:**
-المقياس السيء: معقّد + ذاتي (`subjective`) + غير متسق (`inconsistent`) — عكس الجيد (بسيط، موضوعي، متسق).
-
-هاي الفقرة كانت منطقة عارية تماماً بالبنك الخارجي القديم — لكن exams.md عطاها تغطية ممتازة. راجعيها منيح، بترجع بقوة بمحاضرة 8/9.
+**الإجابة: د**
+> المقياس السيء: معقّد + ذاتي (`subjective`) + غير متسق (`inconsistent`) — عكس الجيد (بسيط، موضوعي، متسق).
 
 
----
-
-## ملخص: الفقرة 8: Productivity + Module + Component
+### الفقرة 8: Productivity + Module + Component
 
 **من المحاضرة:** محاضرة 1، §9.4 | `Productivity = LOC / Person-Months`. `Component` (مكوّن) أكبر من `Module` (وحدة)، ويوفر خدمته عبر `interface`.
 
----
-
-## أسئلة اختيار من متعدد (MCQ) — الفقرة 8: Productivity + Module + Component
-
+#### تحقق سريع:
 **المصدر:** [نمط 2023-2024]
-### السؤال 12 (متوسط)
 Which metric is often used to measure the efficiency of a software development team?
 أ) Defect density
 ب) Lines of code per person-month
 ج) Code coverage
 د) Number of test cases
-**الإجابة الصحيحة: ب**
-**التعليل:**
-تعريف Productivity بالضبط.
+**الإجابة: ب**
+> تعريف Productivity بالضبط.
 
 
----
-
-## ملخص: الفقرة 9: دور الإدارة في التطوير
+### الفقرة 9: دور الإدارة في التطوير
 
 **من المحاضرة:** محاضرة 1، §10 | 4 عوامل: **People + Product + Process + Project**. تجميد المتطلبات (`freeze`) تحت Project بيقلل المخاطر.
 
----
-
-## أسئلة اختيار من متعدد (MCQ) — الفقرة 9: دور الإدارة في التطوير
-
-**المصدر:** [سؤال بأسلوب الدكتور — من تأليفي]
-### السؤال 13 (متوسط)
+#### تحقق سريع:
 Under which management factor does the lecture discuss freezing requirements to avoid software surprises?
 أ) People
 ب) Product
 ج) Process
 د) Project
-**الإجابة الصحيحة: د**
-**التعليل:**
-—
+**الإجابة: د**
+> —
 
 
----
-
-## ملخص: الفقرة 10: نماذج دورة حياة البرمجيات (SDLC Models)
+### الفقرة 10: نماذج دورة حياة البرمجيات (SDLC Models)
 
 **من المحاضرة:** محاضرة 2، كاملة | Spiral = الوحيد بـ`Risk Analysis` صريح كل لفة.
 
----
-
-## أسئلة اختيار من متعدد (MCQ) — الفقرة 10: نماذج دورة حياة البرمجيات (SDLC Models)
-
+#### تحقق سريع:
 **المصدر:** [نمط 2023-2024 — الفصل الأول]
-### السؤال 14 (متوسط)
 Which model is characterized by iterations and feedback cycles?
 أ) Waterfall
 ب) Spiral
 ج) Agile
 د) V-shaped
-**الإجابة الصحيحة: ج**
-**التعليل:**
-*(معرفة عامة أكثر من كونها مذكورة بالاسم بمحاضرتك؛ لو الخيارات ما فيها Agile فـ Spiral هو الأقرب المدروس)*
+**الإجابة: ج**
+> *(معرفة عامة أكثر من كونها مذكورة بالاسم بمحاضرتك؛ لو الخيارات ما فيها Agile فـ Spiral هو الأقرب المدروس)*
 
----
 
+#### تحقق سريع:
 **المصدر:** [نمط 2023-2024 — الفصل الأول]
-### السؤال 15 (متوسط)
 Which model is characterized by a linear and sequential flow?
 أ) Agile
 ب) Waterfall
 ج) Spiral
 د) Iterative
-**الإجابة الصحيحة: ب**
-**التعليل:**
-(Waterfall)
+**الإجابة: ب**
+> تشبيه "الشلال": الماء ينزل لجهة وحدة بلا رجوع.
 
-تشبيه "الشلال": الماء ينزل لجهة وحدة بلا رجوع.
 
----
-
+#### تحقق سريع:
 **المصدر:** [نمط 2023-2024 — الفصل الأول]
-### السؤال 16 (متوسط)
 Which model involves construction of a partial system progressively refined through iterations?
 أ) Waterfall
 ب) Spiral
 ج) Incremental
 د) V-shaped
-**الإجابة الصحيحة: ج**
-**التعليل:**
-بيحذّر: خلط شائع بين Iterative Enhancement (منتج قابل للاستخدام كل دورة) وEvolutionary (لأ).
-
-لاحظي إنو خيارات الأسئلة أحياناً بتستخدم أسماء مو مطابقة 100% لأسماء محاضرتك (Incremental، V-shaped). ارجعي لتعريف السلوك مش لاسم الموديل.
-
-
----
+**الإجابة: ج**
+> بيحذّر: خلط شائع بين Iterative Enhancement (منتج قابل للاستخدام كل دورة) وEvolutionary (لأ).
