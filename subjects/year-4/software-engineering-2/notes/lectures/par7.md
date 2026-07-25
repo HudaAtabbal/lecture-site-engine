@@ -5,35 +5,13 @@
 
 ---
 
-## الجزء الأول: ملخص المفاهيم
-
-### الفقرة 1: تعريف الجودة (IEEE/ISO)
+## ملخص: الفقرة 1: تعريف الجودة (IEEE/ISO)
 
 **من المحاضرة:** محاضرة 12، §2 | الجودة = مطابقة المتطلبات الصريحة (`explicit`) **و**الضمنية (`implicit`) معاً.
 
-### الفقرة 2: عوامل الجودة الاثني عشر — منظور المستخدم مقابل المطوّر
-
-**من المحاضرة:** محاضرة 12، §4-6 | من منظور المستخدم: Correctness, Reliability, Usability, Security... من منظور المطوّر: Maintainability, Portability, Testability, Readability...
-
-### الفقرة 1ب: Quality Control مقابل Quality Assurance
-
-**من المحاضرة:** محاضرة 12، §3 | `Quality Control` (ضبط الجودة): قياس خصائص البرنامج **بعد** اكتماله — رد فعل (`reactive`). `Quality Assurance` (ضمان الجودة): مراقبة والتحكم بعملية التطوير نفسها **أثناء** حدوثها — وقائي (`proactive`).
-
-### الفقرة 2ب: التناقض بين عوامل الجودة + منظورا المستخدم والمطوّر
-
-**من المحاضرة:** محاضرة 12، §6 | لا يمكن تحقيق كل عوامل الجودة بأقصى درجة معاً — مثال تعارض كلاسيكي: `Performance` مقابل `Portability` (تحسين لمنصة معينة يرفع الأداء لكن يصعّب النقل، والعكس). **منظور المستخدم**: Correctness, Usability, Reliability, Security, Adaptability. **منظور المطوّر**: Maintainability, Portability, Readability, Understandability, Testability.
-
-### الفقرة 3: إدارة الجودة (SQM) + ضمان الجودة (SQA)
-
-**من المحاضرة:** محاضرة 12، §7-8 | `SQA` ترتكز على 3: Testing (ديناميكي)، Debugging، Reviews (ساكن).
-
-### الفقرة 4: CMM (Capability Maturity Model)
-
-**من المحاضرة:** محاضرة 12، §9 | معيار عالمي لإطار العملية (مذكور أيضاً بمحاضرة 1 ضمن عامل Process).
-
 ---
 
-## الجزء الثاني: أسئلة اختيار من متعدد (MCQ)
+## أسئلة اختيار من متعدد (MCQ) — الفقرة 1: تعريف الجودة (IEEE/ISO)
 
 **المصدر:** [نمط 2023-2024 — الفصل الثاني]
 ### السؤال 1 (متوسط)
@@ -46,7 +24,16 @@ Which best defines software quality?
 **التعليل:**
 برنامج ممكن يطابق الوثيقة 100% حرفياً لكن يبقى "سيء الجودة" لو ما لبّى الاحتياجات الضمنية غير المكتوبة.
 
+
 ---
+
+## ملخص: الفقرة 2: عوامل الجودة الاثني عشر — منظور المستخدم مقابل المطوّر
+
+**من المحاضرة:** محاضرة 12، §4-6 | من منظور المستخدم: Correctness, Reliability, Usability, Security... من منظور المطوّر: Maintainability, Portability, Testability, Readability...
+
+---
+
+## أسئلة اختيار من متعدد (MCQ) — الفقرة 2: عوامل الجودة الاثني عشر — منظور المستخدم مقابل المطوّر
 
 **المصدر:** [نمط 2023-2024 — الفصل الأول]
 ### السؤال 2 (متوسط)
@@ -115,7 +102,22 @@ What is the measure of effort required to understand, prepare, and modify a comp
 **التعليل:**
 (Maintainability)
 
+
 ---
+
+## ملخص: الفقرة 1ب: Quality Control مقابل Quality Assurance
+
+**من المحاضرة:** محاضرة 12، §3 | `Quality Control` (ضبط الجودة): قياس خصائص البرنامج **بعد** اكتماله — رد فعل (`reactive`). `Quality Assurance` (ضمان الجودة): مراقبة والتحكم بعملية التطوير نفسها **أثناء** حدوثها — وقائي (`proactive`).
+
+---
+
+## ملخص: الفقرة 2ب: التناقض بين عوامل الجودة + منظورا المستخدم والمطوّر
+
+**من المحاضرة:** محاضرة 12، §6 | لا يمكن تحقيق كل عوامل الجودة بأقصى درجة معاً — مثال تعارض كلاسيكي: `Performance` مقابل `Portability` (تحسين لمنصة معينة يرفع الأداء لكن يصعّب النقل، والعكس). **منظور المستخدم**: Correctness, Usability, Reliability, Security, Adaptability. **منظور المطوّر**: Maintainability, Portability, Readability, Understandability, Testability.
+
+---
+
+## أسئلة اختيار من متعدد (MCQ) — الفقرة 2ب: التناقض بين عوامل الجودة + منظورا المستخدم والمطوّر
 
 **المصدر:** [سؤال بأسلوب الدكتور — من تأليفي]
 ### السؤال 7 (متوسط)
@@ -128,7 +130,16 @@ Which pair of quality factors is used in the lecture as a classic example of a t
 **التعليل:**
 —
 
+
 ---
+
+## ملخص: الفقرة 3: إدارة الجودة (SQM) + ضمان الجودة (SQA)
+
+**من المحاضرة:** محاضرة 12، §7-8 | `SQA` ترتكز على 3: Testing (ديناميكي)، Debugging، Reviews (ساكن).
+
+---
+
+## أسئلة اختيار من متعدد (MCQ) — الفقرة 3: إدارة الجودة (SQM) + ضمان الجودة (SQA)
 
 **المصدر:** [نمط 2023-2024 — الفصل الأول]
 ### السؤال 8 (متوسط)
@@ -167,7 +178,16 @@ Which metric is most useful for assessing the effectiveness of code reviews?
 **التعليل:**
 —
 
+
 ---
+
+## ملخص: الفقرة 4: CMM (Capability Maturity Model)
+
+**من المحاضرة:** محاضرة 12، §9 | معيار عالمي لإطار العملية (مذكور أيضاً بمحاضرة 1 ضمن عامل Process).
+
+---
+
+## أسئلة اختيار من متعدد (MCQ) — الفقرة 4: CMM (Capability Maturity Model)
 
 **المصدر:** [سؤال بأسلوب الدكتور — من تأليفي]
 ### السؤال 11 (متوسط)
@@ -182,3 +202,5 @@ Which CMM level is characterized by processes being measured and controlled quan
 
 الترجمة: `Initial` = فوضوي، `Repeatable` = قابل للتكرار، `Defined` = موثَّق، `Managed` = مُدار كمّياً، `Optimizing` = مُحسَّن باستمرار (5 مستويات بالترتيب).
 
+
+---

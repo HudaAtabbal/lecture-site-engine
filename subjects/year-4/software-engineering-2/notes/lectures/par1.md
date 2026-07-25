@@ -5,89 +5,15 @@
 
 ---
 
-## الجزء الأول: ملخص المفاهيم
-
-### الفقرة 1: أزمة البرمجيات وتكاليفها
+## ملخص: الفقرة 1: أزمة البرمجيات وتكاليفها
 
 **من المحاضرة:** محاضرة 1، §1 | **تذكير:** "Software: still come late, exceed budget, full of residual faults."
 
 3 أعراض (تأخر، تجاوز ميزانية، أخطاء متبقية)، والسبب الجذري هو التعقيد (`complexity`) مش نقص الأدوات.
 
-### الفقرة 2: تعريف SE + أساطير البرمجيات
-
-**من المحاضرة:** محاضرة 1، §2.1 و §5 | **تذكير:** "Addition of more software engineers will make up the delay" — أسطورة، مش حقيقة (قانون Brooks).
-
-### الفقرة 2ب: صفات مهندس البرمجيات
-
-**من المحاضرة:** محاضرة 1، §2.2 | 3 مسؤوليات تميّزه عن "مبرمج عادي": نهج منظم وموثّق (`systematic approach`)، اختيار الأدوات المناسبة حسب المشكلة، واستغلال الموارد المتاحة بكفاءة.
-
-### الفقرة 3: Program / Software / Product / Process
-
-**من المحاضرة:** محاضرة 1، §3.1 و §9.2 | **تذكير:** "Product: is what is delivered to the customer... Process: way in which we produce software."
-
-| المصطلح | التعريف |
-|---|---|
-| `Program` (برنامج) | الكود المصدري فقط |
-| `Software` (برمجية) | `Program` + توثيق (`Documentation`) + إجراءات تشغيل |
-| `Product` (منتج) | كل ما يُسلَّم للعميل |
-| `Process` (عملية) | **الطريقة** يلي وصلنا فيها للنتيجة |
-
-**القاعدة الذهبية:** `Product` = شو، `Process` = كيف.
-
-### الفقرة 3ب: هيكل التوثيق + إجراءات التشغيل
-
-**من المحاضرة:** محاضرة 1، §3.2-3.3 | التوثيق (`Documentation`) 4 فئات حسب مرحلة التطوير: Analysis/Specification (DFD, Context Diagram)، Design (Flow Charts, ERD)، Implementation (Source Code Listing)، Testing (Test Data/Results). إجراءات التشغيل (`Operating Procedures`) نوعان: `User Manuals` (للمستخدم: Overview, Beginner's Guide, Tutorial, Reference) و`Operational Manuals` (للفريق التقني: Installation Guide, System Administration Guide).
-
-**📌 الترجمة:** `Cross-Reference Listing` = قائمة الإحالة المرجعية، `Entity-Relationship Diagram` = مخطط العلاقة بين الكيانات.
-
-### الفقرة 4: Generic مقابل Bespoke
-
-**من المحاضرة:** محاضرة 1، §4.1 | مين يملك المواصفة (`specification` — الترجمة: المواصفة/الوثيقة التقنية) هو الفيصل: `Generic` = المطوّر يملكها، `Bespoke` = العميل يملكها.
-
-### الفقرة 4ب: مكونات منتج البرمجية (Software Product)
-
-**من المحاضرة:** محاضرة 1، §4.2 | المنتج = كل ما يُصمَّم للتسليم، 10 عناصر: Source Code, Object Codes, Reports, Plan, Documents, Manuals, Data, Test Suites, Test Results, Prototypes.
-
-### الفقرة 5: Good Software مقابل Software Process
-
-**من المحاضرة:** محاضرة 1، §8 و §6.1 | قائمتان من 4 عناصر بيسهل تختلطوا:
-
-| Good Software (صفات المنتج) | Software Process (أنشطة العملية) |
-|---|---|
-| Maintainability (قابلية الصيانة) | Specification (تخصيص) |
-| Dependability & Security (الموثوقية والأمان) | Development (تطوير) |
-| Efficiency (الكفاءة) | Validation (تحقق) |
-| Acceptability (القبول) | Evolution (تطوّر) |
-
-### الفقرة 5ب: خصائص البرمجية (Software Characteristics) + تطبيقاتها
-
-**من المحاضرة:** محاضرة 1، §6.2 و §7 | 4 خصائص تميّزها عن الهاردوير: **لا تتآكل** (`does not wear out` — منحنى أعطالها ينخفض باستمرار، بعكس منحنى U للهاردوير)، **لا تُصنَّع بل تُنسَخ** (`not manufactured, just copied`)، **قابلة لإعادة الاستخدام**، و**مرنة** (`flexible`).
-
-8 أنواع تطبيقات: System Software (compilers, OS)، Real-time Software، Embedded Software، Business Software، Personal Computer Software، AI Software، Web-Based Software، Engineering & Scientific Software (CAD, SPSS, MATLAB).
-
-### الفقرة 6: Deliverables مقابل Milestones
-
-**من المحاضرة:** محاضرة 1، §9.1 | `Deliverable` (مُخرَج) = شيء ملموس. `Milestone` (معلَم/محطة تقييم) = حدث يقيس التقدم.
-
-### الفقرة 7: Measure / Measurement / Metrics
-
-**من المحاضرة:** محاضرة 1، §9.3 | `Measure` (مقياس فردي) → `Measurement` (فعل القياس) → `Metrics` (ربط عدة measures).
-
-### الفقرة 8: Productivity + Module + Component
-
-**من المحاضرة:** محاضرة 1، §9.4 | `Productivity = LOC / Person-Months`. `Component` (مكوّن) أكبر من `Module` (وحدة)، ويوفر خدمته عبر `interface`.
-
-### الفقرة 9: دور الإدارة في التطوير
-
-**من المحاضرة:** محاضرة 1، §10 | 4 عوامل: **People + Product + Process + Project**. تجميد المتطلبات (`freeze`) تحت Project بيقلل المخاطر.
-
-### الفقرة 10: نماذج دورة حياة البرمجيات (SDLC Models)
-
-**من المحاضرة:** محاضرة 2، كاملة | Spiral = الوحيد بـ`Risk Analysis` صريح كل لفة.
-
 ---
 
-## الجزء الثاني: أسئلة اختيار من متعدد (MCQ)
+## أسئلة اختيار من متعدد (MCQ) — الفقرة 1: أزمة البرمجيات وتكاليفها
 
 **المصدر:** [نمط 2024-2025 — الفصل الأول]
 ### السؤال 1 (متوسط)
@@ -130,7 +56,16 @@ In response to the software crisis, which methodology was introduced to improve 
 
 لاحظي إنو أسئلة هالفقرة بتربط دايماً سبب↔نتيجة↔حل، مو بس استرجاع رقم.
 
+
 ---
+
+## ملخص: الفقرة 2: تعريف SE + أساطير البرمجيات
+
+**من المحاضرة:** محاضرة 1، §2.1 و §5 | **تذكير:** "Addition of more software engineers will make up the delay" — أسطورة، مش حقيقة (قانون Brooks).
+
+---
+
+## أسئلة اختيار من متعدد (MCQ) — الفقرة 2: تعريف SE + أساطير البرمجيات
 
 **المصدر:** [سؤال بأسلوب الدكتور — من تأليفي]
 ### السؤال 4 (متوسط)
@@ -145,7 +80,31 @@ Which of the following is one of the software myths mentioned in the lecture?
 
 حفظي التسعة أساطير بدقة كافية تميزيهن عن نقيضهن الصحيح، مش بس وجودهن.
 
+
 ---
+
+## ملخص: الفقرة 2ب: صفات مهندس البرمجيات
+
+**من المحاضرة:** محاضرة 1، §2.2 | 3 مسؤوليات تميّزه عن "مبرمج عادي": نهج منظم وموثّق (`systematic approach`)، اختيار الأدوات المناسبة حسب المشكلة، واستغلال الموارد المتاحة بكفاءة.
+
+---
+
+## ملخص: الفقرة 3: Program / Software / Product / Process
+
+**من المحاضرة:** محاضرة 1، §3.1 و §9.2 | **تذكير:** "Product: is what is delivered to the customer... Process: way in which we produce software."
+
+| المصطلح | التعريف |
+|---|---|
+| `Program` (برنامج) | الكود المصدري فقط |
+| `Software` (برمجية) | `Program` + توثيق (`Documentation`) + إجراءات تشغيل |
+| `Product` (منتج) | كل ما يُسلَّم للعميل |
+| `Process` (عملية) | **الطريقة** يلي وصلنا فيها للنتيجة |
+
+**القاعدة الذهبية:** `Product` = شو، `Process` = كيف.
+
+---
+
+## أسئلة اختيار من متعدد (MCQ) — الفقرة 3: Program / Software / Product / Process
 
 **المصدر:** [سؤال بأسلوب الدكتور — من تأليفي]
 ### السؤال 5 (متوسط)
@@ -158,7 +117,24 @@ According to the lecture, which of the following completes the definition: Softw
 **التعليل:**
 المكوّن الثالث الحرفي بتعريف Software.
 
+
 ---
+
+## ملخص: الفقرة 3ب: هيكل التوثيق + إجراءات التشغيل
+
+**من المحاضرة:** محاضرة 1، §3.2-3.3 | التوثيق (`Documentation`) 4 فئات حسب مرحلة التطوير: Analysis/Specification (DFD, Context Diagram)، Design (Flow Charts, ERD)، Implementation (Source Code Listing)، Testing (Test Data/Results). إجراءات التشغيل (`Operating Procedures`) نوعان: `User Manuals` (للمستخدم: Overview, Beginner's Guide, Tutorial, Reference) و`Operational Manuals` (للفريق التقني: Installation Guide, System Administration Guide).
+
+**📌 الترجمة:** `Cross-Reference Listing` = قائمة الإحالة المرجعية، `Entity-Relationship Diagram` = مخطط العلاقة بين الكيانات.
+
+---
+
+## ملخص: الفقرة 4: Generic مقابل Bespoke
+
+**من المحاضرة:** محاضرة 1، §4.1 | مين يملك المواصفة (`specification` — الترجمة: المواصفة/الوثيقة التقنية) هو الفيصل: `Generic` = المطوّر يملكها، `Bespoke` = العميل يملكها.
+
+---
+
+## أسئلة اختيار من متعدد (MCQ) — الفقرة 4: Generic مقابل Bespoke
 
 **المصدر:** [سؤال بأسلوب الدكتور — من تأليفي]
 ### السؤال 6 (متوسط)
@@ -171,7 +147,29 @@ A company builds a general accounting package and independently decides which fe
 **التعليل:**
 المطوّر يملك القرار = Generic.
 
+
 ---
+
+## ملخص: الفقرة 4ب: مكونات منتج البرمجية (Software Product)
+
+**من المحاضرة:** محاضرة 1، §4.2 | المنتج = كل ما يُصمَّم للتسليم، 10 عناصر: Source Code, Object Codes, Reports, Plan, Documents, Manuals, Data, Test Suites, Test Results, Prototypes.
+
+---
+
+## ملخص: الفقرة 5: Good Software مقابل Software Process
+
+**من المحاضرة:** محاضرة 1، §8 و §6.1 | قائمتان من 4 عناصر بيسهل تختلطوا:
+
+| Good Software (صفات المنتج) | Software Process (أنشطة العملية) |
+|---|---|
+| Maintainability (قابلية الصيانة) | Specification (تخصيص) |
+| Dependability & Security (الموثوقية والأمان) | Development (تطوير) |
+| Efficiency (الكفاءة) | Validation (تحقق) |
+| Acceptability (القبول) | Evolution (تطوّر) |
+
+---
+
+## أسئلة اختيار من متعدد (MCQ) — الفقرة 5: Good Software مقابل Software Process
 
 **المصدر:** [سؤال بأسلوب الدكتور — من تأليفي]
 ### السؤال 7 (متوسط)
@@ -184,7 +182,24 @@ Which pair correctly matches a Software Process activity with its purpose?
 **التعليل:**
 باقي الأزواج مقلوبة عمداً.
 
+
 ---
+
+## ملخص: الفقرة 5ب: خصائص البرمجية (Software Characteristics) + تطبيقاتها
+
+**من المحاضرة:** محاضرة 1، §6.2 و §7 | 4 خصائص تميّزها عن الهاردوير: **لا تتآكل** (`does not wear out` — منحنى أعطالها ينخفض باستمرار، بعكس منحنى U للهاردوير)، **لا تُصنَّع بل تُنسَخ** (`not manufactured, just copied`)، **قابلة لإعادة الاستخدام**، و**مرنة** (`flexible`).
+
+8 أنواع تطبيقات: System Software (compilers, OS)، Real-time Software، Embedded Software، Business Software، Personal Computer Software، AI Software، Web-Based Software، Engineering & Scientific Software (CAD, SPSS, MATLAB).
+
+---
+
+## ملخص: الفقرة 6: Deliverables مقابل Milestones
+
+**من المحاضرة:** محاضرة 1، §9.1 | `Deliverable` (مُخرَج) = شيء ملموس. `Milestone` (معلَم/محطة تقييم) = حدث يقيس التقدم.
+
+---
+
+## أسئلة اختيار من متعدد (MCQ) — الفقرة 6: Deliverables مقابل Milestones
 
 **المصدر:** [سؤال بأسلوب الدكتور — من تأليفي]
 ### السؤال 8 (متوسط)
@@ -197,7 +212,16 @@ Which pair correctly matches a Software Process activity with its purpose?
 **التعليل:**
 مثال حرفي بالمحاضرة على Milestone.
 
+
 ---
+
+## ملخص: الفقرة 7: Measure / Measurement / Metrics
+
+**من المحاضرة:** محاضرة 1، §9.3 | `Measure` (مقياس فردي) → `Measurement` (فعل القياس) → `Metrics` (ربط عدة measures).
+
+---
+
+## أسئلة اختيار من متعدد (MCQ) — الفقرة 7: Measure / Measurement / Metrics
 
 **المصدر:** [نمط 2023-2024 — الفصل الأول]
 ### السؤال 9 (متوسط)
@@ -241,7 +265,16 @@ What are the features of a poor metric?
 
 هاي الفقرة كانت منطقة عارية تماماً بالبنك الخارجي القديم — لكن exams.md عطاها تغطية ممتازة. راجعيها منيح، بترجع بقوة بمحاضرة 8/9.
 
+
 ---
+
+## ملخص: الفقرة 8: Productivity + Module + Component
+
+**من المحاضرة:** محاضرة 1، §9.4 | `Productivity = LOC / Person-Months`. `Component` (مكوّن) أكبر من `Module` (وحدة)، ويوفر خدمته عبر `interface`.
+
+---
+
+## أسئلة اختيار من متعدد (MCQ) — الفقرة 8: Productivity + Module + Component
 
 **المصدر:** [نمط 2023-2024]
 ### السؤال 12 (متوسط)
@@ -254,7 +287,16 @@ Which metric is often used to measure the efficiency of a software development t
 **التعليل:**
 تعريف Productivity بالضبط.
 
+
 ---
+
+## ملخص: الفقرة 9: دور الإدارة في التطوير
+
+**من المحاضرة:** محاضرة 1، §10 | 4 عوامل: **People + Product + Process + Project**. تجميد المتطلبات (`freeze`) تحت Project بيقلل المخاطر.
+
+---
+
+## أسئلة اختيار من متعدد (MCQ) — الفقرة 9: دور الإدارة في التطوير
 
 **المصدر:** [سؤال بأسلوب الدكتور — من تأليفي]
 ### السؤال 13 (متوسط)
@@ -267,7 +309,16 @@ Under which management factor does the lecture discuss freezing requirements to 
 **التعليل:**
 —
 
+
 ---
+
+## ملخص: الفقرة 10: نماذج دورة حياة البرمجيات (SDLC Models)
+
+**من المحاضرة:** محاضرة 2، كاملة | Spiral = الوحيد بـ`Risk Analysis` صريح كل لفة.
+
+---
+
+## أسئلة اختيار من متعدد (MCQ) — الفقرة 10: نماذج دورة حياة البرمجيات (SDLC Models)
 
 **المصدر:** [نمط 2023-2024 — الفصل الأول]
 ### السؤال 14 (متوسط)
@@ -310,3 +361,5 @@ Which model involves construction of a partial system progressively refined thro
 
 لاحظي إنو خيارات الأسئلة أحياناً بتستخدم أسماء مو مطابقة 100% لأسماء محاضرتك (Incremental، V-shaped). ارجعي لتعريف السلوك مش لاسم الموديل.
 
+
+---

@@ -108,6 +108,13 @@
       "icon": "📌",
       "matIcon": "school",
       "badge": "المحاضرة ١٤"
+    },
+    {
+      "path": "par15.md",
+      "num": 15,
+      "icon": "📖",
+      "matIcon": "menu_book",
+      "badge": "المحاضرة ١٥"
     }
   ],
   "lectureIcons": [
