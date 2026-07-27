@@ -1,8 +1,4 @@
-## الجزء الثالث: أسئلة اختيار من متعدد (MCQ)
-
----
-
-<!-- ========== Section I: Original Question Bank ========== -->
+## نمط Original Question Bank
 
 **المصدر:** [نمط Original Question Bank]
 ### السؤال 1–5 (مجموعة أسئلة على كود مشترك)
@@ -628,7 +624,7 @@ Which Django ORM method returns all objects in a table?
 
 ---
 
-<!-- ========== Section II: 2024 Exam First Semester ========== -->
+## نمط 2023-2024 — الفصل الأول
 
 **المصدر:** [نمط 2023-2024 — الفصل الأول]
 ### السؤال 1–6 (مجموعة أسئلة على كود مشترك)
@@ -1160,7 +1156,7 @@ How can you handle rate limiting in Django REST Framework?
 
 ---
 
-<!-- ========== Section III: 2023 Exam Second Semester ========== -->
+## نمط 2022-2023 — الفصل الثاني
 
 **المصدر:** [نمط 2022-2023 — الفصل الثاني]
 ### السؤال 1 (سهل)
