@@ -5,6 +5,7 @@
     "year": "2025-2026",
     "academicYear": 4,
     "theme": "parallel-teal",
+    "enabledLectures":true,
     "department": "نظري"
   },
   "title": "البرمجة التفرعية — Parallel and Concurrent Programming",
