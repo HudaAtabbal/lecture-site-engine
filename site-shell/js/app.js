@@ -1,6 +1,7 @@
 import { createRenderer } from '../engine/renderer/index.js';
 import { initDiagrams, refreshDiagrams } from '../engine/renderer/diagram/diagram.js';
 import { initEquations } from './equations.js';
+import { initMermaid, refreshMermaid } from './mermaid-render.js';
 import { applySiteSettings } from '../themes/apply-theme.js';
 import { GUIDE_CONFIG } from './guide-config.js';
 import {
@@ -13,8 +14,20 @@ import {
   initAnalytics,
   trackHomeView,
   trackLectureView,
+  trackDawratView,
+  trackNoteView,
   trackLectureContentReady,
   updateAnalyticsContext,
+  trackMcqAnswered,
+  trackLectureProgressToggled,
+  trackSearchPerformed,
+  trackSearchResultClicked,
+  trackSearchOpened,
+  trackTocNavigated,
+  trackJumpToSummary,
+  trackExpandOriginalToggled,
+  trackThemeChanged,
+  trackContentLoadFailed,
 } from './analytics.js';
 import { initLaserPointer } from './laser-pointer.js';
 import { createProgressTracker, lectureIdFromPath, resolveSubjectKeyFromPath } from './progress_tracker.js';
@@ -29,6 +42,7 @@ const STORAGE_THEME = `${GUIDE_CONFIG.storagePrefix || 'study-guide'}-theme`;
 const STORAGE_LAST_LECTURE = `${GUIDE_CONFIG.storagePrefix || 'study-guide'}-last-lecture`;
 const STORAGE_LECTURE_WIDTH = `${GUIDE_CONFIG.storagePrefix || 'study-guide'}-lecture-width`;
 const STORAGE_NOTES_PREFIX = `${GUIDE_CONFIG.storagePrefix || 'study-guide'}-notes`;
+const STORAGE_EXPAND_ORIGINAL = `${GUIDE_CONFIG.storagePrefix || 'study-guide'}-expand-original`;
 const LECTURE_WIDTH_OPTIONS = [
   { value: '50', label: '50%', body: '50%' },
   { value: '70', label: '70%', body: '70%' },
@@ -46,8 +60,11 @@ const {
   renderLecture,
   renderReview,
   renderMCQ,
+  renderCodeGuide,
   buildTocData,
   initInteractivity,
+  applyMcqPick,
+  updateMCQProgress,
   setRefContext,
   clearRefContext,
   ms,
@@ -62,6 +79,10 @@ let appState = {
   items: [],
   reviewManifest: null,
   reviewItems: [],
+  examManifest: null,
+  examItems: [],
+  notesManifest: null,
+  notesItems: [],
   progressTracker: null,
   quizStats: null,
   examMode: null,
@@ -72,9 +93,13 @@ let appState = {
 let siteTitle = "";
 let currentLectureIndex = -1;
 let currentReviewIndex = -1;
+let currentExamIndex = -1;
+let currentNoteIndex = -1;
 let routeLock = false;
 let scrollAnimObserver = null;
 let sidebarObserver = null;
+/** Element marking where the sidebar progress rail should read 100% — start of the "ملخص" part, if any. */
+let progressEndEl = null;
 let htmlCacheBuildId = null;
 /** @type {Map<string, string>} */
 const lectureHtmlCache = new Map();
@@ -103,8 +128,20 @@ function esc(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
+/** Converts markdown `code` spans in a TOC subsection label into a subtly styled <code>, and strips any stray unmatched backticks so raw ` never leaks into the sidebar. */
+function formatSubsectionLabel(rawText) {
+  return esc(rawText)
+    .replace(/`([^`]+)`/g, '<code class="toc-inline-code">$1</code>')
+    .replace(/`/g, '');
+}
+
 function escAttr(s) {
   return esc(s).replace(/"/g, '&quot;');
+}
+
+const ARABIC_DIGITS = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+function arabicDigits(s) {
+  return String(s).replace(/[0-9]/g, d => ARABIC_DIGITS[Number(d)]);
 }
 
 async function loadReviewManifest() {
@@ -130,6 +167,31 @@ function getReviewIndexFromHash(hash) {
   let idx = appState.reviewItems.findIndex(it => it.review.id === hash);
   if (idx >= 0) return idx;
   return appState.reviewItems.findIndex(it => hash.startsWith(`${it.review.id}-`));
+}
+
+async function loadExamManifest() {
+  const res = await fetch(versionedUrl('DAWRAT/manifest.json'), { cache: 'no-store' });
+  if (!res.ok) return null;
+  return res.json();
+}
+
+async function loadExamJson(path) {
+  const res = await fetch(versionedUrl(`DAWRAT/${path}`), { cache: 'no-store' });
+  if (!res.ok) throw new Error(`تعذّر تحميل ${path}`);
+  return res.json();
+}
+
+function examFromJson(data, fileId) {
+  const exam = data.exam || data;
+  if (fileId && exam && !exam.id) exam.id = fileId;
+  return exam;
+}
+
+function getExamIndexFromHash(hash) {
+  if (!hash || hash === 'home') return -1;
+  let idx = appState.examItems.findIndex(it => it.exam.id === hash);
+  if (idx >= 0) return idx;
+  return appState.examItems.findIndex(it => hash.startsWith(`${it.exam.id}-`));
 }
 
 function reviewStats(review) {
@@ -215,6 +277,107 @@ function renderReviewFeatured() {
   });
 }
 
+function dawratAnswerQid(cardOrId) {
+  const id = typeof cardOrId === 'string' ? cardOrId : (cardOrId?.id || '');
+  return id ? `dawrat::${id}` : '';
+}
+
+function examStats(exam) {
+  const mcqPart = exam.parts?.find(p => p.type === 'mcq');
+  const count = mcqPart?.questions?.reduce((n, q) => n + (q.type === 'group' ? q.questions.length : 1), 0) || 0;
+  return { count };
+}
+
+function restoreDawratAnswers(root = document.getElementById('content')) {
+  if (!root || !appState.quizStats) return;
+  root.querySelectorAll('.mcq-card[id]').forEach(card => {
+    if (card.dataset.locked === '1') return;
+    const qid = dawratAnswerQid(card);
+    const saved = appState.quizStats.getAnswerChoice(qid);
+    if (!saved?.picked) return;
+    applyMcqPick(card, saved.picked, { animate: false, dispatchEvent: false });
+  });
+  // Always paint the green/red/gray progress track (even with 0 answers).
+  root.querySelectorAll('.section-block[data-part-type="mcq"]').forEach(section => {
+    updateMCQProgress(section);
+  });
+}
+
+function persistDawratAnswer(detail) {
+  if (currentExamIndex < 0 || !appState.quizStats) return;
+  const cardId = detail?.cardId || '';
+  const picked = detail?.pickedKey;
+  if (!cardId || !picked) return;
+  const qid = dawratAnswerQid(cardId);
+  appState.quizStats.saveAnswerChoice(qid, picked, !!detail.isCorrect);
+  // Also keep mastery-style counts for this dawrat question.
+  appState.quizStats.recordAnswer(qid, !!detail.isCorrect);
+}
+
+function clearPersistedDawratAnswer(detail) {
+  if (currentExamIndex < 0 || !appState.quizStats) return;
+  const cardId = detail?.cardId || '';
+  if (!cardId) return;
+  appState.quizStats.clearAnswerChoice(dawratAnswerQid(cardId));
+}
+
+function clearAllPersistedDawratAnswers(detail) {
+  if (currentExamIndex < 0 || !appState.quizStats) return;
+  const ids = detail?.cardIds || [];
+  if (!ids.length) return;
+  appState.quizStats.clearAnswerChoices(ids.map(dawratAnswerQid));
+}
+
+
+/** Unlike renderReviewFeatured (always just item[0]), a subject can have
+ * more than one دورات file — render one card per item, in a grid that reads
+ * fine whether there's one card or several. */
+function renderExamArchiveSection() {
+  const section = document.getElementById('examArchive');
+  if (!section) return;
+
+  if (!appState.examItems.length) {
+    section.classList.add('hidden');
+    section.innerHTML = '';
+    return;
+  }
+
+  section.classList.remove('hidden');
+  const cardsHtml = appState.examItems.map((item, i) => {
+    const stats = examStats(item.exam);
+    return `<button type="button" class="lecture-picker-card group text-right w-full bg-gradient-to-l from-tertiary-container/40 to-secondary-container/30 border-2 border-tertiary/30 rounded-2xl p-lg custom-shadow box-hover" data-exam-index="${i}" aria-label="فتح ${escAttr(item.exam.title)}">
+      <div class="flex items-center gap-md">
+        <div class="picker-icon-wrap w-14 h-14 rounded-xl bg-tertiary flex items-center justify-center text-on-tertiary shrink-0">
+          ${ms(item.matIcon, true, 'text-2xl')}
+        </div>
+        <div class="flex-1 text-right">
+          <h3 class="font-headline-sm text-headline-sm text-on-surface mb-xs">${esc(item.exam.title)}</h3>
+          ${item.exam.tag ? `<p class="font-label-md text-label-md text-on-surface-variant mb-xs">${esc(item.exam.tag)}</p>` : ''}
+          <span class="inline-flex items-center gap-xs px-sm py-xs bg-surface-container-high rounded-full font-label-md text-label-md text-on-surface-variant">
+            ${ms('quiz', false, 'text-sm text-tertiary')} ${stats.count} سؤال
+          </span>
+        </div>
+        ${ms('arrow_back', false, 'text-on-surface-variant shrink-0')}
+      </div>
+    </button>`;
+  }).join('');
+
+  section.innerHTML = `
+    <div class="flex items-center gap-md mb-lg">
+      ${ms('history_edu', false, 'text-tertiary')}
+      <h2 class="font-headline-md text-headline-md text-on-surface">دورات سنوات سابقة</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-md">${cardsHtml}</div>`;
+
+  section.querySelectorAll('[data-exam-index]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = Number(btn.dataset.examIndex);
+      const id = appState.examItems[idx]?.exam.id;
+      if (id) location.hash = id;
+    });
+  });
+}
+
 function setJumpQuizVisible(show) {
   document.getElementById('jumpQuizBtn')?.closest('.p-lg')?.classList.toggle('hidden', !show);
   document.getElementById('mobileJumpQuizBtn')?.closest('.mobile-toc-drawer__foot')?.classList.toggle('hidden', !show);
@@ -227,8 +390,11 @@ function mountReviewHtml(item, html) {
   initInteractivity(document.getElementById('content'));
   initDiagrams(document.getElementById('content'));
   initEquations(document.getElementById('content'));
+  initMermaid(document.getElementById('content'));
   if (window.hljs) document.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
   buildSidebar(item.toc);
+  updateSidebarProgressTarget();
+  updateSidebarProgressFill();
   initScrollAnimations(document.getElementById('content'));
   revealLectureDetailSections(document.getElementById('content'));
   requestAnimationFrame(() => {
@@ -259,6 +425,8 @@ function loadReviewView(index, anchorHash) {
     document.getElementById('mobileTocMatIcon').textContent = item.matIcon || 'menu_book';
   } else {
     buildSidebar(item.toc);
+    updateSidebarProgressTarget();
+    updateSidebarProgressFill();
     showView('lecture');
   }
 
@@ -269,6 +437,271 @@ function loadReviewView(index, anchorHash) {
 
   if (anchorHash && anchorHash !== item.review.id) scrollToAnchor(anchorHash);
   else if (needsRender) window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showDawratNoticePopup(notice, title = 'تنبيه') {
+  if (!notice) return;
+  let modal = document.getElementById('dawratNoticeModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'dawratNoticeModal';
+    modal.className = 'lecture-notes-modal hidden';
+    modal.setAttribute('aria-hidden', 'true');
+    modal.innerHTML = `
+      <div class="lecture-notes-modal__backdrop" data-close-dawrat-notice></div>
+      <div class="lecture-notes-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="dawratNoticeTitle">
+        <div class="lecture-notes-modal__head">
+          <h2 id="dawratNoticeTitle" class="font-headline-sm text-headline-sm text-on-surface">تنبيه</h2>
+          <button type="button" class="lecture-notes-modal__close" data-close-dawrat-notice aria-label="إغلاق">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <p id="dawratNoticeBody" class="font-body-md text-body-md text-on-surface" style="margin:0;line-height:1.7"></p>
+        <button type="button" data-close-dawrat-notice class="mt-md bg-primary text-on-primary py-sm px-lg rounded-lg font-bold font-label-md hover:opacity-90 transition-all self-start">حسناً، فهمت</button>
+      </div>`;
+    document.body.appendChild(modal);
+    modal.querySelectorAll('[data-close-dawrat-notice]').forEach(el => {
+      el.addEventListener('click', () => {
+        modal.classList.add('hidden');
+        modal.setAttribute('aria-hidden', 'true');
+      });
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+        modal.classList.add('hidden');
+        modal.setAttribute('aria-hidden', 'true');
+      }
+    });
+  }
+  const titleEl = document.getElementById('dawratNoticeTitle');
+  if (titleEl) titleEl.textContent = title;
+  const body = document.getElementById('dawratNoticeBody');
+  if (body) body.textContent = notice;
+  modal.classList.remove('hidden');
+  modal.setAttribute('aria-hidden', 'false');
+}
+
+function loadExamView(index, anchorHash) {
+  const item = appState.examItems[index];
+  if (!item) return;
+
+  currentLectureIndex = -1;
+  showView('lecture');
+  setJumpQuizVisible(false);
+
+  const needsRender = currentExamIndex !== index || !document.getElementById(item.exam.id);
+  const notice = item.exam.notice || appState.examManifest?.notice || '';
+
+  if (needsRender) {
+    currentExamIndex = index;
+    mountReviewHtml(item, renderCodeGuide(item.exam, '📝 دورات سنوات سابقة'));
+    restoreDawratAnswers();
+
+    document.getElementById('sidebarCourseTitle').textContent = shortLectureTitle(item.exam.title);
+    document.getElementById('sidebarCourseSub').textContent = item.exam.tag || '';
+    document.getElementById('sidebarMatIcon').textContent = item.matIcon || 'history_edu';
+    document.getElementById('mobileTocCourseTitle').textContent = shortLectureTitle(item.exam.title);
+    document.getElementById('mobileTocCourseSub').textContent = item.exam.tag || '';
+    document.getElementById('mobileTocMatIcon').textContent = item.matIcon || 'history_edu';
+
+    if (notice) showDawratNoticePopup(notice, 'تنبيه: الملف غير جاهز بعد');
+  } else {
+    buildSidebar(item.toc);
+    showView('lecture');
+    // Re-apply saved answers if the DOM was still mounted but cards were reset.
+    restoreDawratAnswers();
+  }
+
+  const hash = anchorHash && anchorHash !== item.exam.id ? anchorHash : item.exam.id;
+  routeLock = true;
+  if (location.hash !== `#${hash}`) location.hash = hash;
+  routeLock = false;
+
+  if (anchorHash && anchorHash !== item.exam.id) scrollToAnchor(anchorHash);
+  else if (needsRender) window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  trackDawratView(item);
+  trackLectureContentReady();
+}
+
+async function loadNotesManifest() {
+  const res = await fetch(versionedUrl('notes/lectures/manifest.json'), { cache: 'no-store' });
+  if (!res.ok) return null;
+  return res.json();
+}
+
+async function loadNoteJson(path) {
+  const res = await fetch(versionedUrl(`notes/lectures/${path}`), { cache: 'no-store' });
+  if (!res.ok) throw new Error(`تعذّر تحميل ${path}`);
+  return res.json();
+}
+
+/** Notes files hold a full 100-question MCQ bank each — keep the home page
+ * light by only fetching a note's full JSON when the student actually opens
+ * it, same lazy pattern as ensureLectureLoaded for the main lecture list. */
+function createNoteStub(file, i) {
+  const summary = file.summary || {};
+  const stubId = summary.id || `note-par${file.num || i + 1}`;
+  return {
+    lec: { id: stubId, title: summary.title || file.badge || `ملخص ${file.num || i + 1}`, tag: summary.tag || '', parts: [] },
+    fileMeta: file,
+    icon: file.icon || '📖',
+    matIcon: file.matIcon || 'menu_book',
+    sectionIndex: {},
+    toc: null,
+    summary: file.summary || null,
+    loaded: false,
+    loading: null,
+  };
+}
+
+async function ensureNoteLoaded(idx) {
+  const item = appState.notesItems[idx];
+  if (!item) throw new Error('الملخص غير موجود');
+  if (item.loaded) return item;
+  if (item.loading) return item.loading;
+
+  item.loading = (async () => {
+    const doc = await loadNoteJson(item.fileMeta.path);
+    const lec = doc.lectures?.[0];
+    if (!lec) throw new Error(`لا محتوى في ${item.fileMeta.path}`);
+    item.lec = lec;
+    item.sectionIndex = doc.sectionIndex || {};
+    item.toc = buildTocData([lec])[0];
+    item.loaded = true;
+    item.loading = null;
+    return item;
+  })();
+
+  try {
+    return await item.loading;
+  } catch (err) {
+    item.loading = null;
+    throw err;
+  }
+}
+
+function getNoteIndexFromHash(hash) {
+  if (!hash || hash === 'home') return -1;
+  let idx = appState.notesItems.findIndex(it => it.lec.id === hash);
+  if (idx >= 0) return idx;
+  return appState.notesItems.findIndex(it => hash.startsWith(`${it.lec.id}-`));
+}
+
+async function loadNoteView(index, anchorHash) {
+  const stub = appState.notesItems[index];
+  if (!stub) return;
+
+  currentLectureIndex = -1;
+  currentReviewIndex = -1;
+  currentExamIndex = -1;
+  showLectureLoading();
+
+  let item;
+  try {
+    item = await ensureNoteLoaded(index);
+  } catch (err) {
+    document.getElementById('content').innerHTML = `
+      <div class="py-2xl text-center text-error">
+        <p class="mb-md">⚠️ ${esc(err.message)}</p>
+        <button type="button" class="text-primary font-bold" onclick="location.hash='home'">العودة</button>
+      </div>`;
+    return;
+  }
+
+  const needsRender = currentNoteIndex !== index || !document.getElementById(item.lec.id);
+
+  if (needsRender) {
+    currentNoteIndex = index;
+    setRefContext({ lectureRef: item.lec.id, sectionMap: item.sectionIndex || {} });
+    const html = renderLecture(item.lec, 'primary', item.icon, item.sectionIndex);
+    clearRefContext();
+    mountReviewHtml(item, html);
+
+    document.getElementById('sidebarCourseTitle').textContent = shortLectureTitle(item.lec.title);
+    document.getElementById('sidebarCourseSub').textContent = item.lec.tag || '';
+    document.getElementById('sidebarMatIcon').textContent = item.matIcon || 'menu_book';
+    document.getElementById('mobileTocCourseTitle').textContent = shortLectureTitle(item.lec.title);
+    document.getElementById('mobileTocCourseSub').textContent = item.lec.tag || '';
+    document.getElementById('mobileTocMatIcon').textContent = item.matIcon || 'menu_book';
+    setJumpQuizVisible(!!item.lec.parts?.find(p => p.type === 'mcq'));
+  } else {
+    buildSidebar(item.toc);
+    showView('lecture');
+  }
+
+  const hash = anchorHash && anchorHash !== item.lec.id ? anchorHash : item.lec.id;
+  routeLock = true;
+  if (location.hash !== `#${hash}`) location.hash = hash;
+  routeLock = false;
+
+  if (anchorHash && anchorHash !== item.lec.id) scrollToAnchor(anchorHash);
+  else if (needsRender) window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  trackNoteView(item);
+  trackLectureContentReady();
+}
+
+/** Theme-accent class cycled per card — matches the subject's own primary/
+ * secondary/tertiary colors instead of arbitrary hues, so it stays on-brand
+ * while still reading as a distinct rail from the plain lecture grid. */
+const NOTE_ACCENTS = [
+  { bar: 'var(--md-sys-color-primary)', chip: 'bg-primary/15 text-primary', num: 'text-primary' },
+  { bar: 'var(--md-sys-color-secondary)', chip: 'bg-secondary-container/30 text-secondary', num: 'text-secondary' },
+  { bar: 'var(--md-sys-color-tertiary)', chip: 'bg-tertiary-fixed/60 text-on-tertiary-fixed-variant', num: '' },
+];
+
+function renderNotesSection() {
+  const section = document.getElementById('notesSection');
+  if (!section) return;
+
+  if (!appState.notesItems.length) {
+    section.classList.add('hidden');
+    section.innerHTML = '';
+    return;
+  }
+
+  section.classList.remove('hidden');
+
+  const cardsHtml = appState.notesItems.map((item, i) => {
+    const accent = NOTE_ACCENTS[i % NOTE_ACCENTS.length];
+    const mcqCount = item.summary?.mcqCount || 0;
+    const num = arabicDigits(String(item.fileMeta?.num ?? i + 1));
+    return `<button type="button" class="group text-right w-full bg-surface-container-lowest border border-outline-variant rounded-xl p-md custom-shadow box-hover flex items-center gap-md" style="border-inline-start:4px solid ${accent.bar};" data-note-index="${i}" aria-label="فتح ${escAttr(item.lec.title)}">
+      <span class="font-display-sm ${accent.num} shrink-0" style="font-size:28px; font-weight:600; opacity:.55; min-width:34px;">${num}</span>
+      <div class="flex-1 min-w-0">
+        <p class="font-label-md font-bold text-on-surface truncate">${esc(item.lec.title)}</p>
+        <div class="flex items-center gap-sm mt-xs flex-wrap">
+          <span class="font-label-md text-label-md px-sm py-xs rounded-full ${accent.chip}">${ms('menu_book', false, 'text-sm')} ملخص</span>
+          ${mcqCount ? `<span class="font-label-md text-label-md px-sm py-xs rounded-full bg-surface-container-high text-on-surface-variant">${ms('quiz', false, 'text-sm')} ${arabicDigits(String(mcqCount))} سؤال</span>` : ''}
+        </div>
+      </div>
+      ${ms('chevron_left', false, 'text-on-surface-variant shrink-0')}
+    </button>`;
+  }).join('');
+
+  section.innerHTML = `
+    <div class="text-center mb-lg">
+      ${ms('auto_stories', false, 'text-primary text-3xl mb-sm')}
+      <h2 class="font-headline-md text-headline-md text-on-surface">ملخصات وأسئلة سريعة</h2>
+      <p class="font-label-md text-on-surface-variant mt-xs">مراجعة مكثفة لكل محاضرة مع بنك أسئلة كبير</p>
+    </div>
+    <div class="grid grid-cols-1 gap-md">${cardsHtml}</div>`;
+
+  section.querySelectorAll('[data-note-index]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = Number(btn.dataset.noteIndex);
+      const id = appState.notesItems[idx]?.lec.id;
+      if (id) location.hash = id;
+    });
+  });
+}
+
+async function loadNotes() {
+  const notesManifest = await loadNotesManifest();
+  if (!notesManifest?.files?.length) return;
+  appState.notesManifest = notesManifest;
+  appState.notesItems = notesManifest.files.map((f, i) => createNoteStub(f, i));
 }
 
 async function loadReviews() {
@@ -287,6 +720,26 @@ async function loadReviews() {
       icon: file.icon || '📚',
       matIcon: file.matIcon || 'menu_book',
       toc: buildTocData([review])[0],
+    });
+  }
+}
+
+async function loadExams() {
+  const examManifest = await loadExamManifest();
+  if (!examManifest?.files?.length) return;
+
+  appState.examManifest = examManifest;
+  for (const file of examManifest.files) {
+    const path = typeof file === 'string' ? file : file.path;
+    if (!path) continue;
+    const data = await loadExamJson(path);
+    const exam = examFromJson(data, file.id);
+    if (!exam?.parts?.length) continue;
+    appState.examItems.push({
+      exam,
+      icon: file.icon || '📝',
+      matIcon: file.matIcon || 'history_edu',
+      toc: buildTocData([exam])[0],
     });
   }
 }
@@ -355,16 +808,31 @@ function setLectureCompletedByIndex(idx, completed) {
   if (!item || !appState.progressTracker) return;
   const lectureId = lectureStableId(item, idx);
   appState.progressTracker.setLectureCompleted(lectureId, completed);
+  const progress = appState.progressTracker.getSubjectProgress(subjectLectureIds());
+  trackLectureProgressToggled({
+    lectureId,
+    completed: !!completed,
+    source: 'programmatic',
+    subjectPercent: progress.percent,
+  });
   renderSubjectProgressTracker();
   renderHomeGrid();
   syncLectureCompletionButtons(currentLectureIndex);
 }
 
-function toggleLectureCompletedByIndex(idx) {
+function toggleLectureCompletedByIndex(idx, source = 'unknown') {
   const item = appState.items[idx];
   if (!item || !appState.progressTracker) return;
   const lectureId = lectureStableId(item, idx);
   appState.progressTracker.toggleLectureCompleted(lectureId);
+  const completed = appState.progressTracker.isLectureCompleted(lectureId);
+  const progress = appState.progressTracker.getSubjectProgress(subjectLectureIds());
+  trackLectureProgressToggled({
+    lectureId,
+    completed,
+    source,
+    subjectPercent: progress.percent,
+  });
   renderSubjectProgressTracker();
   renderHomeGrid();
   syncLectureCompletionButtons(currentLectureIndex);
@@ -409,7 +877,7 @@ function initLectureCompletionButtons() {
     btn.addEventListener('click', () => {
       const idx = Number(btn.dataset.lectureIndex);
       if (!Number.isInteger(idx) || idx < 0) return;
-      toggleLectureCompletedByIndex(idx);
+      toggleLectureCompletedByIndex(idx, id === 'sidebarCompleteBtn' ? 'sidebar' : 'mobile');
     });
   });
 }
@@ -434,7 +902,9 @@ function initTheme() {
     const isDark = !document.documentElement.classList.contains("dark");
     applyDarkMode(isDark);
     localStorage.setItem(STORAGE_THEME, isDark ? 'dark' : 'light');
+    trackThemeChanged({ theme: isDark ? 'dark' : 'light' });
     refreshDiagrams();
+    refreshMermaid(document.getElementById('content') || document);
   });
 }
 
@@ -464,6 +934,7 @@ function showView(name) {
   document.getElementById('backToHomeBtn')?.classList.toggle('hidden', name === 'home');
   document.getElementById('backToHubBtn')?.classList.toggle('hidden', name !== 'home');
   document.getElementById('lectureWidthControl')?.classList.toggle('hidden', name !== 'lecture');
+  document.getElementById('expandOriginalBtn')?.classList.toggle('hidden', name !== 'lecture');
   document.getElementById('lectureNotesBtn')?.classList.toggle('hidden', !LECTURE_NOTES_ENABLED || name !== 'lecture');
   document.getElementById('mobileStudyBar')?.classList.toggle('hidden', name !== 'lecture');
   document.documentElement.classList.toggle('is-lecture-view', name === 'lecture');
@@ -602,44 +1073,67 @@ function renderHomeGrid() {
     const mastered = stats.mcq
       ? Math.min(appState.quizStats?.getMasteredCount(lectureId) || 0, stats.mcq)
       : 0;
+    const badgeText = badge || (num ? `المحاضرة ${num}` : '');
     return `
-      <article class="lecture-picker-card group text-right bg-surface-container-lowest border border-outline-variant rounded-xl p-lg custom-shadow box-hover w-full"
+      <article class="lecture-picker-card group text-right flex flex-col justify-between items-start bg-surface-container-lowest border border-outline-variant rounded-2xl p-lg custom-shadow box-hover w-full"
                data-lecture-card="${i}" aria-label="${esc(title)}">
-        <div class="flex items-start justify-between mb-md">
-          <div class="picker-icon-wrap w-14 h-14 rounded-xl bg-primary-container flex items-center justify-center text-on-primary-container shrink-0">
-            ${ms(item.matIcon, true, 'text-3xl')}
-          </div>
-          <div class="flex flex-col items-end gap-xs lecture-card-head-actions">
-            <span class="px-sm py-xs bg-secondary-container text-on-secondary-container rounded-lg font-code-sm text-code-sm">#${esc(num)}</span>
-            ${badge ? `<span class="px-sm py-xs bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-lg font-label-md text-label-md">${esc(badge)}</span>` : ''}
-            <button type="button" class="lecture-complete-btn ${isDone ? 'is-complete' : ''}" data-toggle-complete-index="${i}" aria-pressed="${isDone ? 'true' : 'false'}" aria-label="${isDone ? 'إلغاء إكمال' : 'تحديد كمكتملة'} ${escAttr(title)}">
-              ${ms(isDone ? 'task_alt' : 'radio_button_unchecked', false, 'text-base')}
-              <span>${doneLabel}</span>
-            </button>
-          </div>
+        <!-- Top Row -->
+        <div class="flex items-center justify-between mb-md w-full">
+          <!-- Badge (Top-Right in RTL) -->
+          ${badgeText ? `
+            <span class="px-md py-xs bg-surface-container-high text-on-surface rounded-full text-xs font-bold font-label-md">
+              ${esc(badgeText)}
+            </span>
+          ` : '<span></span>'}
+
+          <!-- Completion Status (Top-Left in RTL) -->
+          <button type="button" class="lecture-complete-btn flex items-center gap-xs text-on-surface-variant hover:text-primary transition-colors text-sm font-label-md shrink-0"
+                  data-toggle-complete-index="${i}" aria-pressed="${isDone ? 'true' : 'false'}" aria-label="${isDone ? 'إلغاء إكمال' : 'تحديد كمكتملة'} ${escAttr(title)}">
+            ${ms(isDone ? 'check_circle' : 'radio_button_unchecked', isDone, 'text-base text-on-surface-variant')}
+            <span>${doneLabel}</span>
+          </button>
         </div>
-        <h3 class="font-headline-sm text-headline-sm text-on-surface mb-xs group-hover:text-primary transition-colors">${esc(title)}</h3>
-        ${tag ? `<p class="font-label-md text-label-md text-on-surface-variant mb-md line-clamp-2">${esc(tag)}</p>` : '<div class="mb-md"></div>'}
-        <div class="flex flex-wrap gap-sm mb-lg">
-          <span class="inline-flex items-center gap-xs px-sm py-xs bg-surface-container-high rounded-full font-label-md text-label-md text-on-surface-variant">
-            ${ms('menu_book', false, 'text-sm text-primary')} ${stats.parts} أجزاء
-          </span>
-          ${stats.mcq ? `<span class="inline-flex items-center gap-xs px-sm py-xs bg-surface-container-high rounded-full font-label-md text-label-md text-on-surface-variant">
-            ${ms('quiz', false, 'text-sm text-secondary')} ${stats.mcq} سؤال
-          </span>` : ''}
-          ${mastered ? `<span class="inline-flex items-center gap-xs px-sm py-xs bg-primary-container text-on-primary-container rounded-full font-label-md text-label-md" title="أسئلة أجبت عنها صحيحاً ولو مرة">
-            ${ms('workspace_premium', false, 'text-sm')} إتقان ${mastered}/${stats.mcq}
-          </span>` : ''}
-          ${stats.sections ? `<span class="inline-flex items-center gap-xs px-sm py-xs bg-surface-container-high rounded-full font-label-md text-label-md text-on-surface-variant">
-            ${ms('format_list_bulleted', false, 'text-sm text-tertiary')} ${stats.sections} أقسام
-          </span>` : ''}
+
+        <!-- Middle Content (Right-Aligned Title & Subtitle) -->
+        <div class="flex flex-col items-start text-right flex-grow mb-md w-full">
+          <!-- Title -->
+          <h3 class="font-headline-sm text-headline-sm text-on-surface mb-xs group-hover:text-primary transition-colors text-right line-clamp-2 max-w-full">
+            ${esc(title)}
+          </h3>
+          
+          <!-- Subtitle Pill -->
+          ${tag ? `
+            <div class="inline-flex items-center px-md py-xs bg-surface-container-high/40 text-on-surface-variant rounded-full text-xs font-label-md border border-outline-variant/20 max-w-[95%] text-right">
+              <span class="line-clamp-1">${esc(tag)}</span>
+            </div>
+          ` : ''}
         </div>
-        <div class="lecture-card-footer">
-          <span class="lecture-card-status ${isDone ? 'is-complete' : ''}">
-            ${ms(isDone ? 'check_circle' : 'pending', false, 'text-base')} ${doneLabel}
+
+        <!-- Stats Row (Right-Aligned Pills) -->
+        <div class="flex items-center justify-start gap-sm mb-lg flex-wrap w-full">
+          <span class="inline-flex items-center gap-xs px-md py-xs bg-surface-container-high/60 rounded-full font-label-md text-label-md text-on-surface-variant">
+            ${ms('menu_book', false, 'text-sm text-primary')}
+            <span>${stats.parts} أجزاء</span>
           </span>
-          <button type="button" class="lecture-open-btn inline-flex items-center gap-sm text-primary font-label-md font-bold group-hover:gap-md transition-all" data-open-lecture-index="${i}" aria-label="فتح ${escAttr(title)}">
-            ابدأ الدراسة ${ms('arrow_back', false, 'text-lg')}
+          ${stats.mcq ? `
+            <span class="inline-flex items-center gap-xs px-md py-xs bg-surface-container-high/60 rounded-full font-label-md text-label-md text-on-surface-variant">
+              ${ms('quiz', false, 'text-sm text-secondary')}
+              <span>${stats.mcq} سؤال</span>
+            </span>
+          ` : ''}
+          ${mastered ? `
+            <span class="inline-flex items-center gap-xs px-md py-xs bg-primary-container text-on-primary-container rounded-full font-label-md text-label-md" title="أسئلة أجبت عنها صحيحاً ولو مرة">
+              ${ms('workspace_premium', false, 'text-sm')}
+              <span>إتقان ${mastered}/${stats.mcq}</span>
+            </span>
+          ` : ''}
+        </div>
+
+        <!-- Action Button (Bottom) -->
+        <div class="w-full mt-auto">
+          <button type="button" class="lecture-open-btn w-full py-md bg-inverse-surface text-inverse-on-surface hover:opacity-90 active:scale-[0.98] rounded-xl font-label-md font-bold inline-flex items-center justify-center gap-sm transition-all shadow-sm" data-open-lecture-index="${i}" aria-label="فتح ${escAttr(title)}">
+            <span>ابدأ الدراسة</span>
+            ${ms('arrow_back', false, 'text-lg')}
           </button>
         </div>
       </article>`;
@@ -659,7 +1153,7 @@ function renderHomeGrid() {
       event.stopPropagation();
       const idx = Number(btn.dataset.toggleCompleteIndex);
       if (!Number.isInteger(idx) || idx < 0) return;
-      toggleLectureCompletedByIndex(idx);
+      toggleLectureCompletedByIndex(idx, 'home_card');
     });
   });
 }
@@ -679,17 +1173,19 @@ function revealSectionTree(section) {
 function scrollToAnchor(anchorHash, attempt = 0) {
   if (!anchorHash) return;
   const id = anchorIdFromHash(anchorHash);
-    const el = document.getElementById(id);
+  const el = document.getElementById(id);
   if (!el) {
     if (attempt < 8) {
       requestAnimationFrame(() => scrollToAnchor(anchorHash, attempt + 1));
     }
     return;
   }
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    revealAnimated(el);
-    el.classList.add('anchor-flash');
-    setTimeout(() => el.classList.remove('anchor-flash'), 2200);
+  // Prefer instant when far away — smooth scroll is flaky after remounts / long pages.
+  const far = Math.abs(el.getBoundingClientRect().top) > window.innerHeight * 1.5;
+  el.scrollIntoView({ behavior: far ? 'auto' : 'smooth', block: 'start' });
+  revealAnimated(el);
+  el.classList.add('anchor-flash');
+  setTimeout(() => el.classList.remove('anchor-flash'), 2200);
 }
 
 function revealLectureDetailSections(root = document.getElementById('content')) {
@@ -704,7 +1200,15 @@ function scrollAfterLectureLoad(hashPart, item) {
     revealLectureDetailSections();
     refreshLectureVisibility();
   };
-  requestAnimationFrame(() => requestAnimationFrame(scroll));
+  // Remounted lectures need a couple frames + a short delay so layout height settles.
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      scroll();
+      if (hashPointsToSection(hashPart, item)) {
+        setTimeout(() => scrollToAnchor(hashPart), 80);
+      }
+    });
+  });
 }
 
 function refreshLectureVisibility(root = document.getElementById('content')) {
@@ -717,14 +1221,19 @@ function refreshLectureVisibility(root = document.getElementById('content')) {
   });
 }
 
+/** Highlights the active TOC link. When the active element is a subsection, also gives its parent
+ * part link a lighter "is-parent-active" tint so both the section and the exact point stay visible. */
 function setActiveNavLink(activeEl) {
   const href = activeEl?.getAttribute('href');
+  const parentHref = activeEl?.dataset.parentHref || href;
   document.querySelectorAll('.toc-nav-link').forEach(a => {
-    a.classList.remove('bg-primary-container', 'text-on-primary-container', 'border-primary', 'font-bold');
+    a.classList.remove('bg-primary-container', 'text-on-primary-container', 'border-primary', 'font-bold', 'is-parent-active');
     a.classList.add('text-on-surface-variant');
     if (href && a.getAttribute('href') === href) {
       a.classList.add('bg-primary-container', 'text-on-primary-container', 'border-primary', 'font-bold');
       a.classList.remove('text-on-surface-variant');
+    } else if (parentHref && a.getAttribute('href') === parentHref) {
+      a.classList.add('is-parent-active');
     }
   });
 }
@@ -749,11 +1258,13 @@ function buildSidebar(toc) {
       .replace(/^الجزء[^:]+:\s*/, '')
       .replace(/^📌\s*/, '');
 
+    const partHref = `#${part.id}`;
+
     containers.forEach(container => {
       const link = document.createElement('a');
-      link.href = `#${part.id}`;
-      link.className = 'toc-nav-link flex items-center gap-md text-on-surface-variant hover:bg-surface-container-high p-md transition-all mx-md mb-xs font-label-md text-label-md rounded-l-lg border-r-4 border-transparent';
-      link.innerHTML = `${ms(part.icon, false, 'text-lg shrink-0')}<span class="line-clamp-2">${esc(partLabel)}</span>`;
+      link.href = partHref;
+      link.className = 'toc-nav-link flex items-center gap-sm text-on-surface-variant hover:bg-surface-container-high p-md transition-all mx-md mb-xs font-label-md text-label-md rounded-l-lg border-r-4 border-transparent';
+      link.innerHTML = `<span>${esc(partLabel)}</span>`;
       link.dataset.partType = part.type;
       container.appendChild(link);
       if (container === containers[0]) allLinks.push({ el: link, target: null });
@@ -763,8 +1274,10 @@ function buildSidebar(toc) {
         const subId = `${part.id}-${sub.id}`;
         const indent = sub.level >= 5 ? 'mr-2xl' : sub.level >= 4 ? 'mr-xl' : 'mr-lg';
         subLink.href = `#${subId}`;
+        subLink.dataset.parentHref = partHref;
         subLink.className = `toc-nav-link flex items-center gap-sm text-on-surface-variant hover:bg-surface-container-high py-xs px-md transition-all ${indent} mb-xs font-label-md text-label-md rounded-l-lg border-r-4 border-transparent opacity-80`;
-        subLink.innerHTML = `${ms('chevron_left', false, 'text-sm shrink-0')}<span class="line-clamp-2 text-xs leading-snug">${esc(sub.text.replace(/^\d+(?:\.\d+)*\.?\s*/, ''))}</span>`;
+        const subLabel = sub.text.replace(/^\d+(?:\.\d+)*\.?\s*/, '');
+        subLink.innerHTML = `${ms('chevron_left', false, 'text-sm shrink-0')}<span class="text-xs leading-snug">${formatSubsectionLabel(subLabel)}</span>`;
         container.appendChild(subLink);
         if (container === containers[0]) allLinks.push({ el: subLink, target: null });
       });
@@ -804,6 +1317,15 @@ function buildSidebar(toc) {
       e.preventDefault();
       const anchorId = anchorIdFromHash(link.hash);
       if (!anchorId) return;
+      const partType = link.dataset.partType
+        || target?.getAttribute('data-part-type')
+        || '';
+      trackTocNavigated({
+        targetId: anchorId,
+        partType,
+        isSubsection: link.classList.contains('toc-nav-link--sub')
+          || !!link.closest('.toc-subsections'),
+      });
       if (location.hash !== `#${anchorId}`) location.hash = anchorId;
       else scrollToAnchor(anchorId);
       setActiveNavLink(link);
@@ -819,6 +1341,113 @@ function buildSidebar(toc) {
       sidebarObserver.observe(item.target);
     }
   });
+}
+
+/** Part types that represent practice/reference material rather than linear reading content — once one
+ * of these starts, the student is no longer "reading through the explanation". */
+const NON_READING_PART_TYPES = new Set(['mcq', 'qa', 'debug', 'trace', 'design', 'theory', 'exercise', 'cheat', 'reference']);
+
+/** Finds the DOM element marking the end of the reading content — the point where the sidebar progress
+ * bar should read 100%. Defined as the start of the FIRST practice/reference-type part (MCQ, Q&A cards,
+ * cheat sheet, etc.). This intentionally does NOT depend on part titles or on 'detail'/'summary' typing:
+ * those vary between lecture templates (a subject's "شرح تفصيلي" wording, or whether a closing "ملخص
+ * شامل" section even exists, differs from one batch of lectures to another and kept breaking this for
+ * newer content). The practice-type keywords (MCQ, Q&A cards, cheat sheet, exercises...) are matched by
+ * fixed, explicit patterns everywhere in the parser regardless of subject, so anchoring on the first one
+ * of those is the only boundary that holds across every lecture template. */
+function findSummaryPartEl() {
+  const toc = currentReviewIndex >= 0
+    ? appState.reviewItems[currentReviewIndex]?.toc
+    : appState.items[currentLectureIndex]?.toc;
+  const parts = toc?.parts || [];
+  const part = parts.find(p => NON_READING_PART_TYPES.has(p.type));
+  if (!part) return null;
+  return document.getElementById(part.id);
+}
+
+function updateSidebarProgressTarget() {
+  progressEndEl = findSummaryPartEl();
+  updateLectureNavArrows();
+}
+
+/** Updates the horizontal progress bar(s) in the sidebar/mobile drawer to reflect how far the student has
+ * scrolled through the lecture body (stops at the start of the closing summary part, if present). */
+function updateSidebarProgressFill() {
+  const content = document.getElementById('content');
+  const fills = [document.getElementById('sidebarProgressFill'), document.getElementById('mobileProgressFill')].filter(Boolean);
+  const pcts = [document.getElementById('sidebarProgressPct'), document.getElementById('mobileProgressPct')].filter(Boolean);
+  if (!fills.length || !content || currentView !== 'lecture') return;
+
+  const contentTop = content.getBoundingClientRect().top + window.scrollY;
+  const endTop = progressEndEl
+    ? progressEndEl.getBoundingClientRect().top + window.scrollY
+    : contentTop + content.offsetHeight;
+  const span = Math.max(1, endTop - contentTop);
+  const frac = Math.min(1, Math.max(0, (window.scrollY + SCROLL_OFFSET_PX - contentTop) / span));
+  const pct = Math.round(frac * 100);
+
+  fills.forEach(fill => { fill.style.width = `${pct}%`; });
+  pcts.forEach(el => { el.textContent = `${pct}%`; });
+}
+
+/** Enables/disables the prev/next lecture arrows in the sidebar course header based on position
+ * within appState.items (the same order lectures appear in the manifest). */
+function updateLectureNavArrows() {
+  const atFirst = currentReviewIndex >= 0 || currentLectureIndex <= 0;
+  const atLast = currentReviewIndex >= 0 || currentLectureIndex < 0 || currentLectureIndex >= appState.items.length - 1;
+  [document.getElementById('sidebarPrevLectureBtn'), document.getElementById('mobilePrevLectureBtn')]
+    .filter(Boolean).forEach(btn => { btn.disabled = atFirst; });
+  [document.getElementById('sidebarNextLectureBtn'), document.getElementById('mobileNextLectureBtn')]
+    .filter(Boolean).forEach(btn => { btn.disabled = atLast; });
+}
+
+/** Navigates to the previous/next lecture (by manifest order) via the normal hash router — same path as
+ * clicking a lecture card on the hub. No-op past the first/last lecture or while in review mode. */
+function goToAdjacentLecture(delta) {
+  if (currentReviewIndex >= 0 || currentLectureIndex < 0) return;
+  const stub = appState.items[currentLectureIndex + delta];
+  if (!stub) return;
+  location.hash = stub.lec.id;
+}
+
+function initSidebarLectureNav() {
+  [document.getElementById('sidebarPrevLectureBtn'), document.getElementById('mobilePrevLectureBtn')]
+    .filter(Boolean).forEach(btn => btn.addEventListener('click', () => goToAdjacentLecture(-1)));
+  [document.getElementById('sidebarNextLectureBtn'), document.getElementById('mobileNextLectureBtn')]
+    .filter(Boolean).forEach(btn => btn.addEventListener('click', () => goToAdjacentLecture(1)));
+}
+
+function initSidebarProgress() {
+  let ticking = false;
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      updateSidebarProgressFill();
+      ticking = false;
+    });
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+}
+
+/** Collapses/expands the desktop lecture sidebar. Defaults to expanded on every page load. */
+function setSidebarCollapsed(collapsed) {
+  const aside = document.getElementById('lectureSidebar');
+  const toggleBtn = document.getElementById('sidebarToggleBtn');
+  const expandBtn = document.getElementById('sidebarExpandBtn');
+  const icon = document.getElementById('sidebarToggleIcon');
+  if (!aside) return;
+  aside.classList.toggle('is-collapsed', collapsed);
+  toggleBtn?.setAttribute('aria-expanded', String(!collapsed));
+  if (icon) icon.textContent = collapsed ? 'chevron_left' : 'chevron_right';
+  expandBtn?.classList.toggle('hidden', !collapsed);
+}
+
+function initSidebarToggle() {
+  document.getElementById('sidebarToggleBtn')?.addEventListener('click', () => setSidebarCollapsed(true));
+  document.getElementById('sidebarExpandBtn')?.addEventListener('click', () => setSidebarCollapsed(false));
+  setSidebarCollapsed(false);
 }
 
 function initScrollAnimations(root = document) {
@@ -868,10 +1497,15 @@ function mountLectureHtml(item, html) {
   initInteractivity(document.getElementById('content'));
   initDiagrams(document.getElementById('content'));
   initEquations(document.getElementById('content'));
+  initMermaid(document.getElementById('content'));
   if (window.hljs) document.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
   buildSidebar(item.toc);
+  updateSidebarProgressTarget();
+  updateSidebarProgressFill();
+  bindExpandOriginalInlineToggle(document.getElementById('content'));
   initScrollAnimations(document.getElementById('content'));
   revealLectureDetailSections(document.getElementById('content'));
+  applyExpandOriginal(localStorage.getItem(STORAGE_EXPAND_ORIGINAL) === '1');
   requestAnimationFrame(() => {
     revealLectureDetailSections(document.getElementById('content'));
     refreshLectureVisibility(document.getElementById('content'));
@@ -895,12 +1529,20 @@ async function loadLectureView(idx, hashPart) {
   if (!stub) return;
 
   currentReviewIndex = -1;
-  showLectureLoading();
+
+  // Same lecture + already mounted → just scroll (don't wipe DOM / lose scroll target).
+  const alreadyMounted = currentLectureIndex === idx && !!document.getElementById(stub.lec.id || stub.fileMeta?.summary?.id);
+  if (!alreadyMounted) showLectureLoading();
 
   let item;
   try {
     item = await ensureLectureLoaded(idx);
   } catch (err) {
+    trackContentLoadFailed({
+      failureKind: 'lecture_json',
+      contentType: 'lecture',
+      message: err?.message || 'lecture load failed',
+    });
     document.getElementById('content').innerHTML = `
       <div class="py-2xl text-center text-error">
         <p class="mb-md">⚠️ ${esc(err.message)}</p>
@@ -932,8 +1574,13 @@ async function loadLectureView(idx, hashPart) {
       lectureHtmlCache.set(cacheKey, html);
     }
     mountLectureHtml(item, html);
+
+    const lectureNotice = item.fileMeta?.notice || '';
+    if (lectureNotice) showDawratNoticePopup(lectureNotice, 'ملاحظة');
   } else {
     buildSidebar(item.toc);
+    updateSidebarProgressTarget();
+    updateSidebarProgressFill();
     showView('lecture');
     syncLectureCompletionButtons(idx);
   }
@@ -953,15 +1600,43 @@ async function loadLectureView(idx, hashPart) {
 }
 
 function jumpToSummary() {
-  const item = appState.items[currentLectureIndex];
+  let item = appState.items[currentLectureIndex];
+  if (!item) {
+    const hash = anchorIdFromHash(location.hash);
+    const idx = getLectureIndexFromHash(hash, appState.items);
+    if (idx >= 0) {
+      currentLectureIndex = idx;
+      item = appState.items[idx];
+    }
+  }
   if (!item) return;
-  const part = item.toc?.parts?.find(p =>
-    p.type === 'summary' && !/checklist|قائمة فحص|قائمة المراجعة/i.test(p.title),
-  ) || item.toc?.parts?.find(p => p.type === 'summary' && /ملخص/i.test(p.title));
-  if (!part) return;
-  const hash = `#${part.id}`;
-  if (location.hash === hash) scrollToAnchor(part.id);
-  else location.hash = part.id;
+
+  const isQuickSummary = (title) => /سريع|قبل البدء|checklist|قائمة فحص|قائمة المراجعة/i.test(title || '');
+  const isComprehensive = (title) => /شامل|Alternative Complete|قراءة بديلة/i.test(title || '');
+
+  const tocParts = item.toc?.parts || [];
+  const part = tocParts.find(p => p.type === 'summary' && isComprehensive(p.title))
+    || tocParts.find(p => p.type === 'summary' && /ملخص/i.test(p.title || '') && !isQuickSummary(p.title))
+    || tocParts.find(p => p.type === 'summary' && !isQuickSummary(p.title));
+
+  let targetId = part?.id || null;
+  if (!targetId) {
+    const nodes = [...document.querySelectorAll('#content .section-block[data-part-type="summary"]')];
+    const byTitle = (pred) => nodes.find(el => pred(el.querySelector('h3')?.textContent || ''));
+    targetId = byTitle(isComprehensive)?.id
+      || byTitle(t => /ملخص/i.test(t) && !isQuickSummary(t))?.id
+      || byTitle(t => !isQuickSummary(t))?.id
+      || nodes.at(-1)?.id
+      || null;
+  }
+  if (!targetId) return;
+
+  const lectureId = item.lec?.id || lectureStableId(item, currentLectureIndex);
+  trackJumpToSummary({ targetId, lectureId, trigger: 'button' });
+
+  const hash = `#${targetId}`;
+  if (location.hash === hash) scrollToAnchor(targetId);
+  else location.hash = targetId;
   closeMobileToc();
 }
 
@@ -1042,6 +1717,98 @@ function closeLectureWidthMenu() {
   const btn = document.getElementById('lectureWidthBtn');
   menu?.classList.add('hidden');
   btn?.setAttribute('aria-expanded', 'false');
+}
+
+function isMainTopicHeading(el) {
+  return el?.matches?.('div.flex.anchor-target')
+    && el.querySelector(':scope > .w-10.h-10')
+    && el.querySelector(':scope > h4.font-headline-md');
+}
+
+/** Section start: ### topic, or databases-style #### 📍 / أين نحن */
+function isSectionStartHeading(el) {
+  if (isMainTopicHeading(el)) return true;
+  if (!el?.classList?.contains('mini-heading')) return false;
+  return /📍|أين نحن/.test(el.textContent || '');
+}
+
+/** Nearest section start for this block — stop at previous original-text / HR. */
+function findTopicHeading(el) {
+  let start = null;
+  let node = el.previousElementSibling;
+  while (node) {
+    if (node.classList?.contains('original-text-collapsible')) break;
+    if (node.tagName === 'HR') break;
+    if (isSectionStartHeading(node)) start = node;
+    node = node.previousElementSibling;
+  }
+  return start;
+}
+
+function ensureOrigMarker(el) {
+  if (!el._origMarker) {
+    el._origMarker = document.createComment('orig-text-pos');
+    el.parentNode.insertBefore(el._origMarker, el);
+  }
+}
+
+function restoreOrigPosition(el) {
+  const marker = el._origMarker;
+  if (marker?.parentNode) marker.parentNode.insertBefore(el, marker.nextSibling);
+}
+
+function applyExpandOriginal(enabled) {
+  const root = document.getElementById('content');
+  if (!root) return;
+  root.classList.toggle('expand-original-mode', enabled);
+
+  root.querySelectorAll('.original-text-collapsible').forEach(el => {
+    if (enabled) {
+      ensureOrigMarker(el);
+      const topic = findTopicHeading(el);
+      if (topic && el.previousElementSibling !== topic) {
+        topic.parentNode.insertBefore(el, topic.nextElementSibling);
+      }
+      el.setAttribute('open', '');
+    } else {
+      restoreOrigPosition(el);
+      el.removeAttribute('open');
+    }
+  });
+
+  const btn = document.getElementById('expandOriginalBtn');
+  if (btn) btn.setAttribute('aria-pressed', String(!!enabled));
+  root.querySelectorAll('[data-expand-original-checkbox]').forEach((input) => {
+    input.checked = !!enabled;
+  });
+}
+
+function bindExpandOriginalInlineToggle(root = document.getElementById('content')) {
+  if (!root) return;
+  root.querySelectorAll('[data-expand-original-checkbox]').forEach((input) => {
+    if (input.dataset.bound === '1') return;
+    input.dataset.bound = '1';
+    input.addEventListener('change', () => {
+      const next = !!input.checked;
+      localStorage.setItem(STORAGE_EXPAND_ORIGINAL, next ? '1' : '0');
+      applyExpandOriginal(next);
+      trackExpandOriginalToggled({ enabled: next, source: 'inline' });
+    });
+  });
+}
+
+function initExpandOriginalToggle() {
+  const btn = document.getElementById('expandOriginalBtn');
+  if (!btn || btn.dataset.bound === '1') return;
+  btn.dataset.bound = '1';
+  const saved = localStorage.getItem(STORAGE_EXPAND_ORIGINAL) === '1';
+  applyExpandOriginal(saved);
+  btn.addEventListener('click', () => {
+    const next = btn.getAttribute('aria-pressed') !== 'true';
+    localStorage.setItem(STORAGE_EXPAND_ORIGINAL, next ? '1' : '0');
+    applyExpandOriginal(next);
+    trackExpandOriginalToggled({ enabled: next, source: 'toolbar' });
+  });
 }
 
 function initLectureWidthToggle() {
@@ -1198,12 +1965,26 @@ function resolveRoute() {
     return;
   }
 
+  const examIdx = getExamIndexFromHash(hash);
+  if (examIdx >= 0) {
+    loadExamView(examIdx, hash);
+    return;
+  }
+
+  const noteIdx = getNoteIndexFromHash(hash);
+  if (noteIdx >= 0) {
+    loadNoteView(noteIdx, hash).catch(err => console.error(err));
+    return;
+  }
+
   const idx = getLectureIndexFromHash(hash, appState.items);
   if (idx >= 0) {
     loadLectureView(idx, hash).catch(err => console.error(err));
   } else {
     currentLectureIndex = -1;
     currentReviewIndex = -1;
+    currentExamIndex = -1;
+    currentNoteIndex = -1;
     // Mastery chips and the exam entry card depend on quiz stats that may
     // have changed since the grid was last rendered.
     renderHomeGrid();
@@ -1259,6 +2040,11 @@ function initSearch() {
     search(q, 15).then(matches => {
       if (input.value.trim() !== q.trim()) return; // stale response
 
+      trackSearchPerformed({
+        queryLen: q.trim().length,
+        resultCount: matches.length,
+      });
+
       if (!matches.length) {
         results.innerHTML = `<div class="p-lg text-center text-on-surface-variant font-label-md">لا نتائج لـ "${esc(q)}"</div>`;
         results.classList.remove('hidden');
@@ -1268,10 +2054,15 @@ function initSearch() {
 
       const seen = new Set();
       let html = '';
+      let rank = 0;
       for (const { entry } of matches) {
-        const key = entry.id;
+        // Content blocks often share a part id — keep distinct titles visible.
+        const key = entry.kind === 'content'
+          ? `${entry.id}::${entry.title || entry.text || ''}`
+          : entry.id;
         if (seen.has(key)) continue;
         seen.add(key);
+        rank += 1;
 
         const icon = entry.kind === 'lecture' ? 'description'
           : entry.kind === 'part' ? 'chapter'
@@ -1289,6 +2080,8 @@ function initSearch() {
           <button type="button" class="search-result-item flex items-start gap-md w-full text-right px-lg py-md hover:bg-surface-container-high transition-all border-b border-outline-variant last:border-b-0 cursor-pointer"
             data-lec-id="${escAttr(entry.lecId)}"
             data-anchor="${escAttr(entry.id)}"
+            data-entry-kind="${escAttr(entry.kind || '')}"
+            data-rank="${rank}"
             role="option"
             aria-label="${escAttr(label)}">
             <span class="material-symbols-outlined text-primary shrink-0 mt-xs" aria-hidden="true">${icon}</span>
@@ -1309,6 +2102,13 @@ function initSearch() {
         btn.addEventListener('click', () => {
           const lecId = btn.dataset.lecId;
           const anchor = btn.dataset.anchor;
+          trackSearchResultClicked({
+            lecId,
+            entryId: anchor,
+            entryKind: btn.dataset.entryKind || '',
+            rank: Number(btn.dataset.rank) || 0,
+            queryLen: q.trim().length,
+          });
           closeSearchResults();
           input.value = '';
           clearBtn?.classList.add('hidden');
@@ -1317,6 +2117,11 @@ function initSearch() {
       });
     }).catch(err => {
       console.warn('Search error:', err);
+      trackContentLoadFailed({
+        failureKind: 'search_index',
+        contentType: 'home',
+        message: err?.message || 'search failed',
+      });
     });
   }
 
@@ -1354,6 +2159,7 @@ function initSearch() {
 
   // Navbar search button
   document.getElementById('navbarSearchBtn')?.addEventListener('click', () => {
+    trackSearchOpened({ trigger: 'navbar' });
     if (currentView !== 'home') goToSubjectHome();
     setTimeout(() => {
       input.focus();
@@ -1365,6 +2171,7 @@ function initSearch() {
   document.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'F') {
       e.preventDefault();
+      trackSearchOpened({ trigger: 'shortcut' });
       if (currentView !== 'home') goToSubjectHome();
       setTimeout(() => {
         input.focus();
@@ -1378,11 +2185,25 @@ async function init() {
   initTheme();
   initLaserPointer();
   initInteractivity();
+  window.addEventListener('study:mcq-answered', (e) => {
+    trackMcqAnswered(e.detail || {});
+    persistDawratAnswer(e.detail || {});
+  });
+  window.addEventListener('study:mcq-reset', (e) => {
+    clearPersistedDawratAnswer(e.detail || {});
+  });
+  window.addEventListener('study:mcq-reset-all', (e) => {
+    clearAllPersistedDawratAnswers(e.detail || {});
+  });
   initScrollFab();
   initJumpSummary();
   bindJumpSummaryClicks();
   initLectureWidthToggle();
+  initExpandOriginalToggle();
   initLectureCompletionButtons();
+  initSidebarToggle();
+  initSidebarProgress();
+  initSidebarLectureNav();
   if (LECTURE_NOTES_ENABLED) initLectureNotes();
   initMobileStudyUi();
   initSearch();
@@ -1457,6 +2278,20 @@ async function init() {
     }
     renderReviewFeatured();
     appState.examMode.renderHomeEntry();
+
+    try {
+      await loadExams();
+    } catch (examErr) {
+      console.warn('دورات archive not loaded:', examErr);
+    }
+    renderExamArchiveSection();
+
+    try {
+      await loadNotes();
+    } catch (notesErr) {
+      console.warn('Notes not loaded:', notesErr);
+    }
+    renderNotesSection();
 
     resolveRoute();
   } catch (err) {

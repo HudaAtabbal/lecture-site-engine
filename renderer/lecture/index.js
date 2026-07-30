@@ -3,6 +3,7 @@ import { ms, PART_MAT_ICONS } from '../core/icons.js';
 import { isChecklistPart } from '../core/part-filters.js';
 import { renderBlocks } from '../blocks/index.js';
 import { renderPart } from '../parts/index.js';
+import { mcqSectionAnchor, normalizeMcqSection } from '../core/slug.js';
 
 export function renderAiDisclaimer(config) {
   const site = config.defaultTitle || 'Study Guide';
@@ -84,10 +85,10 @@ export function renderReview(review, icon, deps) {
   return html + '</div></section>';
 }
 
-export function renderCodeGuide(guide, deps) {
+export function renderCodeGuide(guide, deps, badgeLabel = '💻 أكواد المحاضرة') {
   let html = `<section class="lecture mb-xl" id="${guide.id}">
     <section class="mb-xl text-center">
-      <span class="inline-block px-md py-xs bg-tertiary-container text-on-tertiary-container rounded-full font-label-md text-label-md mb-md">💻 أكواد المحاضرة</span>
+      <span class="inline-block px-md py-xs bg-tertiary-container text-on-tertiary-container rounded-full font-label-md text-label-md mb-md">${esc(badgeLabel)}</span>
       <h2 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-md">${esc(guide.title)}</h2>
       <p class="font-body-md text-on-surface-variant mb-md">${esc(guide.tag)}</p>`;
 
@@ -102,6 +103,7 @@ export function renderCodeGuide(guide, deps) {
   guide.parts.forEach((part, pi) => {
     const partId = `${guide.id}-p${pi + 1}`;
     const pIcon = PART_MAT_ICONS[part.type] || 'article';
+    const isMcq = part.type === 'mcq';
 
     html += `<div class="section-block mb-xl scroll-mt-16 box-animate" id="${partId}" data-part-type="${part.type}">
       <div class="flex items-center gap-md mb-lg">
@@ -112,9 +114,10 @@ export function renderCodeGuide(guide, deps) {
       </div>`;
 
     const cardCls = 'border border-outline-variant dark:border-[#1e40af] rounded-xl p-lg custom-shadow box-hover bg-surface-container-lowest dark:bg-transparent';
-    html += `<div class="${cardCls}">`;
+    if (!isMcq) html += `<div class="${cardCls}">`;
     html += renderPart(part, partRenderCtx(partId, part, deps));
-    html += '</div></div>';
+    if (!isMcq) html += '</div>';
+    html += '</div>';
   });
 
   return html + '</div></section>';
@@ -125,6 +128,12 @@ export function renderLecture(lecture, accent, icon, refs, deps) {
     ? refs
     : { codeRef: refs };
   const { codeRef, companionRef, companionOf, badge } = linkRefs;
+
+  // End-of-lecture summary only — keep intro summaries (e.g. «ملخص سريع قبل البدء») in place (see app.js isQuickSummary)
+  const summaryPartIdx = lecture.parts.findIndex(p =>
+    p.type === 'summary' && !/checklist|قائمة فحص|قائمة المراجعة|سريع|قبل البدء/i.test(p.title || ''),
+  );
+  const summaryPart = summaryPartIdx >= 0 ? lecture.parts[summaryPartIdx] : null;
 
   let html = `<section class="lecture mb-xl" id="${lecture.id}">
     ${renderDisclaimers(deps.config)}
@@ -150,16 +159,21 @@ export function renderLecture(lecture, accent, icon, refs, deps) {
     html += `</div>`;
   }
 
-  const summaryPartIdx = lecture.parts.findIndex(p =>
-    p.type === 'summary' && !/checklist|قائمة فحص|قائمة المراجعة/i.test(p.title || ''),
-  );
-  if (summaryPartIdx >= 0) {
-    html += `<div class="lg:hidden flex justify-center mb-md">
-      <button type="button" data-jump-summary class="inline-flex items-center gap-sm px-lg py-md bg-primary text-on-primary rounded-full font-label-md font-bold hover:opacity-90 transition-opacity">
-        ${ms('summarize', false, 'text-lg')} الملخص المنظم
-      </button>
+  // Add "بديل سريع" button if summary exists
+  if (summaryPart) {
+    const summaryId = `${lecture.id}-p${summaryPartIdx + 1}`;
+    html += `<div class="flex justify-center mb-sm">
+      <a href="#${esc(summaryId)}" data-jump-summary class="inline-flex items-center gap-sm px-lg py-md bg-secondary text-on-secondary rounded-full font-label-md font-bold hover:opacity-90 transition-opacity">
+        ${ms('speed', false, 'text-lg')} بديل سريع في حال ما كنت ملحق
+      </a>
     </div>`;
   }
+
+  // Same place on every lecture (SE, DB, …) — under the header / summary button
+  html += `<label class="expand-original-hint-toggle mb-md" title="يعرض النص الأصلي في بداية كل فقرة بدون صندوق قابل للطي">
+    <input type="checkbox" data-expand-original-checkbox aria-label="فعلني في حال تريد النص الأصلي يقول في بداية الفقرة بدون slidedown">
+    <span>فعلني في حال تريد "النص الأصلي يقول" في بداية الفقرة بدون slidedown</span>
+  </label>`;
 
   html += `</section>`;
 
@@ -173,8 +187,15 @@ export function renderLecture(lecture, accent, icon, refs, deps) {
 
   lecture.parts.forEach((part, pi) => {
     if (isChecklistPart(part)) return;
+    // Skip summary part here; we'll render it at the end
+    if (summaryPart && part === summaryPart) return;
     html += renderPartSection(part, pi, lecture.id, deps);
   });
+
+  // Render summary part at the end if it exists
+  if (summaryPart) {
+    html += renderPartSection(summaryPart, summaryPartIdx, lecture.id, deps);
+  }
 
   if (codeRef?.id || companionRef?.id || companionOf?.id) {
     html += `<div class="mt-2xl pt-xl border-t border-outline-variant text-center flex flex-wrap justify-center gap-md">`;
@@ -213,6 +234,41 @@ function buildPartSubsections(part) {
   }
   if (part.questions?.length) {
     if (part.type === 'mcq') {
+      // Past-exam banks group questions under "## المحاضرة N: …" dividers
+      // (parser attaches `section` on each question). Prefer those as TOC
+      // entries so the sidebar navigates by lecture, not by question number.
+      const seen = new Set();
+      const byLecture = [];
+      for (const q of part.questions) {
+        const key = normalizeMcqSection(q.section);
+        if (!key || seen.has(key)) continue;
+        seen.add(key);
+        byLecture.push({
+          level: 3,
+          text: key,
+          id: mcqSectionAnchor(key),
+        });
+      }
+      if (byLecture.length) {
+        // Only re-sort when sections are lecture-labeled ("المحاضرة N").
+        // Pattern/source banks (e.g. "## نمط 2023-2024 — …") must keep
+        // first-seen order — localeCompare would scramble them vs the page.
+        const hasLectureLabels = byLecture.some(s => /المحاضرة\s+\d+/.test(s.text));
+        if (hasLectureLabels) {
+          const lectureOrder = (text) => {
+            const m = text.match(/المحاضرة\s+(\d+)(?:\s*\(جزء\s+(\d+)\))?/);
+            if (!m) return [999, 0];
+            return [Number(m[1]), Number(m[2] || 0)];
+          };
+          byLecture.sort((a, b) => {
+            const [an, ap] = lectureOrder(a.text);
+            const [bn, bp] = lectureOrder(b.text);
+            return an - bn || ap - bp || a.text.localeCompare(b.text, 'ar');
+          });
+        }
+        return byLecture;
+      }
+
       return part.questions.map(q => ({
         level: 3,
         text: `س${q.num} (${q.difficulty})`,
